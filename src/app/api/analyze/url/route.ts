@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { currentUser } from "@/lib/auth/session";
+import { recordScan } from "@/lib/history/store";
 import { analyzeUrl } from "@/lib/url-analyzer";
 import { ALLOWED_PROTOCOLS, parseUrl } from "@/lib/url-analyzer/parser";
 
@@ -80,9 +82,28 @@ export async function POST(request: Request) {
 
   try {
     const report = await analyzeUrl(trimmed);
+    const user = await currentUser();
+    if (user) {
+      recordScan({
+        userId: user.id,
+        scanType: "url",
+        rawInput: trimmed,
+        status: "completed",
+        urlReport: report,
+      });
+    }
     return NextResponse.json({ report });
   } catch (error) {
     console.error("[api/analyze/url] unexpected failure", error);
+    const user = await currentUser();
+    if (user) {
+      recordScan({
+        userId: user.id,
+        scanType: "url",
+        rawInput: trimmed,
+        status: "failed",
+      });
+    }
     return jsonError(
       500,
       "internal_error",

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
+import { currentUser } from "@/lib/auth/session";
 import { MAX_INPUT_CHARS } from "@/lib/examples";
+import { recordScan } from "@/lib/history/store";
 import { analyzeScamText } from "@/lib/scan-pipeline";
 
 export const runtime = "nodejs";
@@ -52,9 +54,30 @@ export async function POST(request: Request) {
 
   try {
     const report = await analyzeScamText(text, { source: "text" });
+    // History is recorded server-side, keyed by the verified session — the
+    // client never sends a user identifier.
+    const user = await currentUser();
+    if (user) {
+      recordScan({
+        userId: user.id,
+        scanType: "message",
+        rawInput: text,
+        status: "completed",
+        messageReport: report,
+      });
+    }
     return NextResponse.json({ report });
   } catch (error) {
     console.error("[api/analyze] unexpected failure", error);
+    const user = await currentUser();
+    if (user) {
+      recordScan({
+        userId: user.id,
+        scanType: "message",
+        rawInput: text,
+        status: "failed",
+      });
+    }
     return jsonError(
       500,
       "internal_error",

@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { currentUser } from "@/lib/auth/session";
+import { recordScan } from "@/lib/history/store";
 import { MAX_INPUT_CHARS } from "@/lib/examples";
 import { OcrError, getOcrProvider } from "@/lib/ocr";
 import { analyzeScamText } from "@/lib/scan-pipeline";
@@ -126,9 +128,28 @@ export async function POST(request: Request) {
       source: "screenshot",
     });
     report.extractedText = extractedText.slice(0, MAX_INPUT_CHARS);
+    const user = await currentUser();
+    if (user) {
+      recordScan({
+        userId: user.id,
+        scanType: "screenshot",
+        rawInput: analysisText,
+        status: "completed",
+        messageReport: report,
+      });
+    }
     return NextResponse.json({ report });
   } catch (error) {
     console.error("[api/analyze/screenshot] unexpected failure", error);
+    const user = await currentUser();
+    if (user) {
+      recordScan({
+        userId: user.id,
+        scanType: "screenshot",
+        rawInput: analysisText,
+        status: "failed",
+      });
+    }
     return jsonError(
       500,
       "internal_error",
