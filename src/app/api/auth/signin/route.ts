@@ -9,6 +9,7 @@ import {
 import { createSession, findUserByEmail, toPublicUser } from "@/lib/auth/store";
 import { jsonError, validateEmail, validatePassword } from "@/lib/auth/validation";
 import { rateLimit } from "@/lib/reports/rate-limit";
+import { readJsonBody, requestSameOrigin } from "@/lib/http/guards";
 
 export const runtime = "nodejs";
 
@@ -23,12 +24,20 @@ function clientKey(request: Request, email: string): string {
 }
 
 export async function POST(request: Request) {
-  let body: Record<string, unknown>;
-  try {
-    body = (await request.json()) as Record<string, unknown>;
-  } catch {
+  if (!requestSameOrigin(request)) {
+    return jsonError(
+      NextResponse,
+      403,
+      "forbidden_origin",
+      "This request didn't come from ScamShield."
+    );
+  }
+
+  const parsed = await readJsonBody(request, 4 * 1024);
+  if (!parsed.ok) {
     return jsonError(NextResponse, 400, "bad_request", "Invalid request body.");
   }
+  const body = parsed.body as Record<string, unknown>;
 
   const email = validateEmail(body.email);
   if (!email) {

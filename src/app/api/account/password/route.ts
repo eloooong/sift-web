@@ -17,6 +17,7 @@ import {
   validatePassword,
 } from "@/lib/auth/validation";
 import { rateLimit } from "@/lib/reports/rate-limit";
+import { readJsonBody, requestSameOrigin } from "@/lib/http/guards";
 import { createHash } from "node:crypto";
 
 export const runtime = "nodejs";
@@ -28,6 +29,15 @@ export const dynamic = "force-dynamic";
  * fresh session cookie.
  */
 export async function POST(request: Request) {
+  if (!requestSameOrigin(request)) {
+    return jsonError(
+      NextResponse,
+      403,
+      "forbidden_origin",
+      "This request didn't come from ScamShield."
+    );
+  }
+
   const sessionUser = await currentUser();
   if (!sessionUser) {
     return jsonError(NextResponse, 401, "unauthorized", "Sign in first.");
@@ -49,12 +59,11 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: Record<string, unknown>;
-  try {
-    body = (await request.json()) as Record<string, unknown>;
-  } catch {
+  const parsed = await readJsonBody(request, 4 * 1024);
+  if (!parsed.ok) {
     return jsonError(NextResponse, 400, "bad_request", "Invalid request body.");
   }
+  const body = parsed.body as Record<string, unknown>;
 
   const currentPassword = validatePassword(body.currentPassword);
   const newPassword = validatePassword(body.newPassword);

@@ -5,6 +5,7 @@ import {
   deleteAllUserHistory,
   listUserHistory,
 } from "@/lib/history/store";
+import { requestSameOrigin } from "@/lib/http/guards";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,7 +27,14 @@ export async function GET() {
 }
 
 /** Delete the signed-in user's entire history. */
-export async function DELETE() {
+export async function DELETE(request: Request) {
+  if (!requestSameOrigin(request)) {
+    return NextResponse.json(
+      { error: { code: "forbidden_origin", message: "This request didn't come from ScamShield." } },
+      { status: 403 }
+    );
+  }
+
   const user = await currentUser();
   if (!user) {
     return NextResponse.json(

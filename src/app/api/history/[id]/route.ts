@@ -5,6 +5,7 @@ import {
   deleteUserHistoryEntry,
   getUserHistoryEntry,
 } from "@/lib/history/store";
+import { requestSameOrigin } from "@/lib/http/guards";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,7 +35,14 @@ export async function GET(_request: Request, { params }: { params: Params }) {
   return NextResponse.json({ entry });
 }
 
-export async function DELETE(_request: Request, { params }: { params: Params }) {
+export async function DELETE(request: Request, { params }: { params: Params }) {
+  if (!requestSameOrigin(request)) {
+    return NextResponse.json(
+      { error: { code: "forbidden_origin", message: "This request didn't come from ScamShield." } },
+      { status: 403 }
+    );
+  }
+
   const user = await currentUser();
   if (!user) {
     return NextResponse.json(

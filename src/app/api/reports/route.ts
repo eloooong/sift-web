@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import { createHash } from "node:crypto";
 
-import { analyzeMessage } from "@/lib/scam-detector";
-import {
+import { analyzeMessage } from "@/lib/scam-detector";import {
   SCAM_CATEGORIES,
   type ScamCategoryId,
 } from "@/lib/scam-detector/categories";
 import { detectImageType } from "@/lib/screenshots";
+import {
+  requestContentLengthExceeds,
+  requestSameOrigin,
+} from "@/lib/http/guards";
 import {
   countUrls,
   descriptionFingerprint,
@@ -78,6 +81,16 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  // --- CSRF / origin check --------------------------------------------------
+  if (!requestSameOrigin(request)) {
+    return jsonError(403, "forbidden_origin", "This request didn't come from ScamShield.");
+  }
+
+  // --- Request size precheck (multipart buffers in memory) -------------------
+  if (requestContentLengthExceeds(request, MAX_REPORT_SCREENSHOT_BYTES + 256 * 1024)) {
+    return jsonError(413, "too_large", "Screenshots must be 2 MB or less.");
+  }
+
   // --- Rate limiting -------------------------------------------------------
   const limit = rateLimit(`report:${clientKey(request)}`, 3, 15 * 60_000);
   if (!limit.ok) {
@@ -151,6 +164,20 @@ export async function POST(request: Request) {
         413,
         "too_large",
         "Screenshots must be 2 MB or less."
+      );
+    }
+    const reportFileName = (file.name || "").toLowerCase();
+    const reportExtension = reportFileName.includes(".")
+      ? reportFileName.slice(reportFileName.lastIndexOf(".") + 1)
+      : "";
+    if (
+      reportExtension &&
+      !["png", "jpg", "jpeg", "webp"].includes(reportExtension)
+    ) {
+      return jsonError(
+        400,
+        "unsupported_type",
+        "Only PNG, JPG, or WebP screenshots are accepted."
       );
     }
     const bytes = new Uint8Array(await file.arrayBuffer());

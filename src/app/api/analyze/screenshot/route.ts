@@ -3,7 +3,13 @@ import { NextResponse } from "next/server";
 import { currentUser } from "@/lib/auth/session";
 import { recordScan } from "@/lib/history/store";
 import { MAX_INPUT_CHARS } from "@/lib/examples";
+import {
+  clientKey,
+  requestContentLengthExceeds,
+  requestSameOrigin,
+} from "@/lib/http/guards";
 import { OcrError, getOcrProvider } from "@/lib/ocr";
+import { rateLimit } from "@/lib/reports/rate-limit";
 import { analyzeScamText } from "@/lib/scan-pipeline";
 import {
   ACCEPTED_MIME_TYPES,
@@ -17,12 +23,48 @@ import {
 export const runtime = "nodejs";
 
 const MIN_EXTRACTED_CHARS = 20;
+const MAX_UPLOAD_BYTES = 6 * 1024 * 1024;
+const ALLOWED_EXTENSIONS: Record<ScreenshotFormat, string[]> = {
+  png: ["png"],
+  jpeg: ["jpg", "jpeg"],
+  webp: ["webp"],
+};
 
 function jsonError(status: number, code: string, message: string) {
   return NextResponse.json({ error: { code, message } }, { status });
 }
 
 export async function POST(request: Request) {
+  if (!requestSameOrigin(request)) {
+    return jsonError(
+      403,
+      "forbidden_origin",
+      "That request didn’t come from ScamShield. Please scan from the app."
+    );
+  }
+
+  const limit = rateLimit(`scan-screenshot:${clientKey(request)}`, 5, 60_000);
+  if (!limit.ok) {
+    return NextResponse.json(
+      {
+        error: {
+          code: "rate_limited",
+          message:
+            "You’ve uploaded a lot of screenshots in a short time. Please wait a minute before trying again.",
+        },
+      },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } }
+    );
+  }
+
+  if (requestContentLengthExceeds(request, MAX_UPLOAD_BYTES)) {
+    return jsonError(
+      413,
+      "too_large",
+      "That image is too large. Please upload a screenshot of 5 MB or less."
+    );
+  }
+
   let formData: FormData;
   try {
     formData = await request.formData();
@@ -71,6 +113,19 @@ export async function POST(request: Request) {
     );
   }
 
+  const fileName = (file.name || "").toLowerCase();
+  const extension = fileName.includes(".")
+    ? fileName.slice(fileName.lastIndexOf(".") + 1)
+    : "";
+  const allowedExtensions = Object.values(ALLOWED_EXTENSIONS).flat();
+  if (extension && !allowedExtensions.includes(extension)) {
+    return jsonError(
+      415,
+      "unsupported_type",
+      "Unsupported file type. Please upload a PNG, JPG, or WebP image."
+    );
+  }
+
   let bytes: Uint8Array;
   try {
     bytes = new Uint8Array(await file.arrayBuffer());
@@ -83,7 +138,17 @@ export async function POST(request: Request) {
   }
 
   const sniffed: ScreenshotFormat | null = detectImageType(bytes);
-  if (!sniffed || (declaredType && declaredType !== formatToMimeType(sniffed) && declaredType !== "image/jpg")) {
+  const declaredMatchesSniff =
+    !declaredType ||
+    declaredType === formatToMimeType(sniffed ?? "png") ||
+    declaredType === "image/jpg";
+  const extensionMatchesSniff =
+    !extension || ALLOWED_EXTENSIONS[sniffed ?? "png"].includes(extension);
+  if (
+    !sniffed ||
+    !declaredMatchesSniff ||
+    !extensionMatchesSniff
+  ) {
     return jsonError(
       415,
       "unsupported_type",

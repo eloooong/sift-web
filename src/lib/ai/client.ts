@@ -42,6 +42,7 @@ export async function requestChatJson(
       body: JSON.stringify({
         model: config.model,
         temperature: 0.2,
+        max_tokens: 900,
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: systemPrompt },

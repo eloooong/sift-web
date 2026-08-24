@@ -97,6 +97,8 @@ function blockedReport(
   };
 }
 
+import { isInternalHostname } from "@/lib/url-analyzer/internal-hosts";
+
 /**
  * Full server-side URL analysis: parse → structural signals → scoring →
  * optional external reputation lookup.
@@ -131,9 +133,10 @@ export async function analyzeUrl(rawInput: string): Promise<UrlReport> {
   const signals = [...structural];
 
   // --- External reputation (optional, server-side only) --------------------
+  // Internal/loopback hosts are never disclosed to third-party APIs.
   let reputation: UrlReport["reputation"] = null;
   const provider = getReputationProvider();
-  if (provider) {
+  if (provider && !isInternalHostname(parts.hostname)) {
     const lookup = await provider.lookup(normalizedUrl);
     reputation = {
       providerId: provider.id,

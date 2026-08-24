@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 
+import { requestSameOrigin } from "@/lib/http/guards";
 import { rateLimit } from "@/lib/reports/rate-limit";
 import { confirmReport, getApprovedReport } from "@/lib/reports/store";
 import { ANON_COOKIE } from "@/lib/reports/types";
@@ -26,6 +27,10 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+
+  if (!requestSameOrigin(request)) {
+    return jsonError(403, "forbidden_origin", "This request didn't come from ScamShield.");
+  }
 
   if (!getApprovedReport(id)) {
     return jsonError(404, "not_found", "Report not found.");

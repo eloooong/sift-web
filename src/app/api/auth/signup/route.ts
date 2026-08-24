@@ -16,17 +16,20 @@ import {
   validatePassword,
 } from "@/lib/auth/validation";
 import { rateLimit } from "@/lib/reports/rate-limit";
-import { createHash } from "node:crypto";
+import { clientKey, readJsonBody, requestSameOrigin } from "@/lib/http/guards";
 
 export const runtime = "nodejs";
 
-function clientKey(request: Request): string {
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-  return createHash("sha256").update(`signup:${ip}`).digest("hex").slice(0, 32);
-}
-
 export async function POST(request: Request) {
+  if (!requestSameOrigin(request)) {
+    return jsonError(
+      NextResponse,
+      403,
+      "forbidden_origin",
+      "This request didn't come from ScamShield."
+    );
+  }
+
   // Modest flood guard on account creation.
   const limit = rateLimit(`signup:${clientKey(request)}`, 5, 15 * 60_000);
   if (!limit.ok) {
@@ -38,12 +41,11 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: Record<string, unknown>;
-  try {
-    body = (await request.json()) as Record<string, unknown>;
-  } catch {
+  const parsed = await readJsonBody(request, 4 * 1024);
+  if (!parsed.ok) {
     return jsonError(NextResponse, 400, "bad_request", "Invalid request body.");
   }
+  const body = parsed.body as Record<string, unknown>;
 
   const email = validateEmail(body.email);
   if (!email) {
