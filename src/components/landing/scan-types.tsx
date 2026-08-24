@@ -6,6 +6,7 @@ import {
   Smartphone,
   ScanText,
 } from "lucide-react";
+import Link from "next/link";
 
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Badge } from "@/components/ui/badge";
@@ -15,12 +16,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type ScanType = {
   icon: typeof Smartphone;
   title: string;
   description: string;
   comingSoon?: boolean;
+  href?: string;
 };
 
 const SCAN_TYPES: ScanType[] = [
@@ -52,8 +55,8 @@ const SCAN_TYPES: ScanType[] = [
     icon: ScanText,
     title: "Screenshots",
     description:
-      "Upload screenshots of entire conversations for analysis. OCR support is on the roadmap.",
-    comingSoon: true,
+      "Upload a screenshot of the whole conversation — we read the text with OCR and analyze it end-to-end.",
+    href: "/scanner/screenshot",
   },
   {
     icon: ClipboardPaste,
@@ -74,31 +77,48 @@ export function ScanTypes() {
         />
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SCAN_TYPES.map((type) => (
-            <Card
-              key={type.title}
-              className="transition-colors hover:ring-foreground/20"
-            >
-              <CardHeader>
-                <span className="mb-1 flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/60 text-foreground">
-                  <type.icon className="size-[18px]" />
-                </span>
-                <CardTitle className="flex items-center gap-2">
-                  {type.title}
-                  {type.comingSoon ? (
-                    <Badge variant="secondary" className="font-normal">
-                      Coming soon
-                    </Badge>
-                  ) : null}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {type.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {SCAN_TYPES.map((type) => {
+            const card = (
+              <Card
+                className={cn(
+                  "h-full transition-colors hover:ring-foreground/20",
+                  type.href && "hover:border-primary/40"
+                )}
+              >
+                <CardHeader>
+                  <span className="mb-1 flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/60 text-foreground">
+                    <type.icon className="size-[18px]" />
+                  </span>
+                  <CardTitle className="flex items-center gap-2">
+                    {type.title}
+                    {type.comingSoon ? (
+                      <Badge variant="secondary" className="font-normal">
+                        Coming soon
+                      </Badge>
+                    ) : null}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {type.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+
+            return type.href ? (
+              <Link
+                key={type.title}
+                href={type.href}
+                className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label={`${type.title} — open the ${type.title.toLowerCase()} scanner`}
+              >
+                {card}
+              </Link>
+            ) : (
+              <div key={type.title}>{card}</div>
+            );
+          })}
         </div>
       </div>
     </section>

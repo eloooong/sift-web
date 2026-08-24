@@ -3,6 +3,7 @@ import { ShieldCheck } from "lucide-react";
 
 const PRODUCT_LINKS = [
   { href: "/scanner", label: "Scam Scanner" },
+  { href: "/scanner/screenshot", label: "Screenshot Scanner" },
   { href: "/scams", label: "Scam Library" },
   { href: "/#scan-types", label: "Supported Scan Types" },
   { href: "/#how-it-works", label: "How It Works" },

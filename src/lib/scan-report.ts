@@ -14,9 +14,12 @@ export type ScanBreakdownRow = {
   total: number;
 };
 
+export type ScanSource = "text" | "screenshot";
+
 export type ScanReport = {
   id: string;
   createdAt: string;
+  source: ScanSource;
   analysisMode: "ai" | "rules";
   warning: string | null;
   riskScore: number;
@@ -27,6 +30,8 @@ export type ScanReport = {
   flags: ScanFlag[];
   breakdown: ScanBreakdownRow[];
   recommendedActions: string[];
+  /** Raw text recovered by OCR when the scan came from a screenshot. */
+  extractedText?: string;
 };
 
 export function ruleReportToScan(
@@ -37,6 +42,7 @@ export function ruleReportToScan(
   return {
     id,
     createdAt,
+    source: "text",
     analysisMode: "rules",
     warning: null,
     riskScore: report.riskScore,

@@ -6,24 +6,40 @@ import { Check, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-const SCAN_STEPS = [
+const TEXT_SCAN_STEPS = [
   "Scanning message…",
   "Checking suspicious patterns…",
   "Analyzing risk signals…",
   "Preparing your security report…",
 ] as const;
 
+const SCREENSHOT_SCAN_STEPS = [
+  "Uploading your screenshot securely…",
+  "Reading text from the image (OCR)…",
+  "Checking suspicious patterns…",
+  "Preparing your security report…",
+] as const;
+
 const STEP_DURATION_MS = 900;
 
-export function ScannerProgress({ onCancel }: { onCancel: () => void }) {
+export function ScannerProgress({
+  onCancel,
+  variant = "text",
+}: {
+  onCancel: () => void;
+  variant?: "text" | "screenshot";
+}) {
   const [activeStep, setActiveStep] = useState(0);
+
+  const isScreenshot = variant === "screenshot";
+  const scanSteps = isScreenshot ? SCREENSHOT_SCAN_STEPS : TEXT_SCAN_STEPS;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveStep((current) => Math.min(current + 1, SCAN_STEPS.length - 1));
+      setActiveStep((current) => Math.min(current + 1, scanSteps.length - 1));
     }, STEP_DURATION_MS);
     return () => clearInterval(interval);
-  }, []);
+  }, [scanSteps.length]);
 
   return (
     <Card aria-live="polite" role="status">
@@ -33,15 +49,19 @@ export function ScannerProgress({ onCancel }: { onCancel: () => void }) {
             <Loader2 className="size-5 animate-spin text-foreground" />
           </span>
           <div>
-            <p className="text-sm font-medium">Analyzing your message</p>
+            <p className="text-sm font-medium">
+              {isScreenshot ? "Analyzing your screenshot" : "Analyzing your message"}
+            </p>
             <p className="text-xs text-muted-foreground">
-              This usually takes a few seconds.
+              {isScreenshot
+                ? "OCR plus the full analysis pipeline — this can take up to a minute."
+                : "This usually takes a few seconds."}
             </p>
           </div>
         </div>
 
         <ul className="mt-5 space-y-2.5 border-t pt-4">
-          {SCAN_STEPS.map((step, index) => {
+          {scanSteps.map((step, index) => {
             const isDone = index < activeStep;
             const isActive = index === activeStep;
             return (
@@ -66,7 +86,7 @@ export function ScannerProgress({ onCancel }: { onCancel: () => void }) {
                 )}
                 {isDone ? step.replace("…", "") : step}
                 {!isDone ? <span className="sr-only">{step}</span> : null}
-                {isActive && index === SCAN_STEPS.length - 1 ? (
+                {isActive && index === scanSteps.length - 1 ? (
                   <Loader2
                     aria-hidden="true"
                     className="size-3.5 shrink-0 animate-spin text-muted-foreground"
@@ -86,7 +106,9 @@ export function ScannerProgress({ onCancel }: { onCancel: () => void }) {
 
         <div className="mt-4 flex items-center justify-between gap-4 border-t pt-4">
           <p className="font-mono text-[11px] text-muted-foreground">
-            Hybrid engine · AI analysis via our secure server
+            {isScreenshot
+              ? "OCR · Hybrid engine · processed in memory"
+              : "Hybrid engine · AI analysis via our secure server"}
           </p>
           <button
             type="button"

@@ -6,6 +6,7 @@ import {
   Banknote,
   Briefcase,
   Calculator,
+  Camera,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -115,9 +116,11 @@ function formatScanTime(iso: string): string {
 }
 
 function buildPlainTextReport(report: ScanReport, text: string): string {
+  const isScreenshot = report.source === "screenshot";
   const lines = [
     "SCAMSHIELD PH — SECURITY REPORT",
     `Scanned: ${formatScanTime(report.createdAt)}`,
+    `Source: ${isScreenshot ? "Screenshot (OCR)" : "Pasted text"}`,
     `Engine: ${report.analysisMode === "ai" ? "AI analyst + rule-engine cross-check" : "Rule-based engine"}`,
     `Risk score: ${report.riskScore}/100 (${report.riskLevel.toUpperCase()} RISK)`,
     `Category: ${report.category?.label ?? "No specific category"}`,
@@ -146,7 +149,7 @@ function buildPlainTextReport(report: ScanReport, text: string): string {
       (action, index) => `${index + 1}. ${action}`
     ),
     "",
-    "--- Original message ---",
+    isScreenshot ? "--- Extracted screenshot text ---" : "--- Original message ---",
     text.slice(0, 1000),
   ];
   return lines.join("\n");
@@ -165,6 +168,7 @@ export function ReportView({
   const [showOriginal, setShowOriginal] = useState(false);
 
   const isAiMode = report.analysisMode === "ai";
+  const isScreenshot = report.source === "screenshot";
 
   const highlightedParts = useMemo(
     () => buildHighlightedParts(analyzedText, report.flags),
@@ -212,6 +216,12 @@ export function ReportView({
               <RiskBadge level={report.riskLevel} />
               <div className="flex flex-wrap items-center gap-2">
                 <CategoryBadge category={report.category} />
+                {isScreenshot ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium">
+                    <Camera className="size-3 text-muted-foreground" />
+                    Analyzed from screenshot
+                  </span>
+                ) : null}
                 <span className="inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium">
                   {isAiMode ? (
                     <>
@@ -408,7 +418,7 @@ export function ReportView({
         <CardFooter className="justify-between gap-3">
           <Button onClick={onReset}>
             <RotateCcw data-icon="inline-start" />
-            Analyze Another Message
+            {isScreenshot ? "Analyze Another Screenshot" : "Analyze Another Message"}
           </Button>
           <Button variant="ghost" size="sm" onClick={handleCopy}>
             {copied ? (
@@ -436,9 +446,9 @@ export function ReportView({
           >
             <CardTitle className="flex items-center gap-2">
               <Quote />
-              Original message
+              {isScreenshot ? "Extracted text from screenshot" : "Original message"}
               <span className="font-normal text-muted-foreground">
-                ({analyzedText.length} characters)
+                ({analyzedText.length.toLocaleString()} characters)
               </span>
             </CardTitle>
             <ChevronDown
@@ -476,7 +486,12 @@ export function ReportView({
                       )
                     )}
                   </p>
-                  {highlightCount > 0 ? (
+                  {isScreenshot ? (
+                    <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
+                      Text recovered with OCR — minor misreads are possible.
+                      The analysis above is based on this extracted content.
+                    </p>
+                  ) : highlightCount > 0 ? (
                     <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted-foreground">
                       <span
                         aria-hidden="true"
