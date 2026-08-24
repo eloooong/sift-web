@@ -20,6 +20,13 @@ const SCREENSHOT_SCAN_STEPS = [
   "Preparing your security report…",
 ] as const;
 
+const URL_SCAN_STEPS = [
+  "Parsing the address…",
+  "Running security checks…",
+  "Comparing against known scam patterns…",
+  "Preparing your security report…",
+] as const;
+
 const STEP_DURATION_MS = 900;
 
 export function ScannerProgress({
@@ -27,12 +34,16 @@ export function ScannerProgress({
   variant = "text",
 }: {
   onCancel: () => void;
-  variant?: "text" | "screenshot";
+  variant?: "text" | "screenshot" | "url";
 }) {
   const [activeStep, setActiveStep] = useState(0);
 
-  const isScreenshot = variant === "screenshot";
-  const scanSteps = isScreenshot ? SCREENSHOT_SCAN_STEPS : TEXT_SCAN_STEPS;
+  const scanSteps =
+    variant === "screenshot"
+      ? SCREENSHOT_SCAN_STEPS
+      : variant === "url"
+        ? URL_SCAN_STEPS
+        : TEXT_SCAN_STEPS;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,10 +61,14 @@ export function ScannerProgress({
           </span>
           <div>
             <p className="text-sm font-medium">
-              {isScreenshot ? "Analyzing your screenshot" : "Analyzing your message"}
+              {variant === "screenshot"
+                ? "Analyzing your screenshot"
+                : variant === "url"
+                  ? "Analyzing the link"
+                  : "Analyzing your message"}
             </p>
             <p className="text-xs text-muted-foreground">
-              {isScreenshot
+              {variant === "screenshot"
                 ? "OCR plus the full analysis pipeline — this can take up to a minute."
                 : "This usually takes a few seconds."}
             </p>
@@ -106,9 +121,11 @@ export function ScannerProgress({
 
         <div className="mt-4 flex items-center justify-between gap-4 border-t pt-4">
           <p className="font-mono text-[11px] text-muted-foreground">
-            {isScreenshot
+            {variant === "screenshot"
               ? "OCR · Hybrid engine · processed in memory"
-              : "Hybrid engine · AI analysis via our secure server"}
+              : variant === "url"
+                ? "Structural checks · reputation lookup · link is never visited"
+                : "Hybrid engine · AI analysis via our secure server"}
           </p>
           <button
             type="button"

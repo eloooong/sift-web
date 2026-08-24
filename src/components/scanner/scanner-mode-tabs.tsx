@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ImageUp, Keyboard } from "lucide-react";
+import { Globe, ImageUp, Keyboard } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -18,9 +18,17 @@ const MODES = [
     label: "Upload Screenshot",
     icon: ImageUp,
   },
+  {
+    key: "url",
+    href: "/scanner/url",
+    label: "Check URL",
+    icon: Globe,
+  },
 ] as const;
 
-export function ScannerModeTabs({ active }: { active: "text" | "screenshot" }) {
+export type ScannerMode = (typeof MODES)[number]["key"];
+
+export function ScannerModeTabs({ active }: { active: ScannerMode }) {
   return (
     <div
       role="tablist"
