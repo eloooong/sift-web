@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import {
   Banknote,
   Briefcase,
-  CheckCircle2,
-  CircleDashed,
   Clock3,
   GraduationCap,
   HeartHandshake,
@@ -23,7 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "ScamShield PH is an independent, educational scam-detection tool built for Filipino internet users. Learn what it checks, who it is for, and what ships next.",
+    "ScamShield PH is an independent, educational scam-detection tool built for Filipino internet users. Learn what it checks and who it is for.",
 };
 
 const DETECTION_CHECKS = [
@@ -42,51 +40,6 @@ const AUDIENCES = [
   { icon: ShoppingBag, label: "Online shoppers" },
   { icon: Briefcase, label: "Employees" },
   { icon: Store, label: "Small business owners" },
-] as const;
-
-const ROADMAP = [
-  {
-    status: "shipped",
-    title: "Phase 1 — UI foundation",
-    description:
-      "Landing page, scanner interface with sample scams, and the ScamShield design system.",
-  },
-  {
-    status: "shipped",
-    title: "Phase 2 — Rule-based detection engine",
-    description:
-      "Transparent, deterministic pattern matching with weighted red flags, risk scoring, categories, and recommended actions.",
-  },
-  {
-    status: "shipped",
-    title: "Phase 3 — Explainable security reports",
-    description:
-      "Risk meter, scam categories, evidence-backed red flags with plain-language explanations, score breakdowns, and highlighted original messages.",
-  },
-  {
-    status: "shipped",
-    title: "Phase 4 — AI-powered analysis (hybrid engine)",
-    description:
-      "A server-side AI analyst works with the rule-based pre-scan, returns structured and validated findings, and degrades gracefully to rules when AI is unavailable.",
-  },
-  {
-    status: "shipped",
-    title: "Phase 5 — Philippine scam intelligence",
-    description:
-      "Twelve PH-specific scam categories, Taglish detection patterns, brand-aware impersonation checks (GCash, Maya, SSS, couriers), and a browsable Scam Library.",
-  },
-  {
-    status: "planned",
-    title: "Screenshot OCR & deeper URL inspection",
-    description:
-      "Upload conversation screenshots and inspect links without visiting them.",
-  },
-  {
-    status: "planned",
-    title: "Accounts, history & community reports",
-    description:
-      "Optional accounts to keep a private scan history and surface trending scam campaigns.",
-  },
 ] as const;
 
 export default function AboutPage() {
@@ -168,39 +121,6 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
-      </FadeIn>
-
-      <FadeIn delay={0.08}>
-        <section className="mt-14">
-          <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-            Product status & roadmap
-          </h2>
-          <ol className="mt-5 space-y-3">
-            {ROADMAP.map((item) => (
-              <li
-                key={item.title}
-                className="flex items-start gap-3 rounded-xl border bg-card p-4"
-              >
-                {item.status === "shipped" ? (
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-green-600" />
-                ) : (
-                  <CircleDashed className="mt-0.5 size-4 shrink-0 text-muted-foreground/60" />
-                )}
-                <div>
-                  <p className="text-sm font-medium">
-                    {item.title}
-                    <span className="ml-2 rounded-full border px-2 py-0.5 align-middle font-mono text-[10px] font-medium tracking-wide text-muted-foreground uppercase">
-                      {item.status === "shipped" ? "Shipped" : "Planned"}
-                    </span>
-                  </p>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                    {item.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
         </section>
       </FadeIn>
 
