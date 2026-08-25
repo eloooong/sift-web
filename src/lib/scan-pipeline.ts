@@ -2,6 +2,10 @@ import { runAiAnalysis } from "@/lib/ai/analyzer";
 import type { AiErrorKind } from "@/lib/ai/client";
 import type { Lang } from "@/lib/i18n/config";
 import { normalizeCategory } from "@/lib/ai/schemas";
+import {
+  findReportedNumbers,
+  getCommunityIntel,
+} from "@/lib/intel/ph-scam-db";
 import { scamCategoryFromLabel } from "@/lib/scam-detector/categories";
 import { analyzeMessage } from "@/lib/scam-detector";
 import { levelFromScore } from "@/lib/scam-detector/scoring";
@@ -51,7 +55,14 @@ export async function analyzeScamText(
   const source: ScanSource = options?.source ?? "text";
   const lang: Lang = options?.lang === "fil" ? "fil" : "en";
 
-  const rulesReport = analyzeMessage(text, { lang });
+  // Cross-check phone numbers in the text against the community scam-number
+  // database (cached feed; null when unavailable, which skips the check).
+  const communityIntel = await getCommunityIntel();
+  const intelMatches = communityIntel
+    ? findReportedNumbers(text, communityIntel)
+    : [];
+
+  const rulesReport = analyzeMessage(text, { lang, intelMatches });
   const aiOutcome = await runAiAnalysis(text, rulesReport, lang);
 
   const id = crypto.randomUUID();

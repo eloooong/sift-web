@@ -1,4 +1,5 @@
-import type { SignalCategoryId } from "./types";
+import type { CommunityNumberMatch } from "../intel/ph-scam-db";
+import type { DetectedSignal, SignalCategoryId } from "./types";
 
 type CustomMatch = { evidence: string };
 
@@ -876,3 +877,31 @@ export const SIGNALS: SignalDefinition[] = [
     },
   },
 ];
+
+/**
+ * Builds signals for numbers found in the text that appear in the
+ * PH Scam DB community database. Weight reflects the community's
+ * confidence: a "block" verdict and confirmed review status weigh heaviest.
+ */
+export function buildCommunityIntelSignals(
+  matches: CommunityNumberMatch[]
+): DetectedSignal[] {
+  return matches.map((match) => {
+    let weight = match.verdict === "block" ? 30 : 18;
+    if (match.status === "confirmed") weight += 10;
+    else if (match.status === "watchlist") weight += 5;
+
+    const categoryHint = match.categories.length
+      ? ` Reported categories: ${match.categories.join(", ")}.`
+      : "";
+
+    return {
+      id: "intel.community-number",
+      category: "intel" as const,
+      label: "Number appears in a community scam database",
+      explanation: `This contact number has been reported to PH Scam DB, a public Philippine scam-number database maintained by the community.${categoryHint}`,
+      weight,
+      evidence: truncateEvidence(match.evidence, 24),
+    };
+  });
+}

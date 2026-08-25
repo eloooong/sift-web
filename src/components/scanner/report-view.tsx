@@ -18,6 +18,7 @@ import {
   Info,
   KeyRound,
   Link2,
+  PhoneOff,
   Quote,
   RotateCcw,
   ShieldCheck,
@@ -55,6 +56,7 @@ const CATEGORY_ICONS: Record<SignalCategoryId, LucideIcon> = {
   investment: TrendingUp,
   loan: HandCoins,
   romance: Heart,
+  intel: PhoneOff,
 };
 
 const SCORE_TEXT_COLORS: Record<ScanReport["riskLevel"], string> = {

@@ -48,6 +48,11 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
     "Never pay customs, tickets, or hospital bills for someone you have not met in person.",
     "Request a spontaneous video call, since scammers consistently avoid live verification.",
   ],
+  intel: [
+    "Do not call back, reply to, or transact with this number.",
+    "Block the number and report it through your messaging app or telco.",
+    "Community reports are strong warnings, not legal findings; verify independently when money is involved.",
+  ],
 };
 
 const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
@@ -96,6 +101,11 @@ const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
     "Mag-ingat sa online na kakilala na mabilis umamin ng pagmamahal nang hindi pa nagkikita.",
     "Huwag magbayad ng customs, tiket, o hospital bill para sa taong hindi mo pa personal na nakikita.",
     "Hilingin ang spontaneous na video call, dahil palaging iniiwasan ng scammers ang live na verification.",
+  ],
+  intel: [
+    "Huwag tumawag, sumagot, o makipag-transaksyon sa numerong ito.",
+    "I-block ang numero at i-report sa messaging app mo o telco.",
+    "Ang community reports ay malakas na babala, hindi legal na hatol; mag-verify nang sarili kapag pera na ang usapan.",
   ],
 };
 

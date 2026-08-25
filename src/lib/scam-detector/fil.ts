@@ -226,6 +226,11 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
     explanation:
       "Ang kwentong package o papeles mula ibang bansa ay sinusundan ng hingi ng bayad sa customs.",
   },
+  "intel.community-number": {
+    label: "Numero na nasa community scam database",
+    explanation:
+      "Nai-report ang contact number na ito sa PH Scam DB, isang pampublikong database ng mga numerong naulat ng komunidad bilang scam.",
+  },
 };
 
 export const BREAKDOWN_LABEL_FIL: Record<string, string> = {
@@ -238,4 +243,5 @@ export const BREAKDOWN_LABEL_FIL: Record<string, string> = {
   investment: "Pangako ng investimento",
   loan: "Loan na may fee",
   romance: "Romance manipulation",
+  intel: "Intel mula sa komunidad",
 };

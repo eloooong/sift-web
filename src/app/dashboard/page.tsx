@@ -3,12 +3,19 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, Database } from "lucide-react";
 
 import { CategoryDonut } from "@/components/dashboard/category-donut";
+import { CommunityIntelCard } from "@/components/dashboard/community-intel-card";
 import { RecentScansTable } from "@/components/dashboard/recent-scans-table";
 import { RiskBars } from "@/components/dashboard/risk-bars";
 import { StatCards } from "@/components/dashboard/stat-cards";
 import { TrendChart } from "@/components/dashboard/trend-chart";
 import { FadeIn } from "@/components/shared/fade-in";
+import {
+  getCommunityIntel,
+  summarizeCommunityIntel,
+} from "@/lib/intel/ph-scam-db";
 import { getDashboardData } from "@/lib/dashboard/demo-data";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -16,8 +23,12 @@ export const metadata: Metadata = {
     "ScamShield PH analytics: scan volume, high-risk detections, scam category breakdowns, and recent activity across the platform.",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   const data = getDashboardData(new Date());
+  const communityIntel = await getCommunityIntel();
+  const intelStats = communityIntel
+    ? summarizeCommunityIntel(communityIntel)
+    : null;
 
   return (
     <div className="relative">
@@ -62,9 +73,9 @@ export default function DashboardPage() {
               <span className="font-mono font-semibold tracking-wide text-foreground uppercase">
                 Demo dataset.
               </span>{" "}
-              ScamShield doesn&apos;t persist scans yet, so every figure below
-              is generated seed data for preview purposes, not live production
-              statistics.
+              ScamShield doesn&apos;t persist scans yet, so the usage figures
+              below are generated seed data for preview purposes. The community
+              threat-intel card is live data from the open PH Scam DB project.
             </p>
           </aside>
         </FadeIn>
@@ -73,24 +84,28 @@ export default function DashboardPage() {
           <StatCards data={data} />
         </FadeIn>
 
-        <FadeIn delay={0.12}>
+        <FadeIn delay={0.12} className="mt-6">
           <TrendChart series={data.trendSeries} />
         </FadeIn>
 
+        <FadeIn delay={0.16} className="mt-6">
+          <CommunityIntelCard stats={intelStats} />
+        </FadeIn>
+
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <FadeIn delay={0.16}>
+          <FadeIn delay={0.2}>
             <CategoryDonut categories={data.categories} />
           </FadeIn>
-          <FadeIn delay={0.2}>
+          <FadeIn delay={0.24}>
             <RiskBars risks={data.risks} />
           </FadeIn>
         </div>
 
-        <FadeIn delay={0.22} className="mt-6">
+        <FadeIn delay={0.26} className="mt-6">
           <RecentScansTable scans={data.recentScans} />
         </FadeIn>
 
-        <FadeIn delay={0.24}>
+        <FadeIn delay={0.28}>
           <p className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
             <span>
               Want these numbers to reflect your own suspicious messages?

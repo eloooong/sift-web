@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { createHash } from "node:crypto";
 
+import {
+  findReportedNumbers,
+  getCommunityIntel,
+} from "@/lib/intel/ph-scam-db";
 import { analyzeMessage } from "@/lib/scam-detector";import {
   SCAM_CATEGORIES,
   type ScamCategoryId,
@@ -197,8 +201,14 @@ export async function POST(request: Request) {
     };
   }
 
-  // --- Risk derivation (rules engine, no external calls) ---------------------
-  const analysis = analyzeMessage(description);
+  // --- Risk derivation (rules engine + cached community intel) ---------------
+  const communityIntel = await getCommunityIntel();
+  const analysis = analyzeMessage(
+    description,
+    communityIntel
+      ? { intelMatches: findReportedNumbers(description, communityIntel) }
+      : undefined
+  );
 
   // --- Basic auto-moderation -------------------------------------------------
   let status: "pending" | "rejected" = "pending";

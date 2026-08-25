@@ -191,6 +191,44 @@ assert(
   `classifier distinguishes at least 9 categories (got ${coveredLabels.size}: ${[...coveredLabels].join(", ")})`
 );
 
+console.log("\n=== Community intel signal ===");
+const intelText =
+  "Your GCash account will be closed. Call our agent at 0917 123 4567 now to verify.";
+const withoutIntel = analyzeMessage(intelText);
+assert(
+  !withoutIntel.signals.some((signal) => signal.id === "intel.community-number"),
+  "no community intel signal when no matches are provided"
+);
+const withIntel = analyzeMessage(intelText, {
+  intelMatches: [
+    {
+      number: "+639171234567",
+      evidence: "0917 123 4567",
+      categories: ["phishing-sms"],
+      status: "confirmed",
+      verdict: "block",
+      reportCount: 4,
+      lastReportedAt: "2026-08-01",
+    },
+  ],
+});
+const intelSignal = withIntel.signals.find(
+  (signal) => signal.id === "intel.community-number"
+);
+assert(Boolean(intelSignal), "community intel signal fires on a known number");
+assert(
+  intelSignal !== undefined && intelSignal.weight >= 30,
+  `confirmed block-listed number weighs heavily (${intelSignal?.weight})`
+);
+assert(
+  withIntel.riskScore > withoutIntel.riskScore,
+  `intel match raises the score (${withoutIntel.riskScore} → ${withIntel.riskScore})`
+);
+assert(
+  withIntel.breakdown.some((row) => row.category === "intel"),
+  "breakdown includes the community threat intel row"
+);
+
 console.log("\n=== Determinism check ===");
 const sample =
   "CONGRATULATIONS! You won P850,000! Claim your prize via bit.ly/prize within 24 hours.";

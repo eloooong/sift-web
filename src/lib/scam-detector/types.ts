@@ -11,7 +11,8 @@ export type SignalCategoryId =
   | "job"
   | "investment"
   | "loan"
-  | "romance";
+  | "romance"
+  | "intel";
 
 export type DetectedSignal = {
   id: string;

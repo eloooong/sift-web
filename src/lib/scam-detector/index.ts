@@ -1,4 +1,5 @@
 import type { Lang } from "@/lib/i18n/config";
+import type { CommunityNumberMatch } from "@/lib/intel/ph-scam-db";
 import { BREAKDOWN_LABEL_FIL, SIGNAL_FIL } from "./fil";
 import { buildRecommendedActions } from "./actions";
 import { aggregateCategories, detectSignals } from "./detector";
@@ -24,6 +25,7 @@ const BREAKDOWN_LABELS: Record<SignalCategoryId, string> = {
   investment: "Investment promises",
   loan: "Loan-fee demands",
   romance: "Romance manipulation",
+  intel: "Community threat intel",
 };
 
 function breakdownLabel(
@@ -91,10 +93,14 @@ function formatListFil(items: string[]): string {
 
 export function analyzeMessage(
   text: string,
-  options?: { lang?: Lang }
+  options?: {
+    lang?: Lang;
+    /** Numbers in the text already matched against the community scam DB. */
+    intelMatches?: CommunityNumberMatch[];
+  }
 ): AnalysisReport {
   const lang: Lang = options?.lang ?? "en";
-  const rawSignals = detectSignals(text);
+  const rawSignals = detectSignals(text, options?.intelMatches);
   const signals =
     lang === "fil"
       ? rawSignals.map((signal) => ({

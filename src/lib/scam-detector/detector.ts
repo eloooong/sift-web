@@ -1,7 +1,11 @@
-import { SIGNALS, type SignalDefinition } from "./signals";
+import { SIGNALS, buildCommunityIntelSignals, type SignalDefinition } from "./signals";
+import type { CommunityNumberMatch } from "../intel/ph-scam-db";
 import type { DetectedSignal, SignalCategoryId } from "./types";
 
-export function detectSignals(text: string): DetectedSignal[] {
+export function detectSignals(
+  text: string,
+  intelMatches?: CommunityNumberMatch[]
+): DetectedSignal[] {
   const detected: DetectedSignal[] = [];
 
   for (const signal of SIGNALS) {
@@ -17,6 +21,10 @@ export function detectSignals(text: string): DetectedSignal[] {
       weight: signal.weight,
       evidence,
     });
+  }
+
+  if (intelMatches && intelMatches.length > 0) {
+    detected.push(...buildCommunityIntelSignals(intelMatches));
   }
 
   return detected.sort((a, b) => b.weight - a.weight);
@@ -46,6 +54,7 @@ const CATEGORY_PRIORITY: SignalCategoryId[] = [
   "loan",
   "romance",
   "urgency",
+  "intel",
 ];
 
 export type CategoryTotals = {
