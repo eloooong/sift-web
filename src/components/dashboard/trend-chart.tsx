@@ -90,7 +90,7 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
           <h2 className="font-heading text-base leading-snug font-medium">
             Spam Volume Over Time
           </h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
             Corpus texts per month · Nov 2022 – Aug 2024
           </p>
         </div>

@@ -7,10 +7,10 @@ import {
 
 const SORTED = [...REGIONAL_INCIDENTS].sort((a, b) => b.rate - a.rate);
 
-const ROW_H = 18;
-const PAD = { top: 4, right: 48, bottom: 4, left: 100 };
+const ROW_H = 15;
+const PAD = { top: 2, right: 42, bottom: 2, left: 88 };
 const HEIGHT = PAD.top + PAD.bottom + SORTED.length * ROW_H;
-const INNER_W = 440;
+const INNER_W = 360;
 const WIDTH = PAD.left + INNER_W + PAD.right;
 const GRID_TICKS = 4;
 
@@ -36,7 +36,7 @@ export function RegionalIncidentsCard() {
           <h2 className="font-heading text-base leading-snug font-medium">
             Scam Incidents by Region
           </h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
             Reported text scam incidents per 100,000 population across Philippine
             regions
           </p>
@@ -70,9 +70,9 @@ export function RegionalIncidentsCard() {
                 />
                 <text
                   x={x}
-                  y={HEIGHT - PAD.bottom + 14}
+                  y={HEIGHT - PAD.bottom + 10}
                   textAnchor="middle"
-                  className="fill-muted-foreground font-mono text-[9px] tabular-nums"
+                  className="fill-muted-foreground font-mono text-[8px] tabular-nums"
                 >
                   {value >= 1000
                     ? `${Math.round(value / 1000)}k`
@@ -105,11 +105,11 @@ export function RegionalIncidentsCard() {
 
                 {/* Region label */}
                 <text
-                  x={PAD.left - 6}
+                  x={PAD.left - 5}
                   y={midY + 1}
                   textAnchor="end"
                   dominantBaseline="middle"
-                  className="fill-foreground text-[10px] font-medium"
+                  className="fill-foreground text-[9px] font-medium"
                 >
                   {incident.region}
                 </text>
@@ -117,9 +117,9 @@ export function RegionalIncidentsCard() {
                 {/* Bar */}
                 <rect
                   x={PAD.left}
-                  y={y + 3}
+                  y={y + 2}
                   width={barW}
-                  height={ROW_H - 6}
+                  height={ROW_H - 4}
                   rx={2}
                   fill={barColor(incident.rate, index)}
                   className="opacity-85 transition-opacity group-hover:opacity-100"
@@ -130,7 +130,7 @@ export function RegionalIncidentsCard() {
                   x={PAD.left + barW + 6}
                   y={midY + 1}
                   dominantBaseline="middle"
-                  className="fill-muted-foreground font-mono text-[10px] tabular-nums"
+                  className="fill-muted-foreground font-mono text-[9px] tabular-nums"
                 >
                   {Math.round(incident.rate).toLocaleString("en-US")}
                 </text>

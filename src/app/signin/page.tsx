@@ -39,10 +39,10 @@ export default async function SignInPage({
           <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10">
             <KeyRound aria-hidden="true" className="size-5 text-primary" />
           </span>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight">
+          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             <T k="auth.signin.title" />
           </h1>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             <T k="auth.signin.body" />
           </p>
         </FadeIn>

@@ -54,7 +54,7 @@ export function CommunityIntelCard({
           >
             Community threat intel
           </h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
             Reported Philippine scam numbers from the open PH Scam DB project.
           </p>
         </div>

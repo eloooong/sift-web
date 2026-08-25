@@ -23,10 +23,10 @@ export default function ReportsPage() {
           <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
             Community watch
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             Scam reports from real people
           </h1>
-          <p className="mt-3 leading-relaxed text-muted-foreground">
+          <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             Warn others about scam attempts you&apos;ve received and browse what
             the community has flagged. Reports stay anonymous and are reviewed
             by a moderator before they appear publicly.

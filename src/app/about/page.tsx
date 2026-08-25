@@ -47,6 +47,7 @@ export default function AboutPage() {
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
       <FadeIn>
         <SectionHeading
+          as="h1"
           eyebrow="About"
           title="Fighting scams, one message at a time"
           description="ScamShield PH exists because scam messages in the Philippines are not an edge case: they are a daily reality in every inbox, SMS thread, and Messenger chat."

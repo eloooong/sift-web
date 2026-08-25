@@ -17,10 +17,10 @@ const PALETTE = [
 ];
 
 const OTHER_COLOR = "color-mix(in oklab, var(--muted-foreground), transparent 35%)";
-const SIZE = 208;
-const RADIUS = 78;
-const STROKE = 24;
-const ACTIVE_STROKE = 30;
+const SIZE = 232;
+const RADIUS = 88;
+const STROKE = 26;
+const ACTIVE_STROKE = 32;
 const GAP_DEGREES = 2.4;
 
 type DisplaySlice = {
@@ -88,13 +88,13 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
         <h2 className="font-heading text-base leading-snug font-medium">
           Scam Categories
         </h2>
-        <p className="mt-0.5 text-sm text-muted-foreground">
+        <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
           Engine classification of the 666 flagged-pattern texts
         </p>
       </div>
 
       {/* Row only when the card itself is wide enough: container query, not viewport. */}
-      <div className="mt-2 flex flex-1 flex-col items-center justify-center gap-5 @[460px]:flex-row @[460px]:items-center @[460px]:gap-6">
+      <div className="mt-2 flex flex-1 flex-col items-center justify-center gap-3 @[460px]:flex-row @[460px]:items-center @[460px]:gap-5">
         <div className="relative shrink-0">
           <svg
             width={SIZE}
@@ -128,7 +128,7 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-10 text-center"
+            className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-8 text-center"
           >
             {active ? (
               <>
@@ -152,7 +152,7 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
           </div>
         </div>
 
-        <ul className="w-full min-w-0 flex-1 space-y-1 @[460px]:max-w-64">
+        <ul className="w-full min-w-0 flex-1 space-y-0.5 @[460px]:max-w-64">
           {slices.map((slice) => {
             const isActive = activeKey === slice.key;
 
@@ -165,7 +165,7 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
                   onFocus={() => setActiveKey(slice.key)}
                   onBlur={() => setActiveKey(null)}
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left transition-colors",
+                    "flex w-full items-center gap-2 rounded-lg px-2 py-1 text-left transition-colors",
                     isActive ? "bg-muted" : "hover:bg-muted/60"
                   )}
                 >

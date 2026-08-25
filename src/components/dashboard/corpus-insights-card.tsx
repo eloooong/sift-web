@@ -96,7 +96,7 @@ export function CorpusInsightsCard() {
           <h2 className="font-heading text-base leading-snug font-medium">
             What real PH spam looks like
           </h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
             Aggregate patterns from {totals.messages.toLocaleString("en-US")}{" "}
             real spam texts shared by Filipino users
           </p>

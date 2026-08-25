@@ -82,7 +82,7 @@ export function RecentScansTable({ scans }: { scans: ScanRowView[] }) {
           <h2 className="font-heading text-base leading-snug font-medium">
             Recent Scans
           </h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
             Latest messages and links run through the engine
           </p>
         </div>

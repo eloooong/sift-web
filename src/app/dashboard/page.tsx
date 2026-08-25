@@ -44,7 +44,7 @@ export default async function DashboardPage() {
         <FadeIn>
           <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div className="max-w-xl">
-              <p className="font-mono text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+              <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
                 Intelligence
               </p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">

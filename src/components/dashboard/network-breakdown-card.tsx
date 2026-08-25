@@ -75,7 +75,7 @@ export function NetworkBreakdownCard() {
           <h2 className="font-heading text-base leading-snug font-medium">
             Network &amp; Keyword Analysis
           </h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
             Which telcos are most exploited and what scammers write
           </p>
         </div>

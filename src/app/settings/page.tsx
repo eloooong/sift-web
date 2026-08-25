@@ -23,8 +23,8 @@ export default async function SettingsPage() {
         <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
           Account
         </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Settings</h1>
-        <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted-foreground">
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">Settings</h1>
+        <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted-foreground sm:text-base">
           Manage how your name appears in the app and keep your account secure.
         </p>
       </FadeIn>

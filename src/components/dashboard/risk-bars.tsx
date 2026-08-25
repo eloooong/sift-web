@@ -35,7 +35,7 @@ export function RiskBars({ risks }: { risks: RiskSlice[] }) {
         <h2 className="font-heading text-base leading-snug font-medium">
           Risk Distribution
         </h2>
-        <p className="mt-0.5 text-sm text-muted-foreground">
+        <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
           How scanned messages scored
         </p>
       </div>

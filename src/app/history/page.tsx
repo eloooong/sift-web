@@ -48,10 +48,10 @@ export default async function HistoryPage() {
           <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
             Private to you
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             Scan history
           </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
+          <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             Scans you ran while signed in. Only your account can see these.
           </p>
         </div>

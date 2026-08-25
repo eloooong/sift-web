@@ -24,6 +24,7 @@ export default function ScamsPage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
       <FadeIn>
         <SectionHeading
+          as="h1"
           align="left"
           eyebrow="Scam Library"
           title="The Philippine scam catalog"
