@@ -4,6 +4,7 @@ import { ArrowRight, CalendarDays, Database } from "lucide-react";
 
 import { CategoryDonut } from "@/components/dashboard/category-donut";
 import { CommunityIntelCard } from "@/components/dashboard/community-intel-card";
+import { CorpusInsightsCard } from "@/components/dashboard/corpus-insights-card";
 import { RecentScansTable } from "@/components/dashboard/recent-scans-table";
 import { RiskBars } from "@/components/dashboard/risk-bars";
 import { StatCards } from "@/components/dashboard/stat-cards";
@@ -75,7 +76,8 @@ export default async function DashboardPage() {
               </span>{" "}
               ScamShield doesn&apos;t persist scans yet, so the usage figures
               below are generated seed data for preview purposes. The community
-              threat-intel card is live data from the open PH Scam DB project.
+              threat-intel card is live data from the open PH Scam DB project,
+              and the spam-patterns card summarizes a public research dataset.
             </p>
           </aside>
         </FadeIn>
@@ -92,20 +94,24 @@ export default async function DashboardPage() {
           <CommunityIntelCard stats={intelStats} />
         </FadeIn>
 
+        <FadeIn delay={0.2} className="mt-6">
+          <CorpusInsightsCard />
+        </FadeIn>
+
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <FadeIn delay={0.2}>
+          <FadeIn delay={0.24}>
             <CategoryDonut categories={data.categories} />
           </FadeIn>
-          <FadeIn delay={0.24}>
+          <FadeIn delay={0.28}>
             <RiskBars risks={data.risks} />
           </FadeIn>
         </div>
 
-        <FadeIn delay={0.26} className="mt-6">
+        <FadeIn delay={0.3} className="mt-6">
           <RecentScansTable scans={data.recentScans} />
         </FadeIn>
 
-        <FadeIn delay={0.28}>
+        <FadeIn delay={0.32}>
           <p className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
             <span>
               Want these numbers to reflect your own suspicious messages?
