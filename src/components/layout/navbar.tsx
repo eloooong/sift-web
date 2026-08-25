@@ -272,7 +272,7 @@ export function Navbar() {
               <SheetHeader>
                 <SheetTitle>ScamShield PH</SheetTitle>
                 <SheetDescription>
-                  AI-powered scam detection for Filipinos
+                  AI-assisted scam risk assessment for Filipinos
                 </SheetDescription>
               </SheetHeader>
               <nav aria-label="Mobile navigation" className="flex flex-col gap-1 overflow-y-auto px-4">

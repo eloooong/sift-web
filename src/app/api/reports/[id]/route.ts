@@ -16,7 +16,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const report = getApprovedReport(id);
+  const report = await getApprovedReport(id);
 
   if (!report) {
     return NextResponse.json(

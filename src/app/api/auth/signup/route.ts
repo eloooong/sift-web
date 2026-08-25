@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   }
 
   // Modest flood guard on account creation.
-  const limit = rateLimit(`signup:${clientKey(request)}`, 5, 15 * 60_000);
+  const limit = await rateLimit(`signup:${clientKey(request)}`, 5, 15 * 60_000);
   if (!limit.ok) {
     return jsonError(
       NextResponse,
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
   const displayName =
     validateDisplayName(body.displayName) ?? email.split("@")[0].slice(0, 40);
 
-  if (findUserByEmail(email)) {
+  if (await findUserByEmail(email)) {
     // Deliberately the same message shape as other failures; existence is
     // still revealed via 409 which sign-in pages treat as "just sign in".
     return jsonError(
@@ -82,8 +82,8 @@ export async function POST(request: Request) {
   }
 
   const passwordHash = await hashPassword(password);
-  const user = createUser({ email, displayName, passwordHash });
-  const { token } = createSession(user.id);
+  const user = await createUser({ email, displayName, passwordHash });
+  const { token } = await createSession(user.id);
 
   const response = NextResponse.json({ user: toPublicUser(user) }, { status: 201 });
   response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions());

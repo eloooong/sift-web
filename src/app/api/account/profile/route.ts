@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { currentUser } from "@/lib/auth/session";
-import {
-  authStore,
-  toPublicUser,
-} from "@/lib/auth/store";
+import { toPublicUser, updateUserProfile } from "@/lib/auth/store";
 import { jsonError, validateDisplayName } from "@/lib/auth/validation";
 import { readJsonBody, requestSameOrigin } from "@/lib/http/guards";
 
@@ -44,11 +41,9 @@ export async function PATCH(request: Request) {
   }
 
   // currentUser() already proved the session maps to a live record.
-  for (const user of authStore.users.values()) {
-    if (user.id === sessionUser.id) {
-      user.displayName = displayName;
-      return NextResponse.json({ user: toPublicUser(user) });
-    }
+  const updated = await updateUserProfile(sessionUser.id, displayName);
+  if (updated) {
+    return NextResponse.json({ user: toPublicUser(updated) });
   }
   return jsonError(NextResponse, 401, "unauthorized", "Sign in first.");
 }

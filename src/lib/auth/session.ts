@@ -21,7 +21,7 @@ export async function currentUser(): Promise<PublicUser | null> {
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   if (!token) return null;
 
-  const user = getSessionUser(token);
+  const user = await getSessionUser(token);
   return user ? toPublicUser(user) : null;
 }
 
@@ -40,7 +40,7 @@ export async function requireUser(returnTo: string): Promise<PublicUser> {
 export async function signOutCurrentSession(): Promise<void> {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value;
-  if (token) destroySession(token);
+  if (token) await destroySession(token);
 }
 
 export function sessionCookieOptions() {

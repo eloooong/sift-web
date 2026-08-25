@@ -7,9 +7,10 @@ import {
   currentUser,
 } from "@/lib/auth/session";
 import {
-  authStore,
   createSession,
   destroyAllSessionsForUser,
+  getUserById,
+  updateUserPassword,
 } from "@/lib/auth/store";
 import {
   jsonError,
@@ -45,7 +46,7 @@ export async function POST(request: Request) {
 
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-  const limit = rateLimit(
+  const limit = await rateLimit(
     `pwchange:${createHash("sha256").update(ip).digest("hex").slice(0, 32)}`,
     5,
     10 * 60_000
@@ -84,9 +85,8 @@ export async function POST(request: Request) {
     );
   }
 
-  for (const user of authStore.users.values()) {
-    if (user.id !== sessionUser.id) continue;
-
+  const user = await getUserById(sessionUser.id);
+  if (user) {
     if (!(await verifyPassword(currentPassword, user.passwordHash))) {
       return jsonError(
         NextResponse,
@@ -96,11 +96,11 @@ export async function POST(request: Request) {
       );
     }
 
-    user.passwordHash = await hashPassword(newPassword);
+    await updateUserPassword(user.id, await hashPassword(newPassword));
     // Sign out every device, then re-issue a fresh session for THIS device so
     // the user isn't logged out of the settings page they're looking at.
-    destroyAllSessionsForUser(user.id);
-    const { token } = createSession(user.id);
+    await destroyAllSessionsForUser(user.id);
+    const { token } = await createSession(user.id);
     const response = NextResponse.json({ ok: true });
     response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions());
     return response;

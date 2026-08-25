@@ -11,7 +11,7 @@ import { ConfirmButton } from "@/components/reports/confirm-button";
 import { scamCategoryById } from "@/lib/scam-detector/categories";
 import {
   getApprovedReport,
-  reportsStore,
+  hasConfirmed,
 } from "@/lib/reports/store";
 import { ANON_COOKIE, PLATFORM_LABELS } from "@/lib/reports/types";
 import { formatDay, timeAgo } from "@/lib/reports/time-ago";
@@ -24,7 +24,7 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { id } = await params;
-  const report = getApprovedReport(id);
+  const report = await getApprovedReport(id);
   if (!report) return { title: "Report not found | ScamShield PH" };
   const category = scamCategoryById(report.categoryId);
   return {
@@ -35,7 +35,7 @@ export async function generateMetadata({
 
 export default async function ReportDetailPage({ params }: { params: Params }) {
   const { id } = await params;
-  const report = getApprovedReport(id);
+  const report = await getApprovedReport(id);
   if (!report) notFound();
 
   // Initial confirmed state for the anonymous visitor.
@@ -43,7 +43,7 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get(ANON_COOKIE)?.value;
-    if (token && reportsStore.reports.get(report.id)?.confirmedTokens.has(token)) {
+    if (token && (await hasConfirmed(report.id, token))) {
       initiallyConfirmed = true;
     }
   } catch {

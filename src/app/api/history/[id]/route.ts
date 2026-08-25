@@ -25,7 +25,7 @@ export async function GET(_request: Request, { params }: { params: Params }) {
     );
   }
   const { id } = await params;
-  const entry = getUserHistoryEntry(user.id, id);
+  const entry = await getUserHistoryEntry(user.id, id);
   if (!entry) {
     return NextResponse.json(
       { error: { code: "not_found", message: "Scan not found." } },
@@ -51,7 +51,7 @@ export async function DELETE(request: Request, { params }: { params: Params }) {
     );
   }
   const { id } = await params;
-  if (!deleteUserHistoryEntry(user.id, id)) {
+  if (!(await deleteUserHistoryEntry(user.id, id))) {
     return NextResponse.json(
       { error: { code: "not_found", message: "Scan not found." } },
       { status: 404 }

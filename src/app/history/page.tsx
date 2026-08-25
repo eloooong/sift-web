@@ -39,7 +39,7 @@ function formatDateTime(iso: string): string {
 export default async function HistoryPage() {
   // Server-side guard; unauthenticated visitors never reach the data.
   const user = await requireUser("/history");
-  const entries = listUserHistory(user.id);
+  const entries = await listUserHistory(user.id);
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16">

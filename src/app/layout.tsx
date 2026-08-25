@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { T } from "@/components/providers/t";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 import "./globals.css";
 
@@ -19,12 +20,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "ScamShield PH: AI-powered scam detection for Filipinos",
-    template: "%s · ScamShield PH",
+    default: `${SITE_NAME}: AI-assisted scam risk assessment for Filipinos`,
+    template: `%s · ${SITE_NAME}`,
   },
   description:
     "Check suspicious SMS, emails, chat messages, and links. ScamShield PH scores the risk, explains the red flags, and tells you what to do next.",
+  applicationName: SITE_NAME,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    title: `${SITE_NAME}: AI-assisted scam risk assessment for Filipinos`,
+    description:
+      "Assess the risk of suspicious messages, links, and screenshots. ScamShield PH highlights potential warning signs — always verify through official channels.",
+    locale: "en_PH",
+    alternateLocale: ["fil_PH"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME}: AI-assisted scam risk assessment for Filipinos`,
+    description:
+      "Assess the risk of suspicious messages, links, and screenshots. ScamShield PH highlights potential warning signs — always verify through official channels.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 function SkipLink() {

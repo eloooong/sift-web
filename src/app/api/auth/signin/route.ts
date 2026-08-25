@@ -50,7 +50,11 @@ export async function POST(request: Request) {
   }
 
   // Brute-force guard per IP + targeted account.
-  const limit = rateLimit(`signin:${clientKey(request, email)}`, 10, 10 * 60_000);
+  const limit = await rateLimit(
+    `signin:${clientKey(request, email)}`,
+    10,
+    10 * 60_000
+  );
   if (!limit.ok) {
     return jsonError(
       NextResponse,
@@ -71,7 +75,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const user = findUserByEmail(email);
+  const user = await findUserByEmail(email);
   if (!user || !(await verifyPassword(password, user.passwordHash))) {
     return jsonError(
       NextResponse,
@@ -81,7 +85,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { token } = createSession(user.id);
+  const { token } = await createSession(user.id);
   const response = NextResponse.json({ user: toPublicUser(user) });
   response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions());
   return response;

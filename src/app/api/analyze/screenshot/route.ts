@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const limit = rateLimit(`scan-screenshot:${clientKey(request)}`, 5, 60_000);
+  const limit = await rateLimit(`scan-screenshot:${clientKey(request)}`, 5, 60_000);
   if (!limit.ok) {
     return NextResponse.json(
       {
@@ -198,7 +198,7 @@ export async function POST(request: Request) {
     report.extractedText = extractedText.slice(0, MAX_INPUT_CHARS);
     const user = await currentUser();
     if (user) {
-      recordScan({
+      await recordScan({
         userId: user.id,
         scanType: "screenshot",
         rawInput: analysisText,
@@ -211,7 +211,7 @@ export async function POST(request: Request) {
     console.error("[api/analyze/screenshot] unexpected failure", error);
     const user = await currentUser();
     if (user) {
-      recordScan({
+      await recordScan({
         userId: user.id,
         scanType: "screenshot",
         rawInput: analysisText,

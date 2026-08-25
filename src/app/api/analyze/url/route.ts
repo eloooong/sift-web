@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const limit = rateLimit(`scan-url:${clientKey(request)}`, 15, 60_000);
+  const limit = await rateLimit(`scan-url:${clientKey(request)}`, 15, 60_000);
   if (!limit.ok) {
     return NextResponse.json(
       {
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
     const report = await analyzeUrl(trimmed, { lang });
     const user = await currentUser();
     if (user) {
-      recordScan({
+      await recordScan({
         userId: user.id,
         scanType: "url",
         rawInput: trimmed,
@@ -137,7 +137,7 @@ export async function POST(request: Request) {
     console.error("[api/analyze/url] unexpected failure", error);
     const user = await currentUser();
     if (user) {
-      recordScan({
+      await recordScan({
         userId: user.id,
         scanType: "url",
         rawInput: trimmed,

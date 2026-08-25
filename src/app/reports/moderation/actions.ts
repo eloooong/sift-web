@@ -71,7 +71,7 @@ export async function moderateReportAction(
     redirect("/reports/moderation?error=expired");
   }
 
-  moderateReport(id, status);
+  await moderateReport(id, status);
   revalidatePath("/reports/moderation");
   revalidatePath("/reports");
 }

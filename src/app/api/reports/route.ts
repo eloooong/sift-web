@@ -23,9 +23,10 @@ import {
 import { rateLimit } from "@/lib/reports/rate-limit";
 import {
   createReport,
+  getConfirmedIds,
   getMeta,
+  hasDescriptionFingerprint,
   listApprovedReports,
-  reportsStore,
 } from "@/lib/reports/store";
 import {
   ANON_COOKIE,
@@ -71,16 +72,12 @@ function anonToken(request: Request): string | undefined {
 
 export async function GET(request: Request) {
   const token = anonToken(request);
-  const confirmedIds = token
-    ? [...reportsStore.reports.entries()]
-        .filter(([, report]) => report.confirmedTokens.has(token))
-        .map(([id]) => id)
-    : [];
+  const confirmedIds = token ? await getConfirmedIds([token]) : [];
 
   return NextResponse.json({
-    reports: listApprovedReports(),
-    meta: getMeta(),
-    confirmedIds,
+    reports: await listApprovedReports(),
+    meta: await getMeta(),
+    confirmedIds: [...confirmedIds],
   });
 }
 
@@ -96,7 +93,7 @@ export async function POST(request: Request) {
   }
 
   // --- Rate limiting -------------------------------------------------------
-  const limit = rateLimit(`report:${clientKey(request)}`, 3, 15 * 60_000);
+  const limit = await rateLimit(`report:${clientKey(request)}`, 3, 15 * 60_000);
   if (!limit.ok) {
     return jsonError(
       429,
@@ -221,17 +218,13 @@ export async function POST(request: Request) {
     status = "rejected";
     rejectionReason = "malicious-content";
   } else {
-    const fingerprint = descriptionFingerprint(description);
-    for (const existing of reportsStore.reports.values()) {
-      if (descriptionFingerprint(existing.description) === fingerprint) {
-        status = "rejected";
-        rejectionReason = "duplicate";
-        break;
-      }
+    if (await hasDescriptionFingerprint(descriptionFingerprint(description))) {
+      status = "rejected";
+      rejectionReason = "duplicate";
     }
   }
 
-  const report = createReport({
+  const report = await createReport({
     categoryId,
     platform,
     description,

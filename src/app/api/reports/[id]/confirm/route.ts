@@ -32,18 +32,18 @@ export async function POST(
     return jsonError(403, "forbidden_origin", "This request didn't come from ScamShield.");
   }
 
-  if (!getApprovedReport(id)) {
+  if (!(await getApprovedReport(id))) {
     return jsonError(404, "not_found", "Report not found.");
   }
 
   // Gentle flood guard on top of one-confirmation-per-token.
   const token = readAnonToken(request) ?? randomUUID();
-  const limit = rateLimit(`confirm:${token}`, 20, 60_000);
+  const limit = await rateLimit(`confirm:${token}`, 20, 60_000);
   if (!limit.ok) {
     return jsonError(429, "rate_limited", "Slow down a little.");
   }
 
-  const confirmations = confirmReport(id, token);
+  const confirmations = await confirmReport(id, token);
   if (confirmations === null) {
     return jsonError(404, "not_found", "Report not found.");
   }

@@ -21,7 +21,7 @@ export async function GET() {
   }
 
   return NextResponse.json(
-    { entries: listUserHistory(user.id) },
+    { entries: await listUserHistory(user.id) },
     { headers: { "cache-control": "no-store" } }
   );
 }
@@ -43,6 +43,6 @@ export async function DELETE(request: Request) {
     );
   }
 
-  const deleted = deleteAllUserHistory(user.id);
+  const deleted = await deleteAllUserHistory(user.id);
   return NextResponse.json({ ok: true, deleted });
 }

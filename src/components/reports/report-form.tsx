@@ -365,7 +365,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="flex h-full flex-col">
       <div className="mb-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-0">
         <label
           htmlFor={htmlFor}
@@ -379,7 +379,7 @@ function Field({
           </span>
         ) : null}
       </div>
-      {children}
+      <div className="mt-auto">{children}</div>
     </div>
   );
 }

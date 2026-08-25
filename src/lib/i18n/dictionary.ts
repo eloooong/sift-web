@@ -150,7 +150,7 @@ export const DICT = {
     "hero.title.pre": "Think it's a scam?",
     "hero.title.highlight": "Let ScamShield check.",
     "hero.subhead":
-      "AI-powered scam detection built to help Filipinos identify suspicious messages, links, and online threats.",
+      "AI-assisted scam risk assessment built to help Filipinos evaluate suspicious messages, links, and online threats.",
     "hero.cta.scan": "Scan Something Suspicious",
     "hero.cta.how": "How It Works",
     "hero.check.builtForPh": "Built for Philippine scam patterns",
@@ -167,7 +167,7 @@ export const DICT = {
     "hero.sample.noteLink": "scanner page",
 
     "footer.tagline":
-      "AI-powered scam detection built to help Filipinos identify suspicious messages, links, and online threats, with clear explanations rather than just labels.",
+      "AI-assisted scam risk assessment built to help Filipinos evaluate suspicious messages, links, and online threats, with clear explanations rather than just labels.",
     "footer.product": "Product",
     "footer.resources": "Resources",
     "footer.link.scanner": "Scam Scanner",
@@ -350,7 +350,7 @@ export const DICT = {
     "hero.title.pre": "Mukhang scam?",
     "hero.title.highlight": "Ipa-check sa ScamShield.",
     "hero.subhead":
-      "AI-powered na scam detection na ginawa para matulungan ang mga Pilipino na makilala ang kahina-hinalang messages, links, at online threats.",
+      "AI-assisted na risk assessment para matulungan ang mga Pilipino na tasahin ang kahina-hinalang messages, links, at online threats.",
     "hero.cta.scan": "Mag-scan ng Kahina-hinala",
     "hero.cta.how": "Paano Ito Gumagana",
     "hero.check.builtForPh": "Ginawa para sa mga scam na karaniwan sa Pilipinas",
@@ -367,7 +367,7 @@ export const DICT = {
     "hero.sample.noteLink": "scanner page",
 
     "footer.tagline":
-      "AI-powered na scam detection na ginawa para matulungan ang mga Pilipino na makilala ang kahina-hinalang messages, links, at online threats, may malinaw na paliwanag at hindi lang mga label.",
+      "AI-assisted na risk assessment para matulungan ang mga Pilipino na tasahin ang kahina-hinalang messages, links, at online threats, may malinaw na paliwanag at hindi lang mga label.",
     "footer.product": "Produkto",
     "footer.resources": "Mga Resource",
     "footer.link.scanner": "Scam Scanner",

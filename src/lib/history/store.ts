@@ -2,11 +2,15 @@ import type { ScanReport } from "@/lib/scan-report";
 import type { UrlReport } from "@/lib/url-analyzer";
 import { randomBytes } from "node:crypto";
 
+import { isDatabaseConfigured, query } from "@/lib/db";
+
 /**
- * Per-user scan history, in-memory (globalThis), consistent with the rest of
- * the demo. Entries are ONLY ever created/read/deleted through the helpers
- * below, which always scope by userId; API routes never accept a client-side
- * user identifier.
+ * Per-user scan history.
+ *
+ * With DATABASE_URL set, entries live in Postgres; otherwise in server
+ * memory (globalThis) for zero-config demo runs. Entries are ONLY ever
+ * created/read/deleted through the helpers below, which always scope by
+ * userId; API routes never accept a client-side user identifier.
  */
 
 export type HistoryScanType = "message" | "screenshot" | "url";
@@ -44,19 +48,6 @@ export type HistoryListItem = Pick<
   | "categoryLabel"
 >;
 
-type HistoryStoreShape = {
-  /** id → entry */
-  entries: Map<string, HistoryEntry>;
-};
-
-const globalStore = globalThis as unknown as {
-  __scamshieldHistoryStore?: HistoryStoreShape;
-};
-
-export const historyStore: HistoryStoreShape =
-  globalStore.__scamshieldHistoryStore ?? { entries: new Map() };
-globalStore.__scamshieldHistoryStore = historyStore;
-
 const MAX_STORED_INPUT_CHARS = 12_000;
 const PREVIEW_CHARS = 140;
 
@@ -71,14 +62,41 @@ function buildPreview(input: string): string {
     : singleLine;
 }
 
-export function recordScan(input: {
+function memoryEntries(): Map<string, HistoryEntry> {
+  const globalStore = globalThis as unknown as {
+    __scamshieldHistoryStore?: { entries: Map<string, HistoryEntry> };
+  };
+  globalStore.__scamshieldHistoryStore ??= { entries: new Map() };
+  return globalStore.__scamshieldHistoryStore.entries;
+}
+
+type HistoryRow = Record<string, unknown>;
+
+function rowToEntry(row: HistoryRow): HistoryEntry {
+  return {
+    id: String(row.id),
+    userId: String(row.user_id),
+    scanType: row.scan_type as HistoryScanType,
+    status: row.status as HistoryStatus,
+    createdAt: new Date(row.created_at as string).toISOString(),
+    inputPreview: String(row.input_preview),
+    fullInput: String(row.full_input),
+    riskScore: row.risk_score === null ? null : Number(row.risk_score),
+    riskLevel: (row.risk_level as HistoryEntry["riskLevel"]) ?? null,
+    categoryLabel: (row.category_label as string) ?? null,
+    messageReport: (row.message_report as ScanReport | null) ?? null,
+    urlReport: (row.url_report as UrlReport | null) ?? null,
+  };
+}
+
+export async function recordScan(input: {
   userId: string;
   scanType: HistoryScanType;
   rawInput: string;
   status: HistoryStatus;
   messageReport?: ScanReport | null;
   urlReport?: UrlReport | null;
-}): HistoryEntry {
+}): Promise<HistoryEntry> {
   const entry: HistoryEntry = {
     id: generateEntryId(),
     userId: input.userId,
@@ -96,13 +114,60 @@ export function recordScan(input: {
     urlReport: input.urlReport ?? null,
   };
 
-  historyStore.entries.set(entry.id, entry);
+  if (isDatabaseConfigured()) {
+    await query(
+      `INSERT INTO scan_history
+        (id, user_id, scan_type, status, created_at, input_preview,
+         full_input, risk_score, risk_level, category_label,
+         message_report, url_report)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+      [
+        entry.id,
+        entry.userId,
+        entry.scanType,
+        entry.status,
+        entry.createdAt,
+        entry.inputPreview,
+        entry.fullInput,
+        entry.riskScore,
+        entry.riskLevel,
+        entry.categoryLabel,
+        entry.messageReport,
+        entry.urlReport,
+      ]
+    );
+    return entry;
+  }
+
+  memoryEntries().set(entry.id, entry);
   return entry;
 }
 
 /** All entries belonging to one user, newest first. */
-export function listUserHistory(userId: string): HistoryListItem[] {
-  return [...historyStore.entries.values()]
+export async function listUserHistory(
+  userId: string
+): Promise<HistoryListItem[]> {
+  if (isDatabaseConfigured()) {
+    const rows = await query<HistoryRow>(
+      `SELECT id, user_id, scan_type, status, created_at, input_preview,
+              risk_score, risk_level, category_label
+       FROM scan_history WHERE user_id = $1
+       ORDER BY created_at DESC`,
+      [userId]
+    );
+    return rows.map((row) => ({
+      id: String(row.id),
+      scanType: row.scan_type as HistoryScanType,
+      status: row.status as HistoryStatus,
+      createdAt: new Date(row.created_at as string).toISOString(),
+      inputPreview: String(row.input_preview),
+      riskScore: row.risk_score === null ? null : Number(row.risk_score),
+      riskLevel: (row.risk_level as HistoryEntry["riskLevel"]) ?? null,
+      categoryLabel: (row.category_label as string) ?? null,
+    }));
+  }
+
+  return [...memoryEntries().values()]
     .filter((entry) => entry.userId === userId)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     .map((entry) => ({
@@ -121,31 +186,55 @@ export function listUserHistory(userId: string): HistoryListItem[] {
  * Ownership-enforced fetch: returns the entry only when it belongs to the
  * given user. Callers treat any miss as not-found.
  */
-export function getUserHistoryEntry(
+export async function getUserHistoryEntry(
   userId: string,
   entryId: string
-): HistoryEntry | null {
-  const entry = historyStore.entries.get(entryId);
+): Promise<HistoryEntry | null> {
+  if (isDatabaseConfigured()) {
+    const rows = await query<HistoryRow>(
+      "SELECT * FROM scan_history WHERE id = $1 AND user_id = $2 LIMIT 1",
+      [entryId, userId]
+    );
+    return rows[0] ? rowToEntry(rows[0]) : null;
+  }
+
+  const entry = memoryEntries().get(entryId);
   if (!entry || entry.userId !== userId) return null;
   return entry;
 }
 
 /** Returns true when something was actually deleted. */
-export function deleteUserHistoryEntry(
+export async function deleteUserHistoryEntry(
   userId: string,
   entryId: string
-): boolean {
-  // Check ownership first; delete must never succeed cross-user.
-  if (!getUserHistoryEntry(userId, entryId)) return false;
-  historyStore.entries.delete(entryId);
+): Promise<boolean> {
+  // Ownership scoping in the query itself; delete must never succeed cross-user.
+  if (isDatabaseConfigured()) {
+    const rows = await query(
+      "DELETE FROM scan_history WHERE id = $1 AND user_id = $2 RETURNING id",
+      [entryId, userId]
+    );
+    return rows.length > 0;
+  }
+
+  if (!(await getUserHistoryEntry(userId, entryId))) return false;
+  memoryEntries().delete(entryId);
   return true;
 }
 
-export function deleteAllUserHistory(userId: string): number {
+export async function deleteAllUserHistory(userId: string): Promise<number> {
+  if (isDatabaseConfigured()) {
+    const rows = await query(
+      "DELETE FROM scan_history WHERE user_id = $1 RETURNING id",
+      [userId]
+    );
+    return rows.length;
+  }
+
   let deleted = 0;
-  for (const [id, entry] of historyStore.entries) {
+  for (const [id, entry] of memoryEntries()) {
     if (entry.userId === userId) {
-      historyStore.entries.delete(id);
+      memoryEntries().delete(id);
       deleted += 1;
     }
   }

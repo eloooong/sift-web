@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const limit = rateLimit(`scan-text:${clientKey(request)}`, 8, 60_000);
+  const limit = await rateLimit(`scan-text:${clientKey(request)}`, 8, 60_000);
   if (!limit.ok) {
     return NextResponse.json(
       {
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
     // client never sends a user identifier.
     const user = await currentUser();
     if (user) {
-      recordScan({
+      await recordScan({
         userId: user.id,
         scanType: "message",
         rawInput: text,
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
     console.error("[api/analyze] unexpected failure", error);
     const user = await currentUser();
     if (user) {
-      recordScan({
+      await recordScan({
         userId: user.id,
         scanType: "message",
         rawInput: text,

@@ -36,7 +36,7 @@ export default async function HistoryDetailPage({ params }: { params: Params }) 
   // Guard + ownership check happen server-side; anything else is notFound.
   const user = await requireUser("/history");
   const { id } = await params;
-  const entry = getUserHistoryEntry(user.id, id);
+  const entry = await getUserHistoryEntry(user.id, id);
   if (!entry) notFound();
 
   const meta = SCAN_TYPE_LABELS[entry.scanType];
