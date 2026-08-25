@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { EXAMPLE_SCAMS } from "@/lib/examples";
+import { FadeIn } from "@/components/shared/fade-in";
 import { RiskBadge } from "@/components/shared/risk-badge";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +16,7 @@ import {
 
 export function PhExamples() {
   return (
-    <section id="examples" className="scroll-mt-24 border-y bg-white">
+    <section id="examples" className="scroll-mt-24 border-y bg-muted/40">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <SectionHeading
           eyebrow="Know The Enemy"
@@ -24,8 +25,9 @@ export function PhExamples() {
         />
 
         <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {EXAMPLE_SCAMS.map((example) => (
-            <Card key={example.id} className="h-full">
+          {EXAMPLE_SCAMS.map((example, index) => (
+            <FadeIn key={example.id} delay={Math.min(index * 0.04, 0.2)}>
+            <Card className="h-full">
               <CardHeader>
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="secondary" className="font-normal">
@@ -51,7 +53,7 @@ export function PhExamples() {
                   {example.redFlags.map((flag) => (
                     <li
                       key={flag}
-                      className="rounded-full border border-red-100 bg-red-50 px-2 py-0.5 text-[11px] font-medium text-red-700"
+                      className="rounded-full border border-danger/30 bg-danger/10 px-2 py-0.5 text-[11px] font-medium text-danger"
                     >
                       {flag}
                     </li>
@@ -65,13 +67,14 @@ export function PhExamples() {
                 </p>
                 <Link
                   href={`/scanner?example=${example.id}`}
-                  className="inline-flex items-center gap-1 text-sm font-medium transition-all hover:gap-1.5"
+                  className="group/link inline-flex items-center gap-1 text-sm font-medium"
                 >
                   Test in scanner
-                  <ArrowRight className="size-3.5" />
+                  <ArrowRight className="size-3.5 transition-transform group-hover/link:translate-x-0.5" />
                 </Link>
               </CardFooter>
             </Card>
+            </FadeIn>
           ))}
         </div>
 

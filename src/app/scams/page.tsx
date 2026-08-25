@@ -40,7 +40,7 @@ export default function ScamsPage() {
             <a
               key={category.id}
               href={`#${category.id}`}
-              className="rounded-full border bg-background px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+              className="inline-flex min-h-9 items-center rounded-full border bg-background px-3.5 py-1 text-xs font-medium text-muted-foreground transition-colors outline-none hover:border-foreground/30 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
               {category.label}
             </a>

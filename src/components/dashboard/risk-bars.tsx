@@ -4,10 +4,10 @@ import type { RiskSlice } from "@/lib/dashboard/demo-data";
 import { formatInt, formatPct } from "@/lib/dashboard/demo-data";
 
 const BAR_COLORS: Record<RiskLevel, string> = {
-  low: "#16a34a",
-  medium: "#f59e0b",
-  high: "#dc2626",
-  critical: "#7f1d1d",
+  low: "var(--success)",
+  medium: "var(--warning)",
+  high: "var(--danger)",
+  critical: "color-mix(in oklab, var(--danger), black 35%)",
 };
 
 const WIDTH = 340;

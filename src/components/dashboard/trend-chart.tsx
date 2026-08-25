@@ -6,8 +6,8 @@ import type { TrendPoint } from "@/lib/dashboard/demo-data";
 import { cn } from "@/lib/utils";
 
 const PAD = { top: 14, right: 10, bottom: 30, left: 44 };
-const ACCENT = "#4f46e5";
-const DANGER = "#dc2626";
+const ACCENT = "var(--chart-1)";
+const DANGER = "var(--chart-5)";
 const GRID_TICKS = 4;
 
 function niceCeil(value: number): number {

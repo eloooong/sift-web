@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import { FadeIn } from "@/components/shared/fade-in";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -77,7 +78,7 @@ export function ScanTypes() {
         />
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SCAN_TYPES.map((type) => {
+          {SCAN_TYPES.map((type, index) => {
             const card = (
               <Card
                 className={cn(
@@ -107,16 +108,19 @@ export function ScanTypes() {
             );
 
             return type.href ? (
+              <FadeIn key={type.title} delay={Math.min(index * 0.05, 0.2)} className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <Link
-                key={type.title}
                 href={type.href}
-                className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="block rounded-xl"
                 aria-label={`${type.title} — open the ${type.title.toLowerCase()} scanner`}
               >
                 {card}
               </Link>
+              </FadeIn>
             ) : (
-              <div key={type.title}>{card}</div>
+              <FadeIn key={type.title} delay={Math.min(index * 0.05, 0.2)}>
+                {card}
+              </FadeIn>
             );
           })}
         </div>

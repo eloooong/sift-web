@@ -281,7 +281,7 @@ export function ScreenshotScanner() {
                       size="icon"
                       onClick={handleRemove}
                       aria-label="Remove image"
-                      className="absolute top-3 right-3 bg-background/90 backdrop-blur"
+                      className="absolute top-3 right-3 size-10 bg-background/90 backdrop-blur sm:size-9"
                     >
                       <Trash2 />
                     </Button>

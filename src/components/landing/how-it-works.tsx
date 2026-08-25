@@ -1,6 +1,7 @@
 import { FileSearch, Info, ScanSearch, Upload } from "lucide-react";
 
 import { SectionHeading } from "@/components/shared/section-heading";
+import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent } from "@/components/ui/card";
 
 const STEPS = [
@@ -38,13 +39,14 @@ export function HowItWorks() {
         />
 
         <ol className="mt-10 grid gap-4 md:grid-cols-3">
-          {STEPS.map((step) => (
+          {STEPS.map((step, index) => (
             <li key={step.number}>
+              <FadeIn delay={index * 0.05}>
               <Card className="relative h-full transition-colors hover:ring-foreground/20">
                 <CardContent className="flex h-full flex-col gap-3 pt-1">
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute top-4 right-5 font-mono text-4xl font-semibold text-slate-100 select-none"
+                    className="pointer-events-none absolute top-4 right-5 font-mono text-4xl font-semibold text-muted-foreground/10 select-none"
                   >
                     {step.number}
                   </span>
@@ -57,14 +59,15 @@ export function HowItWorks() {
                   </p>
                 </CardContent>
               </Card>
+              </FadeIn>
             </li>
           ))}
         </ol>
 
-        <div className="mt-8 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3.5">
-          <Info className="mt-0.5 size-4 shrink-0 text-amber-600" />
-          <p className="text-sm leading-relaxed text-amber-900">
-            <span className="font-medium">Hybrid analysis.</span> Every scan
+        <div className="mt-8 flex items-start gap-3 rounded-xl border border-warning/30 bg-warning/5 px-4 py-3.5">
+          <Info className="mt-0.5 size-4 shrink-0 text-warning" />
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            <span className="font-medium text-foreground">Hybrid analysis.</span> Every scan
             runs an AI analyst alongside ScamShield’s transparent rule engine —
             points still come from named, weighted red flags, and the AI
             explains its findings in plain language.

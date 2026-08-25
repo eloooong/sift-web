@@ -24,27 +24,17 @@ export default function DashboardPage() {
       {/* Dot-grid flourish behind the header */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-72"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, var(--foreground) 1px, transparent 1px)",
-          backgroundSize: "22px 22px",
-          opacity: 0.05,
-          maskImage:
-            "linear-gradient(to bottom, black 0%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 0%, transparent 100%)",
-        }}
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle,var(--color-foreground)_1px,transparent_1px)] bg-[size:22px_22px] opacity-[0.05] [mask-image:linear-gradient(to_bottom,black,transparent)]"
       />
 
-      <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-16 sm:px-6 sm:pt-16 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <FadeIn>
           <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div className="max-w-xl">
               <p className="font-mono text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                 Analytics
               </p>
-              <h1 className="mt-2 text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                 Scam Intelligence Dashboard
               </h1>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">

@@ -32,7 +32,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             aria-pressed={isActive}
             title={option.name}
             className={cn(
-              "min-h-8 rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "min-h-9 rounded-full px-3 py-1 font-mono text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-8 sm:px-2.5",
               isActive
                 ? "bg-background text-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"

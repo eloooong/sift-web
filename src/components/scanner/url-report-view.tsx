@@ -22,6 +22,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { AnimatedScore } from "@/components/shared/count-up";
 import { useLang } from "@/components/providers/language-provider";
 import type { DictKey } from "@/lib/i18n/dictionary";
 import { RiskBadge } from "@/components/shared/risk-badge";
@@ -168,7 +169,7 @@ export function UrlReportView({
                   SCORE_TEXT_COLORS[report.riskLevel]
                 )}
               >
-                {report.riskScore}
+                <AnimatedScore value={report.riskScore} />
               </span>
               <span className="text-base font-medium text-muted-foreground">/100</span>
             </p>

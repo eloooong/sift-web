@@ -25,7 +25,7 @@ export function ReportsView() {
           </span>
         </div>
 
-        <FadeIn delay={1}>
+        <FadeIn delay={0.06}>
           <ReportForm onSubmitted={() => setRefreshKey((value) => value + 1)} />
         </FadeIn>
 
@@ -46,7 +46,7 @@ export function ReportsView() {
           </span>
         </div>
 
-        <FadeIn delay={2}>
+        <FadeIn delay={0.12}>
           <ReportsBoard refreshKey={refreshKey} />
         </FadeIn>
       </section>

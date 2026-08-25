@@ -18,7 +18,7 @@ export default function ReportsPage() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--color-foreground)_1px,transparent_0)] bg-[size:24px_24px] opacity-[0.04]"
       />
 
-      <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <FadeIn className="max-w-2xl">
           <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
             Community watch

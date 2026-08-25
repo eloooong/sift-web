@@ -4,12 +4,15 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   Camera,
+  Info,
   Link2,
   MessageSquareWarning,
+  RotateCcw,
   TriangleAlert,
 } from "lucide-react";
 
 import { FadeIn } from "@/components/shared/fade-in";
+import { Button } from "@/components/ui/button";
 import {
   HistoryMessageResult,
   HistoryUrlResult,
@@ -39,7 +42,7 @@ export default async function HistoryDetailPage({ params }: { params: Params }) 
   const meta = SCAN_TYPE_LABELS[entry.scanType];
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
+    <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
       <Link
         href="/history"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -72,7 +75,7 @@ export default async function HistoryDetailPage({ params }: { params: Params }) 
 
       <div className="mt-6">
         {entry.status === "failed" ? (
-          <FadeIn delay={1}>
+          <FadeIn delay={0.05}>
             <div className="flex flex-col items-start gap-2 rounded-xl border border-dashed p-6">
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-danger">
                 <TriangleAlert aria-hidden="true" className="size-4" />
@@ -85,14 +88,12 @@ export default async function HistoryDetailPage({ params }: { params: Params }) 
               <p className="mt-2 w-full rounded-lg border bg-muted/40 p-3 font-mono text-[11px] leading-relaxed break-words whitespace-pre-wrap">
                 {entry.inputPreview}
               </p>
-              <Link
-                href={
-                  entry.scanType === "url" ? "/scanner/url" : "/scanner"
-                }
-                className="mt-1 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                Scan again
-              </Link>
+              <Button asChild variant="outline" className="mt-1 h-11 px-5 sm:h-8 sm:px-3">
+                <Link href={entry.scanType === "url" ? "/scanner/url" : "/scanner"}>
+                  <RotateCcw aria-hidden="true" />
+                  Scan again
+                </Link>
+              </Button>
             </div>
           </FadeIn>
         ) : entry.messageReport ? (
@@ -102,7 +103,25 @@ export default async function HistoryDetailPage({ params }: { params: Params }) 
           />
         ) : entry.urlReport ? (
           <HistoryUrlResult report={entry.urlReport} />
-        ) : null}
+        ) : (
+          <div className="flex flex-col items-start gap-2 rounded-xl border border-dashed p-6">
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+              <Info aria-hidden="true" className="size-4" />
+              No report content stored
+            </span>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              This scan finished, but its full report is no longer available in
+              this demo server&apos;s memory. Run the scan again to regenerate
+              it.
+            </p>
+            <Button asChild variant="outline" className="mt-1 h-11 px-5 sm:h-8 sm:px-3">
+              <Link href={entry.scanType === "url" ? "/scanner/url" : "/scanner"}>
+                <RotateCcw aria-hidden="true" />
+                Scan again
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

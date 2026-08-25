@@ -136,7 +136,7 @@ export function UrlScanner() {
         <motion.div key="input" {...VIEW_TRANSITION}>
           <Card>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <label htmlFor="url-scanner-input" className="text-sm font-medium">
                   Link you want checked
                 </label>

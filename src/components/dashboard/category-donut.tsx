@@ -7,16 +7,16 @@ import { formatInt, formatPct } from "@/lib/dashboard/demo-data";
 import { cn } from "@/lib/utils";
 
 const PALETTE = [
-  "#4f46e5",
-  "#f59e0b",
-  "#0ea5e9",
-  "#8b5cf6",
-  "#10b981",
-  "#f43f5e",
-  "#64748b",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--success)",
+  "var(--chart-5)",
+  "var(--muted-foreground)",
 ];
 
-const OTHER_COLOR = "#94a3b8";
+const OTHER_COLOR = "color-mix(in oklab, var(--muted-foreground), transparent 35%)";
 const SIZE = 208;
 const RADIUS = 78;
 const STROKE = 24;

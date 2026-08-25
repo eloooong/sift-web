@@ -30,6 +30,7 @@ import {
 import { RiskBadge } from "@/components/shared/risk-badge";
 import { CategoryBadge } from "@/components/shared/category-badge";
 import { RiskMeter } from "@/components/scanner/risk-meter";
+import { AnimatedScore } from "@/components/shared/count-up";
 import { useLang } from "@/components/providers/language-provider";
 import type { SignalCategoryId } from "@/lib/scam-detector";
 import type { ScanFlag, ScanReport } from "@/lib/scan-report";
@@ -249,7 +250,7 @@ export function ReportView({
                   SCORE_TEXT_COLORS[report.riskLevel]
                 )}
               >
-                {report.riskScore}
+                <AnimatedScore value={report.riskScore} />
               </span>
               <span className="text-base font-medium text-muted-foreground">
                 /100

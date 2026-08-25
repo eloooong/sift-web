@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 
+import { CountUp } from "@/components/shared/count-up";
 import { T } from "@/components/providers/t";
 import { RiskBadge } from "@/components/shared/risk-badge";
 import { Badge } from "@/components/ui/badge";
@@ -98,8 +99,8 @@ export function Hero() {
               <div className="mt-4 flex items-end justify-between gap-4">
                 <RiskBadge level="critical" />
                 <p aria-label="Risk score 95 out of 100" className="leading-none">
-                  <span className="text-3xl font-semibold tracking-tight">
-                    95
+                  <span className="text-3xl font-semibold tracking-tight tabular-nums">
+                    <CountUp value={95} />
                   </span>
                   <span className="text-sm text-muted-foreground">/100</span>
                 </p>

@@ -18,16 +18,19 @@ export default async function SettingsPage() {
   const user = await requireUser("/settings");
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
+    <div className="mx-auto w-full max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
       <FadeIn>
         <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
           Account
         </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight">Settings</h1>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Settings</h1>
+        <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted-foreground">
+          Manage how your name appears in the app and keep your account secure.
+        </p>
       </FadeIn>
 
       <div className="mt-8 flex flex-col gap-5">
-        <FadeIn delay={1}>
+        <FadeIn delay={0.04}>
           <section className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
             <h2 className="flex items-center gap-2 text-sm font-semibold">
               <CircleUser aria-hidden="true" className="size-4 text-muted-foreground" />
@@ -48,7 +51,7 @@ export default async function SettingsPage() {
           </section>
         </FadeIn>
 
-        <FadeIn delay={2}>
+        <FadeIn delay={0.08}>
           <section className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
             <h2 className="flex items-center gap-2 text-sm font-semibold">
               <KeyRound aria-hidden="true" className="size-4 text-muted-foreground" />
@@ -61,7 +64,7 @@ export default async function SettingsPage() {
           </section>
         </FadeIn>
 
-        <FadeIn delay={3}>
+        <FadeIn delay={0.12}>
           <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed p-5">
             <div className="flex items-start gap-2.5">
               <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success" />

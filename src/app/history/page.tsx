@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Camera, ChevronRight, Clock3, Inbox, Link2, MessageSquareWarning, ScanLine } from "lucide-react";
 
 import { FadeIn } from "@/components/shared/fade-in";
+import { Button } from "@/components/ui/button";
 import {
   DeleteAllHistoryButton,
   DeleteScanButton,
@@ -41,13 +42,13 @@ export default async function HistoryPage() {
   const entries = listUserHistory(user.id);
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
+    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
       <FadeIn className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
             Private to you
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
             Scan history
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground">
@@ -58,7 +59,7 @@ export default async function HistoryPage() {
       </FadeIn>
 
       {entries.length === 0 ? (
-        <FadeIn delay={1}>
+        <FadeIn delay={0.04}>
           <div className="mt-10 flex flex-col items-center rounded-xl border border-dashed p-10 text-center">
             <Inbox aria-hidden="true" className="size-7 text-muted-foreground" />
             <p className="mt-4 text-sm font-medium">No scans yet</p>
@@ -66,13 +67,12 @@ export default async function HistoryPage() {
               Run a scan while signed in and it will show up here so you can
               revisit the full result anytime.
             </p>
-            <Link
-              href="/scanner"
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              <ScanLine aria-hidden="true" className="size-4" />
-              Try the scanner
-            </Link>
+            <Button asChild className="mt-5 h-11 px-5 sm:h-8 sm:px-2.5">
+              <Link href="/scanner">
+                <ScanLine aria-hidden="true" />
+                Try the scanner
+              </Link>
+            </Button>
           </div>
         </FadeIn>
       ) : (
@@ -82,7 +82,7 @@ export default async function HistoryPage() {
             const failed = entry.status === "failed";
             return (
               <li key={entry.id}>
-                <FadeIn delay={Math.min(index, 6)}>
+                <FadeIn delay={Math.min(index * 0.04, 0.24)}>
                   <article className="flex items-center gap-3 rounded-xl bg-card p-3.5 ring-1 ring-foreground/10 transition-shadow hover:shadow-sm sm:p-4">
                     <span
                       aria-hidden="true"
@@ -129,12 +129,12 @@ export default async function HistoryPage() {
 
                     <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                       {failed || entry.riskScore === null ? (
-                        <span className="hidden font-mono text-[11px] text-muted-foreground sm:inline">
+                        <span className="font-mono text-[11px] text-muted-foreground">
                           no score
                         </span>
                       ) : (
                         <>
-                          <span className="hidden font-mono text-sm font-semibold tabular-nums sm:inline">
+                          <span className="hidden font-mono text-sm font-semibold tabular-nums md:inline">
                             {entry.riskScore}
                             <span className="text-[10px] font-normal text-muted-foreground">/100</span>
                           </span>
@@ -142,13 +142,16 @@ export default async function HistoryPage() {
                         </>
                       )}
 
-                      <Link
-                        href={`/history/${entry.id}`}
-                        aria-label={`Open scan result`}
-                        className="rounded-lg border px-2 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground"
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="h-10 px-3 sm:h-7"
                       >
-                        Open
-                      </Link>
+                        <Link href={`/history/${entry.id}`} aria-label="Open scan result">
+                          Open
+                        </Link>
+                      </Button>
 
                       <DeleteScanButton entryId={entry.id} />
                     </div>
