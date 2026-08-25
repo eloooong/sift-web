@@ -58,10 +58,10 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
       "Payment “released” to a wrong number, asking you to “return” it",
     ],
     whatToDo: [
-      "Treat any MPIN/OTP request as theft — share it with no one.",
+      "Treat any MPIN/OTP request as theft and share it with no one.",
       "Verify only inside the official GCash/Maya app.",
       "Screenshot the message and report via the app’s official help center.",
-      "Warn family members — e-wallet texts are the most common scam format in PH.",
+      "Warn family members; e-wallet texts are the most common scam format in PH.",
     ],
     exampleChannel: "SMS",
     exampleText:
@@ -71,7 +71,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     id: "prize-scam",
     label: "Prize Scam",
     description:
-      "The classic Filipino text scam: you “won” a PCSO, PAGCOR, or TV-show raffle you never joined — but must first pay a processing or tax fee to release winnings that never existed.",
+      "The classic Filipino text scam: you “won” a PCSO, PAGCOR, or TV-show raffle you never joined, yet you must first pay a processing or tax fee to release winnings that never existed.",
     warningSigns: [
       "You joined no raffle, yet you “won”",
       "Fees for “processing”, “tax”, or “release” before payout",
@@ -93,7 +93,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     id: "delivery-scam",
     label: "Delivery Scam",
     description:
-      "Courier-themed texts from “LBC”, “J&T Express”, or marketplace orders claiming an unpaid delivery or customs fee on a package you never ordered — payable to a personal e-wallet number.",
+      "Courier-themed texts from “LBC”, “J&T Express”, or marketplace orders claiming an unpaid delivery or customs fee on a package you never ordered, payable to a personal e-wallet number.",
     warningSigns: [
       "Package on hold for an unpaid fee of ₱50–₱300",
       "Tracking numbers you can’t find on the courier’s real site",
@@ -109,13 +109,13 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     ],
     exampleChannel: "SMS",
     exampleText:
-      "[LBC EXPRESS] Parcel LB8837465210 is ON HOLD — UNPAID DELIVERY FEE of P185. Settle via GCash 0918XXX2231 within 6 hours or item returns to sender. Thank you!",
+      "[LBC EXPRESS] Parcel LB8837465210 is ON HOLD due to an UNPAID DELIVERY FEE of P185. Settle via GCash 0918XXX2231 within 6 hours or item returns to sender. Thank you!",
   },
   {
     id: "online-job-scam",
     label: "Online Job Scam",
     description:
-      "Unsolicited offers to earn ₱2,000–₱10,000 daily rating products or encoding data from home. They always begin with an “activation”, “membership”, or “registration” fee — then disappear.",
+      "Unsolicited offers to earn ₱2,000–₱10,000 daily rating products or encoding data from home. They always begin with an “activation”, “membership”, or “registration” fee, then disappear.",
     warningSigns: [
       "Job offer you never applied for",
       "High pay for simple tasks (“rate products, earn daily”)",
@@ -131,13 +131,13 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     ],
     exampleChannel: "Messenger",
     exampleText:
-      "GOOD NEWS! You are SELECTED as Online Product Reviewer. Earn PHP4,000 DAILY rating products, work from home! Pay PHP350 activation fee via Maya to Admin Karen now — only 5 slots left!",
+      "GOOD NEWS! You are SELECTED as Online Product Reviewer. Earn PHP4,000 DAILY rating products, work from home! Pay PHP350 activation fee via Maya to Admin Karen now! Only 5 slots left!",
   },
   {
     id: "loan-scam",
     label: "Loan Scam",
     description:
-      "Too-easy “pre-approved” loans from lending apps or texters who demand advance “release fees”, insurance, or processing payments — and vanish once paid. Some harvest your IDs for other fraud.",
+      "Too-easy “pre-approved” loans from lending apps or texters who demand advance “release fees”, insurance, or processing payments, then vanish once paid. Some harvest your IDs for other fraud.",
     warningSigns: [
       "Loan approved instantly without documents or credit check",
       "Release/processing/insurance fee required BEFORE payout",
@@ -146,9 +146,9 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
       "Guaranteed approval regardless of income",
     ],
     whatToDo: [
-      "Legit lenders deduct fees from proceeds — never collect them upfront.",
+      "Legit lenders deduct fees from proceeds instead of collecting them upfront.",
       "Check SEC (sec.gov.ph) for registered lending companies.",
-      "Never send ID photos to unverified lenders — they fuel scam databases.",
+      "Never send ID photos to unverified lenders; they fuel scam databases.",
       "Compare offers only through banks’ official apps or websites.",
     ],
     exampleChannel: "SMS",
@@ -168,7 +168,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
       "Payment channels that are personal e-wallets",
     ],
     whatToDo: [
-      "Agencies serve formal notices by mail or official portals — not SMS threats.",
+      "Agencies serve formal notices by mail or official portals, not SMS threats.",
       "Log in only through official websites (.gov.ph) you type yourself.",
       "Call the agency’s published hotline to verify any claim.",
       "No government office collects fines via personal GCash/Maya numbers.",
@@ -181,7 +181,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     id: "account-verification-scam",
     label: "Account Verification Scam",
     description:
-      "Any message demanding urgent “verification” or re-activation of an account — email, wallet, social media, bank — usually with a link or an OTP request. It exists to hijack your login.",
+      "Any message demanding urgent “verification” or re-activation of an account (email, wallet, social media, bank), usually with a link or an OTP request. It exists to hijack your login.",
     warningSigns: [
       "“Verify within X hours or lose access”",
       "OTP/MPIN/password requests framed as “confirmation”",
@@ -190,7 +190,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
       "Verification demanded right after a scary warning",
     ],
     whatToDo: [
-      "Real services verify inside their own app — never via random links.",
+      "Real services verify inside their own app, never via random links.",
       "If you entered credentials anywhere suspicious, change passwords NOW.",
       "Enable two-factor authentication on important accounts.",
       "Check haveibeenpwned.com if you suspect leaked emails.",
@@ -203,7 +203,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     id: "investment-scam",
     label: "Investment Scam",
     description:
-      "Crypto, forex, or “trading group” pitches promising doubled money or fixed daily returns. Early “payouts” are theater — deposits eventually vanish, often alongside celebrity deepfake endorsements.",
+      "Crypto, forex, or “trading group” pitches promising doubled money or fixed daily returns. Early “payouts” are theater; deposits eventually vanish, often alongside celebrity deepfake endorsements.",
     warningSigns: [
       "“Double your money in 30 days” / guaranteed % returns",
       "VIP trading groups with screenshots of huge profits",
@@ -213,7 +213,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     ],
     whatToDo: [
       "Check the company against SEC and BSP advisory lists first.",
-      "Assume every guaranteed high return is a scam — they mathematically are.",
+      "Assume every guaranteed high return is a scam, because mathematically it is.",
       "Never invest through group admins’ personal accounts.",
       "If already in, stop depositing; warn co-members quietly.",
     ],
@@ -225,7 +225,7 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     id: "romance-scam",
     label: "Romance Scam",
     description:
-      "Long-con affection from “OFWs, soldiers abroad, or foreign engineers” who fall in love fast — then need help with customs fees, hospital bills, or a plane ticket. The person never arrives.",
+      "Long-con affection from “OFWs, soldiers abroad, or foreign engineers” who fall in love fast, then need help with customs fees, hospital bills, or a plane ticket. The person never arrives.",
     warningSigns: [
       "Rapid declarations of love without meeting",
       "Profession abroad: soldier, doctor on a ship, engineer",
@@ -235,19 +235,19 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     ],
     whatToDo: [
       "Never send money to someone you haven’t met in person.",
-      "Reverse-image-search their photos — most are stolen.",
+      "Reverse-image-search their photos; most are stolen.",
       "Insist on a spontaneous video call; watch how they dodge.",
-      "Talk to family before sending anything — isolation is their tool.",
+      "Talk to family before sending anything; isolation is their tool.",
     ],
     exampleChannel: "Chat",
     exampleText:
-      "Hello dear, I’m Dr. James stationed abroad on a mission ship. I sent you my gift box but customs is holding it — please send P8,500 clearance fee so it can finally reach you, my love.",
+      "Hello dear, I’m Dr. James stationed abroad on a mission ship. I sent you my gift box but customs is holding it, please send P8,500 clearance fee so it can finally reach you, my love.",
   },
   {
     id: "phishing",
     label: "Phishing",
     description:
-      "Catch-all for fake links designed to steal logins or card details — lookalike domains, shortened URLs, and cloned login pages for Shopee, Lazada, Grab, email providers, and more.",
+      "Catch-all for fake links designed to steal logins or card details: lookalike domains, shortened URLs, and cloned login pages for Shopee, Lazada, Grab, email providers, and more.",
     warningSigns: [
       "Domains mimicking real ones: shopee-pay.xyz, grabkash.site",
       "Shortened links (bit.ly, cutt.ly) hiding destinations",
@@ -263,13 +263,13 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     ],
     exampleChannel: "Email",
     exampleText:
-      "Your Lazada wallet refund of P1,240.00 is ready! Claim within 24 hours: http://lazada-refund-claim.buzz/wallet — log in with your registered email to receive your cashback.",
+      "Your Lazada wallet refund of P1,240.00 is ready! Claim within 24 hours: http://lazada-refund-claim.buzz/wallet and log in with your registered email to receive your cashback.",
   },
   {
     id: "other",
     label: "Other Scam Pattern",
     description:
-      "Suspicious messages that don’t fit a known mold — unusual payment demands, odd impersonations, or pressure tactics. New scam formats appear constantly; caution still applies.",
+      "Suspicious messages that don’t fit a known mold: unusual payment demands, odd impersonations, or pressure tactics. New scam formats appear constantly; caution still applies.",
     warningSigns: [
       "Unexpected requests involving money or codes",
       "Pressure, threats, or too-good-to-be-true claims",
@@ -278,13 +278,13 @@ export const SCAM_CATEGORIES: ScamCategoryDef[] = [
     ],
     whatToDo: [
       "Apply the universal rule: verify through an official channel first.",
-      "Don’t reply — engagement confirms your number is active.",
+      "Don’t reply; engagement confirms your number is active.",
       "Ask someone you trust before acting.",
       "Report and block the sender after documenting it.",
     ],
     exampleChannel: "SMS",
     exampleText:
-      "Pahabol! Last day ng promo — send 3 load pins worth P50 each to 0977XXX0912 and get DOUBLE load back guaranteed within the hour. Kailangan magbayad ngayon para makuha mo agad!",
+      "Pahabol! Last day ng promo! Send 3 load pins worth P50 each to 0977XXX0912 and get DOUBLE load back guaranteed within the hour. Kailangan magbayad ngayon para makuha mo agad!",
   },
 ];
 

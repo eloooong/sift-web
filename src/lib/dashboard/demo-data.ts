@@ -7,7 +7,7 @@ import {
 /**
  * Seeded demo dataset for the analytics dashboard.
  *
- * ScamShield PH does not persist scans yet — every number on /dashboard is
+ * ScamShield PH does not persist scans yet, so every number on /dashboard is
  * generated from the fixed-seed PRNG below so charts are stable across
  * server and client renders. This is demo data, not live telemetry.
  */
@@ -51,7 +51,7 @@ export function buildTrendSeries(now: Date, days = 30): TrendPoint[] {
 
     // Gentle upward drift as adoption grows.
     let base = 318 + (days - i) * 3.4;
-    // Weekends are quieter — fewer workday texts to scan.
+    // Weekends are quieter; fewer workday texts to scan.
     if (dayOfWeek === 0 || dayOfWeek === 6) base *= 0.72;
     // Payday windows drive scam blasts in PH.
     if (dayOfMonth === 15 || dayOfMonth === 30 || dayOfMonth === 31) {

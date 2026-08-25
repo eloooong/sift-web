@@ -120,7 +120,7 @@ function formatScanTime(iso: string): string {
 function buildPlainTextReport(report: ScanReport, text: string): string {
   const isScreenshot = report.source === "screenshot";
   const lines = [
-    "SCAMSHIELD PH — SECURITY REPORT",
+    "SCAMSHIELD PH: SECURITY REPORT",
     `Scanned: ${formatScanTime(report.createdAt)}`,
     `Source: ${isScreenshot ? "Screenshot (OCR)" : "Pasted text"}`,
     `Engine: ${report.analysisMode === "ai" ? "AI analyst + rule-engine cross-check" : "Rule-based engine"}`,

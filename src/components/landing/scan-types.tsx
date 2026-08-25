@@ -32,7 +32,7 @@ const SCAN_TYPES: ScanType[] = [
     icon: Smartphone,
     title: "SMS & Text Messages",
     description:
-      "Suspicious “prize”, “loan”, or “account locked” texts — check them before you tap anything.",
+      "Suspicious “prize”, “loan”, or “account locked” texts. Check them before you tap anything.",
   },
   {
     icon: MessagesSquare,
@@ -50,20 +50,20 @@ const SCAN_TYPES: ScanType[] = [
     icon: Link2,
     title: "URLs & Links",
     description:
-      "Sketchy links from SMS or chat — inspect them before entering login details or personal info.",
+      "Sketchy links from SMS or chat. Inspect them before entering login details or personal info.",
   },
   {
     icon: ScanText,
     title: "Screenshots",
     description:
-      "Upload a screenshot of the whole conversation — we read the text with OCR and analyze it end-to-end.",
+      "Upload a screenshot of the whole conversation; we read the text with OCR and analyze it end-to-end.",
     href: "/scanner/screenshot",
   },
   {
     icon: ClipboardPaste,
     title: "Any Other Text",
     description:
-      "Anything that feels off — job offers, investment pitches, refund notices, or unknown senders.",
+      "Anything that feels off: job offers, investment pitches, refund notices, or unknown senders.",
   },
 ];
 
@@ -112,7 +112,7 @@ export function ScanTypes() {
               <Link
                 href={type.href}
                 className="block rounded-xl"
-                aria-label={`${type.title} — open the ${type.title.toLowerCase()} scanner`}
+                aria-label={`${type.title}: open the ${type.title.toLowerCase()} scanner`}
               >
                 {card}
               </Link>

@@ -30,7 +30,7 @@ import {
 } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Moderation — ScamShield PH",
+  title: "Moderation | ScamShield PH",
   description: "Moderator queue for community scam reports.",
   robots: { index: false },
 };
@@ -89,7 +89,7 @@ function SignInCard({ error }: { error: string | null }) {
       {error ? (
         <p role="alert" className="text-center text-xs text-danger">
           {error === "expired"
-            ? "Session expired — sign in again."
+            ? "Session expired. Sign in again."
             : "That token is incorrect."}
         </p>
       ) : null}

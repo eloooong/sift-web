@@ -54,7 +54,7 @@ export function DeleteScanButton({ entryId }: { entryId: string }) {
       />
       {error ? (
         <span role="alert" className="sr-only">
-          Delete failed — try again.
+          Delete failed. Try again.
         </span>
       ) : null}
     </>
@@ -82,7 +82,7 @@ export function DeleteAllHistoryButton({
       setOpen(false);
       router.refresh();
     } catch {
-      setError("Couldn't delete your history — please try again.");
+      setError("Couldn't delete your history. Please try again.");
     } finally {
       setBusy(false);
     }

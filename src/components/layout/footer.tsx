@@ -87,7 +87,7 @@ export function Footer() {
             © {new Date().getFullYear()} ScamShield PH. <T k="footer.copyright" />
           </p>
           <p className="font-mono text-xs text-muted-foreground/80">
-            v0.4 — hybrid engine · AI analysis + rule-based pre-scan
+            v0.4, hybrid engine · AI analysis + rule-based pre-scan
           </p>
         </div>
       </div>

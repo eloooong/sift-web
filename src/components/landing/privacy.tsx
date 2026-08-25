@@ -9,13 +9,13 @@ const PRIVACY_POINTS = [
     icon: Lock,
     title: "Private by design",
     description:
-      "Scanned messages are processed in real time through our secured server to build your report — never stored by ScamShield, never sold, never used for advertising.",
+      "Scanned messages are processed in real time through our secured server to build your report, never stored by ScamShield, never sold, never used for advertising.",
   },
   {
     icon: UserX,
     title: "No account required",
     description:
-      "Use the scanner freely and anonymously. Accounts arrive later — purely optional, for saved history.",
+      "Use the scanner freely and anonymously. Accounts arrive later and are purely optional, for saved history.",
   },
   {
     icon: Eye,
@@ -27,7 +27,7 @@ const PRIVACY_POINTS = [
     icon: HeartHandshake,
     title: "Independent & educational",
     description:
-      "An independent project for scam awareness in the Philippines — not affiliated with any brand named in examples.",
+      "An independent project for scam awareness in the Philippines, not affiliated with any brand named in examples.",
   },
 ] as const;
 
@@ -40,7 +40,7 @@ export function Privacy() {
             align="left"
             eyebrow="Safety & Privacy"
             title="Your safety includes your data"
-            description="ScamShield is built on a simple principle: a tool that protects you from scams should never become a risk to your privacy. No sign-ups, no data selling, no mystery verdicts — just clear analysis you can verify yourself."
+            description="ScamShield is built on a simple principle: a tool that protects you from scams should never become a risk to your privacy. No sign-ups, no data selling, no mystery verdicts, just clear analysis you can verify yourself."
           />
           <p className="mt-6 rounded-xl border border-dashed p-4 text-xs leading-relaxed text-muted-foreground">
             Trademark notice: GCash, Maya, Shopee, Lazada, LBC, J&amp;T

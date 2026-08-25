@@ -14,7 +14,7 @@ export type SeedInput = {
 };
 
 /**
- * Seeded demo reports — realistic Philippine scam formats written as
+ * Seeded demo reports: realistic Philippine scam formats written as
  * anonymized community submissions. The final entries demonstrate the
  * moderation states (pending / rejected) that never appear in the feed.
  */
@@ -73,7 +73,7 @@ export const REPORT_SEEDS: SeedInput[] = [
     categoryId: "bank-scam",
     platform: "sms",
     description:
-      "Message from BDO Security about unusual logins, warning my access would be restricted in 12 hours. The link went to bdo-online-secure.xyz — clearly not the real domain. My actual banking app showed nothing wrong.",
+      "Message from BDO Security about unusual logins, warning my access would be restricted in 12 hours. The link went to bdo-online-secure.xyz, clearly not the real domain. My actual banking app showed nothing wrong.",
     sender: "bdo-online-secure.xyz",
     daysAgo: 7,
     riskScore: 90,
@@ -93,7 +93,7 @@ export const REPORT_SEEDS: SeedInput[] = [
     categoryId: "loan-scam",
     platform: "sms",
     description:
-      "Pre-approved P200,000 loan with no documents needed, released in 24 hours — but they demanded a P1,800 release fee first via e-wallet. The lender isn't in the SEC's registered list.",
+      "Pre-approved P200,000 loan with no documents needed, released in 24 hours, but they demanded a P1,800 release fee first via e-wallet. The lender isn't in the SEC's registered list.",
     sender: null,
     daysAgo: 10,
     riskScore: 78,
@@ -119,7 +119,7 @@ export const REPORT_SEEDS: SeedInput[] = [
     riskScore: 71,
     confirmations: 9,
   },
-  // Pending — visible only to moderators until approved.
+  // Pending; visible only to moderators until approved.
   {
     categoryId: "account-verification-scam",
     platform: "instagram",
@@ -140,7 +140,7 @@ export const REPORT_SEEDS: SeedInput[] = [
     riskScore: 58,
     status: "pending",
   },
-  // Rejected by auto-moderation — link spam.
+  // Rejected by auto-moderation: link spam.
   {
     categoryId: "e-wallet-scam",
     platform: "whatsapp",

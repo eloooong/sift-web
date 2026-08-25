@@ -21,7 +21,7 @@ export function PhExamples() {
         <SectionHeading
           eyebrow="Know The Enemy"
           title="Common Philippine scam patterns"
-          description="Reconstructed samples of formats scammers use every day. Study them so you can recognize one instantly — then test them in the scanner."
+          description="Reconstructed samples of formats scammers use every day. Study them so you can recognize one instantly, then test them in the scanner."
         />
 
         <div className="mt-10 grid gap-4 md:grid-cols-2">
@@ -81,7 +81,7 @@ export function PhExamples() {
         <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground">
           Sample texts are reconstructions for education and awareness. They
           are not real messages, and phone numbers shown are placeholders.
-          Brand names illustrate impersonation tactics only — the legitimate
+          Brand names illustrate impersonation tactics only; the legitimate
           companies are not involved.
         </p>
       </div>

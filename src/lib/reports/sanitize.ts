@@ -28,7 +28,7 @@ const DOMAIN_PATTERN =
 
 /**
  * Reduce a user-supplied handle (phone / email / domain / username) to a
- * safe display form. Anything that does not parse cleanly becomes null —
+ * safe display form. Anything that does not parse cleanly becomes null;
  * we would rather drop data than store something executable or personal.
  */
 export function sanitizeSenderHandle(raw: string): string | null {

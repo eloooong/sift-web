@@ -93,7 +93,7 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
         </p>
       </div>
 
-      {/* Row only when the card itself is wide enough — container query, not viewport. */}
+      {/* Row only when the card itself is wide enough: container query, not viewport. */}
       <div className="mt-2 flex flex-1 flex-col items-center justify-center gap-5 @[460px]:flex-row @[460px]:items-center @[460px]:gap-6">
         <div className="relative shrink-0">
           <svg

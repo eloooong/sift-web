@@ -15,7 +15,7 @@ function subscribe(onChange: () => void) {
  *
  * `useSyncExternalStore` renders with the server snapshot (false) during SSR
  * *and* during the hydration pass, then re-renders with the real client value
- * afterwards — so server and client markup always match on first paint.
+ * afterwards, so server and client markup always match on first paint.
  */
 export function usePrefersReducedMotion(): boolean {
   return useSyncExternalStore(

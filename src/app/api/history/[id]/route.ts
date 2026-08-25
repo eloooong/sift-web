@@ -13,8 +13,8 @@ export const dynamic = "force-dynamic";
 type Params = Promise<{ id: string }>;
 
 /**
- * Single-entry access is scoped to the session user. Another user's entry —
- * or a nonexistent one — returns the same 404, so IDs can't be probed.
+ * Single-entry access is scoped to the session user. Another user's entry,
+ * or a nonexistent one, returns the same 404, so IDs can't be probed.
  */
 export async function GET(_request: Request, { params }: { params: Params }) {
   const user = await currentUser();

@@ -16,7 +16,7 @@ import { SCAM_CATEGORIES } from "@/lib/scam-detector/categories";
 export const metadata: Metadata = {
   title: "Scam Library",
   description:
-    "A Philippine-focused catalog of scam formats — prize texts, GCash phishing, courier fees, loan offers, government impersonation, investing groups, romance cons, and more. Learn the warning signs and what to do.",
+    "A Philippine-focused catalog of scam formats: prize texts, GCash phishing, courier fees, loan offers, government impersonation, investing groups, romance cons, and more. Learn the warning signs and what to do.",
 };
 
 export default function ScamsPage() {
@@ -27,7 +27,7 @@ export default function ScamsPage() {
           align="left"
           eyebrow="Scam Library"
           title="The Philippine scam catalog"
-          description="Every major scam format used against Filipinos, in plain language. Learn the warning signs now so you recognize them in the wild — brands named below are impersonation targets, never suspects."
+          description="Every major scam format used against Filipinos, in plain language. Learn the warning signs now so you recognize them in the wild; brands named below are impersonation targets, never suspects."
         />
       </FadeIn>
 
@@ -144,7 +144,7 @@ export default function ScamsPage() {
             Think you just received one of these?
           </h2>
           <p className="mx-auto mt-1.5 max-w-lg text-sm leading-relaxed text-muted-foreground">
-            Paste it into the scanner for a full breakdown — risk score, red
+            Paste it into the scanner for a full breakdown: risk score, red
             flags with evidence, and recommended next steps.
           </p>
           <Button asChild className="mt-5">

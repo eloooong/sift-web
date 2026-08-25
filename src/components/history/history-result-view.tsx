@@ -8,7 +8,7 @@ import type { ScanReport } from "@/lib/scan-report";
 import type { UrlReport } from "@/lib/url-analyzer";
 
 /**
- * Reopens a stored result with the exact views used by the live scanner —
+ * Reopens a stored result with the exact views used by the live scanner;
  * only the "scan again" action is rewired to navigate back to the scanner.
  */
 export function HistoryMessageResult({

@@ -62,7 +62,7 @@ export async function POST(request: Request) {
 
   const password = validatePassword(body.password);
   if (!password) {
-    // Same generic message for validation misses — don't leak which part failed.
+    // Same generic message for validation misses; don't leak which part failed.
     return jsonError(
       NextResponse,
       401,

@@ -88,7 +88,7 @@ export type NewReportInput = {
   rejectionReason?: string | null;
 };
 
-/** Public reference code — random, not sequential, reveals nothing. */
+/** Public reference code, random, not sequential, reveals nothing. */
 function generateReportId(): string {
   const bytes = new Uint8Array(6);
   crypto.getRandomValues(bytes);

@@ -16,7 +16,7 @@ const FORMAT = "scrypt";
 
 /**
  * Password hashing with Node's built-in scrypt (memory-hard KDF).
- * Stored format: `scrypt:<salt-hex>:<hash-hex>` — parameters are fixed here,
+ * Stored format: `scrypt:<salt-hex>:<hash-hex>`, parameters are fixed here,
  * so no version negotiation is needed while the app is young.
  */
 export async function hashPassword(password: string): Promise<string> {

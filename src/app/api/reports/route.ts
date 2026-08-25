@@ -34,7 +34,7 @@ export const dynamic = "force-dynamic";
 
 const MAX_DESCRIPTION_CHARS = 2000;
 const MIN_DESCRIPTION_CHARS = 30;
-/** Community screenshots are smaller than OCR uploads — they are kept in memory. */
+/** Community screenshots are smaller than OCR uploads, so they are kept in memory. */
 export const MAX_REPORT_SCREENSHOT_BYTES = 2 * 1024 * 1024;
 const MAX_URLS_IN_DESCRIPTION = 5;
 const ENCOUNTERED_MAX_AGE_MS = 3 * 365 * 86_400_000;
@@ -47,7 +47,7 @@ function isCategoryId(value: string): value is ScamCategoryId {
   return SCAM_CATEGORIES.some((category) => category.id === value);
 }
 
-/** Opaque per-client key for rate limiting — hashed IP + UA, never stored elsewhere. */
+/** Opaque per-client key for rate limiting: hashed IP + UA, never stored elsewhere. */
 function clientKey(request: Request): string {
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
     return jsonError(400, "bad_request", "We couldn't read that submission.");
   }
 
-  // Honeypot — real users never see this field.
+  // Honeypot; real users never see this field.
   if (String(formData.get("website") ?? "").trim() !== "") {
     return jsonError(400, "spam_detected", "This submission looked automated.");
   }
@@ -134,7 +134,7 @@ export async function POST(request: Request) {
     );
   }
 
-  // Date encountered — day precision only.
+  // Date encountered; day precision only.
   const encounteredRaw = String(formData.get("encounteredAt") ?? "");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(encounteredRaw)) {
     return jsonError(400, "invalid_date", "Enter the date you encountered it.");
@@ -197,7 +197,7 @@ export async function POST(request: Request) {
     };
   }
 
-  // --- Risk derivation (rules engine — no external calls) -------------------
+  // --- Risk derivation (rules engine, no external calls) ---------------------
   const analysis = analyzeMessage(description);
 
   // --- Basic auto-moderation -------------------------------------------------
@@ -242,7 +242,7 @@ export async function POST(request: Request) {
         report.status === "approved"
           ? "Report published."
           : report.status === "pending"
-            ? "Received — your report is awaiting moderation before it appears publicly."
+            ? "Received; your report is awaiting moderation before it appears publicly."
             : "This report was flagged by automatic checks and won't be published.",
     },
     { status: 201 }

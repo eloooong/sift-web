@@ -10,7 +10,7 @@ import { T } from "@/components/providers/t";
 export const metadata: Metadata = {
   title: "Screenshot Scanner",
   description:
-    "Upload a screenshot of a suspicious message — ScamShield PH reads it with OCR and runs the full Philippine scam analysis, without storing your image.",
+    "Upload a screenshot of a suspicious message. ScamShield PH reads it with OCR and runs the full Philippine scam analysis, without storing your image.",
 };
 
 const PRIVACY_POINTS = [

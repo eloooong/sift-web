@@ -43,7 +43,7 @@ function buildSummary(
 ): string {
   if (lang === "fil") return buildSummaryFil(topLabels, riskScore);
   if (topLabels.length === 0) {
-    return "No known scam markers were found in this text. That is reassuring — but scammers evolve constantly. When money or account access is involved, always verify through official channels before acting.";
+    return "No known scam markers were found in this text. That is reassuring, but scammers evolve constantly. When money or account access is involved, always verify through official channels before acting.";
   }
 
   const strongest = formatList(topLabels);
@@ -51,32 +51,32 @@ function buildSummary(
   if (riskScore >= 60) {
     return `You were right to be cautious. This message matches multiple known scam indicators${
       categoryLabel ? ` typical of a ${categoryLabel.toLowerCase()}` : ""
-    }. The strongest signs are ${strongest} — a combination designed to rush you before you can verify anything.`;
+    }. The strongest signs are ${strongest}, a combination designed to rush you before you can verify anything.`;
   }
 
   if (riskScore >= 30) {
     return `Several suspicious markers were found: ${strongest}. On its own, none is conclusive proof of a scam, but together they resemble common scam formats used against Filipinos. Handle this message with care.`;
   }
 
-  return `Only weak or isolated indicators were found (${strongest}). This does not prove the message is safe — review the sender and any links carefully before responding.`;
+  return `Only weak or isolated indicators were found (${strongest}). This does not prove the message is safe. Review the sender and any links carefully before responding.`;
 }
 
 function buildSummaryFil(topLabels: string[], riskScore: number): string {
   if (topLabels.length === 0) {
-    return "Walang natukoy na kilalang palatandaan ng scam sa text na ito. Magandang senyales ito — pero laging nagbabago ang modus ng mga scammer. Kapag pera o account ang pinag-uusapan, i-verify muna sa opisyal na channel bago kumilos.";
+    return "Walang natukoy na kilalang palatandaan ng scam sa text na ito. Magandang senyales ito, pero laging nagbabago ang modus ng mga scammer. Kapag pera o account ang pinag-uusapan, i-verify muna sa opisyal na channel bago kumilos.";
   }
 
   const strongest = formatListFil(topLabels);
 
   if (riskScore >= 60) {
-    return `Tama lang ang pagdududa mo. Maraming kilalang palatandaan ng scam ang tumugma sa message na ito — pinagsasama ang ${strongest} para ikaw ay magmadali bago mo pa ma-verify ang katotohanan.`;
+    return `Tama lang ang pagdududa mo. Maraming kilalang palatandaan ng scam ang tumugma sa message na ito, pinagsasama ang ${strongest} para ikaw ay magmadali bago mo pa ma-verify ang katotohanan.`;
   }
 
   if (riskScore >= 30) {
     return `May mga kahina-hinalang bahagi ang message: ${strongest}. Kahit alinman sa mga ito ay hindi sapat na ebidensya, kapag pinagsama-sama ay kamukha ng mga karaniwang scam sa mga Pilipino. Mag-ingat sa paghawak ng message na ito.`;
   }
 
-  return `Mahina o hiwa-hiwalay na palatandaan lang ang nakita (${strongest}). Hindi pa ito katibayan na ligtas ang message — suriin muna nang mabuti ang sender at mga link bago sumagot.`;
+  return `Mahina o hiwa-hiwalay na palatandaan lang ang nakita (${strongest}). Hindi pa ito katibayan na ligtas ang message, kaya suriin muna nang mabuti ang sender at mga link bago sumagot.`;
 }
 
 function formatList(items: string[]): string {

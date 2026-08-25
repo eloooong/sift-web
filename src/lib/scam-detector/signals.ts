@@ -230,7 +230,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "prize",
     label: "Congratulations opener",
     explanation:
-      "Unexpected congratulations often open scam messages — they excite you before you think.",
+      "Unexpected congratulations often open scam messages; they excite you before you think.",
     weight: 10,
     matcher: {
       kind: "pattern",
@@ -278,7 +278,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "prize",
     label: "Promises a large cash amount",
     explanation:
-      "Huge cash offers are bait — too-good-to-be-true amounts are the oldest scam trick there is.",
+      "Huge cash offers are bait: too-good-to-be-true amounts are the oldest scam trick there is.",
     weight: 12,
     matcher: { kind: "custom", run: findLargeAmount },
   },
@@ -337,7 +337,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "financial",
     label: "Processing / membership / delivery fee",
     explanation:
-      "Scammers invent fees — processing, release, customs — that real companies don’t collect this way.",
+      "Scammers invent fees (processing, release, customs) that real companies don’t collect this way.",
     weight: 11,
     matcher: {
       kind: "pattern",
@@ -393,7 +393,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "financial",
     label: "Requests OTP / MPIN / card codes",
     explanation:
-      "Your OTP unlocks your accounts. No legitimate company will ever ask you to share it — anyone who does is taking over your account.",
+      "Your OTP unlocks your accounts. No legitimate company will ever ask you to share it, because anyone who does is taking over your account.",
     weight: 22,
     matcher: {
       kind: "pattern",
@@ -415,7 +415,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "financial",
     label: "“Pa-load” / mobile load request",
     explanation:
-      "Load requests from strangers are small tests — paying them marks you as an easy target.",
+      "Load requests from strangers are small tests; paying them marks you as an easy target.",
     weight: 7,
     matcher: {
       kind: "pattern",
@@ -448,7 +448,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "credential",
     label: "Verification demand for account or identity",
     explanation:
-      "Real companies verify accounts inside their official app — never through random links or texts.",
+      "Real companies verify accounts inside their official app, never through random links or texts.",
     weight: 14,
     matcher: {
       kind: "pattern",
@@ -571,7 +571,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "link",
     label: "Shortened URL hides the destination",
     explanation:
-      "Shortened links hide where they really go — exactly what scammers rely on.",
+      "Shortened links hide where they really go, which is exactly what scammers rely on.",
     weight: 13,
     matcher: {
       kind: "custom",
@@ -611,7 +611,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "link",
     label: "Link imitates an official brand domain",
     explanation:
-      "The address imitates a real company’s name — a hallmark of fake login pages.",
+      "The address imitates a real company’s name, a hallmark of fake login pages.",
     weight: 20,
     matcher: {
       kind: "custom",
@@ -656,7 +656,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "link",
     label: "Non-HTTPS (insecure) link",
     explanation:
-      "Without HTTPS the connection isn’t encrypted — real services always use secure sites.",
+      "Without HTTPS the connection isn’t encrypted; real services always use secure sites.",
     weight: 5,
     matcher: {
       kind: "custom",
@@ -710,7 +710,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "job",
     label: "“Easy money / no experience” hook",
     explanation:
-      "“Easy money, no experience” hooks target people who need income — then demand payments from them.",
+      "“Easy money, no experience” hooks target people who need income, then demand payments from them.",
     weight: 9,
     matcher: {
       kind: "pattern",
@@ -748,7 +748,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "investment",
     label: "“Double your money” promise",
     explanation:
-      "Doubling money quickly is impossible in real investing — it is the core hook of investing scams.",
+      "Doubling money quickly is impossible in real investing; it is the core hook of investing scams.",
     weight: 14,
     matcher: {
       kind: "pattern",
@@ -763,7 +763,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "investment",
     label: "Guaranteed high-return claim",
     explanation:
-      "Legitimate investments never guarantee fixed high returns — guarantees are the scammer’s signature.",
+      "Legitimate investments never guarantee fixed high returns; guarantees are the scammer’s signature.",
     weight: 13,
     matcher: {
       kind: "pattern",
@@ -811,7 +811,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "loan",
     label: "Instant / pre-approved loan offer",
     explanation:
-      "Real lenders assess documents and capacity first — instant approval texts are bait.",
+      "Real lenders assess documents and capacity first; instant approval texts are bait.",
     weight: 12,
     matcher: {
       kind: "pattern",
@@ -828,7 +828,7 @@ export const SIGNALS: SignalDefinition[] = [
     category: "loan",
     label: "Advance fee to release a loan",
     explanation:
-      "Fees collected before a loan is released go straight to scammers — legitimate lenders deduct fees from proceeds.",
+      "Fees collected before a loan is released go straight to scammers, while legitimate lenders deduct fees from proceeds.",
     weight: 12,
     matcher: {
       kind: "pattern",

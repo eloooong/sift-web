@@ -37,7 +37,7 @@ function formatDateTime(iso: string): string {
 }
 
 export default async function HistoryPage() {
-  // Server-side guard — unauthenticated visitors never reach the data.
+  // Server-side guard; unauthenticated visitors never reach the data.
   const user = await requireUser("/history");
   const entries = listUserHistory(user.id);
 

@@ -1,6 +1,6 @@
 /**
  * Phase 6 sanity checks for the screenshot-scanner plumbing.
- * Pure-logic only (no network, no real OCR) — run with:
+ * Pure-logic only (no network, no real OCR). Run with:
  *   npx tsx scripts/screenshot-validation-check.ts
  */
 import { analyzeMessage } from "../src/lib/scam-detector";

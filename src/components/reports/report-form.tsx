@@ -121,7 +121,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
       formRef.current?.reset();
       onSubmitted?.();
     } catch {
-      setClientError("Network error — check your connection and try again.");
+      setClientError("Network error. Check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
@@ -173,7 +173,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
       className="flex flex-col gap-4 rounded-xl bg-card p-5 ring-1 ring-foreground/10 sm:p-6"
       noValidate
     >
-      {/* Honeypot — visually hidden, real users never fill this */}
+      {/* Honeypot: visually hidden, real users never fill this */}
       <div className="hidden" aria-hidden="true">
         <label>
           Website
@@ -230,7 +230,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
           onChange={(event) => setDescription(event.target.value)}
           rows={6}
           maxLength={MAX_DESCRIPTION_CHARS + 200}
-          placeholder="Describe the scam attempt — what they claimed, what they asked for, and anything that felt off."
+          placeholder="Describe the scam attempt: what they claimed, what they asked for, and anything that felt off."
           className="w-full resize-y rounded-lg border bg-background p-3 text-sm leading-relaxed outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
         />
         <p
@@ -247,7 +247,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
         <Field
           label="Sender or domain"
           htmlFor="rf-sender"
-          hint="Optional — masked before publishing"
+          hint="Optional; masked before publishing"
         >
           <input
             id="rf-sender"
@@ -328,7 +328,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
       <div className="flex flex-col gap-2 sm:flex-row-reverse sm:items-center">
         <SubmitButton submitting={submitting} />
         <p className="text-[11px] leading-snug text-muted-foreground sm:flex-1">
-          No name, email, or account details — reports stay anonymous.
+          No name, email, or account details; reports stay anonymous.
         </p>
       </div>
     </form>

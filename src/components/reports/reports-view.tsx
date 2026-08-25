@@ -31,7 +31,7 @@ export function ReportsView() {
 
         <p className="rounded-lg border border-dashed p-3 text-xs leading-relaxed text-muted-foreground">
           Demo note: reports are stored in this server&apos;s memory for the
-          demo — restarting resets them. Never include real passwords, OTPs,
+          demo, and restarting resets them. Never include real passwords, OTPs,
           or full account numbers in any report.
         </p>
       </section>

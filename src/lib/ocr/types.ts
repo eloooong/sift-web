@@ -23,7 +23,7 @@ export class OcrError extends Error {
 /**
  * Contract every OCR backend must fulfill. Swapping providers (cloud vision
  * APIs, on-device models, …) only requires implementing this interface and
- * registering it in the factory — nothing else in the app changes.
+ * registering it in the factory; nothing else in the app changes.
  */
 export interface OcrProvider {
   readonly id: string;

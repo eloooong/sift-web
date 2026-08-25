@@ -38,7 +38,7 @@ export const KNOWN_BRANDS: KnownBrand[] = [
   { label: "DTI", domains: ["dti.gov.ph"], tokens: ["dti"] },
 ];
 
-/** Popular URL shorteners — destination is hidden, so trust is limited. */
+/** Popular URL shorteners: destination is hidden, so trust is limited. */
 export const SHORTENER_DOMAINS = new Set([
   "bit.ly",
   "tinyurl.com",
@@ -59,7 +59,7 @@ export const SHORTENER_DOMAINS = new Set([
 
 /**
  * Cheap-trust TLDs frequently abused in phishing. Presence alone is a weak
- * signal (plenty of legitimate sites use them) — never decisive on its own.
+ * signal (plenty of legitimate sites use them), never decisive on its own.
  */
 export const HIGH_ABUSE_TLD_SUFFIXES = [
   ".xyz",

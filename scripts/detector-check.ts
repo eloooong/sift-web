@@ -58,13 +58,13 @@ const EXTRA_CASES: Array<{
   },
   {
     name: "Investment doubling pitch",
-    text: "Boss, last slot for our VIP crypto trading pool! Invest P10,000 and double your money in 30 days — guaranteed 40% return weekly! Mag-invest ka na, registration closes tonight.",
+    text: "Boss, last slot for our VIP crypto trading pool! Invest P10,000 and double your money in 30 days, guaranteed 40% return weekly! Mag-invest ka na, registration closes tonight.",
     expectMinScore: 40,
     expectCategory: "Investment Scam",
   },
   {
     name: "Romance customs-fee scam",
-    text: "Hello dear, this is Dr. James stationed abroad on a mission ship. My gift box for you is being held at customs — please send the P8,500 clearance fee so it can reach you, my love.",
+    text: "Hello dear, this is Dr. James stationed abroad on a mission ship. My gift box for you is being held at customs, please send the P8,500 clearance fee so it can reach you, my love.",
     expectMinScore: 25,
     expectCategory: "Romance Scam",
   },
@@ -164,7 +164,10 @@ assert(
   gcashReport.category?.label === "E-wallet Scam",
   "GCash sample categorized as E-wallet Scam"
 );
-const deliveryReport = analyzeMessage(EXAMPLE_SCAMS[2].sampleText);
+const deliveryExample = EXAMPLE_SCAMS.find(
+  (example) => example.id === "lazada-delivery-scam"
+);
+const deliveryReport = analyzeMessage(deliveryExample.sampleText);
 assert(
   deliveryReport.category?.label === "Delivery Scam",
   "delivery sample categorized as Delivery Scam"

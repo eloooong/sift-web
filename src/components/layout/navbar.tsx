@@ -114,7 +114,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <LanguageSwitcher className="hidden sm:inline-flex" />
-          {/* Account area — reserved space avoids layout shift while loading */}
+          {/* Account area: reserved space avoids layout shift while loading */}
           <div className="hidden items-center md:flex">
             {!loaded ? (
               <span aria-hidden="true" className="size-8 rounded-full bg-muted/60" />

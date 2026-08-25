@@ -5,7 +5,7 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
   prize: [
     "Do not reply, click links, or pay any “claim” fee.",
     "Real raffles never require payment to release winnings.",
-    "Verify with the organization’s official channels — never the contact details in the message.",
+    "Verify with the organization’s official channels, never the contact details in the message.",
   ],
   financial: [
     "Do not send money or share wallet or bank details.",
@@ -20,7 +20,7 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
   ],
   link: [
     "Do not tap the link.",
-    "Inspect the domain closely — scammers use lookalike spellings of real sites.",
+    "Inspect the domain closely; scammers use lookalike spellings of real sites.",
     "Access the service only through its official app or website.",
   ],
   job: [
@@ -29,24 +29,24 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
     "Ask for an official company email address and verify the recruiter’s identity.",
   ],
   urgency: [
-    "Slow down — artificial deadlines are a pressure tactic.",
+    "Slow down: artificial deadlines are a pressure tactic.",
     "Verify the claim through an official channel before acting on it.",
     "Talk to someone you trust before responding.",
   ],
   investment: [
     "Do not deposit money with anyone soliciting investments over chat or text.",
     "Check the company against the SEC’s advisory and registered lists (sec.gov.ph).",
-    "Guaranteed high daily returns are impossible — that promise alone is disqualifying.",
+    "Guaranteed high daily returns are impossible; that promise alone is disqualifying.",
   ],
   loan: [
-    "Never pay advance “release” fees — legitimate lenders deduct fees from proceeds.",
+    "Never pay advance “release” fees; legitimate lenders deduct fees from proceeds.",
     "Verify the lender against SEC-registered lending companies and BSP-accredited firms.",
     "Do not send ID photos or selfies to unverified lenders; they fuel identity fraud.",
   ],
   romance: [
     "Be cautious with online contacts who profess love quickly without meeting.",
     "Never pay customs, tickets, or hospital bills for someone you have not met in person.",
-    "Request a spontaneous video call — scammers consistently avoid live verification.",
+    "Request a spontaneous video call, since scammers consistently avoid live verification.",
   ],
 };
 
@@ -54,7 +54,7 @@ const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
   prize: [
     "Huwag sumagot, mag-click ng link, o magbayad ng anumang “claim” fee.",
     "Ang tunay na raffle ay hindi humihingi ng bayad bago ibigay ang premyo.",
-    "I-verify sa opisyal na channel ng organisasyon — hindi sa mga detalyeng nakasulat sa message.",
+    "I-verify sa opisyal na channel ng organisasyon, hindi sa mga detalyeng nakasulat sa message.",
   ],
   financial: [
     "Huwag magpadala ng pera o magbigay ng detalye ng e-wallet o bangko.",
@@ -69,7 +69,7 @@ const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
   ],
   link: [
     "Huwag pindutin ang link.",
-    "Suriin nang mabuti ang domain — gumagamit ang scammers ng spelling na kamukha ng tunay na site.",
+    "Suriin nang mabuti ang domain, dahil gumagamit ang scammers ng spelling na kamukha ng tunay na site.",
     "Pumasok lang sa serbisyo gamit ang opisyal na app o website nito.",
   ],
   job: [
@@ -78,42 +78,42 @@ const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
     "Humingi ng opisyal na company email at i-verify ang pagkakakilanlan ng recruiter.",
   ],
   urgency: [
-    "Huminto muna — ang artipisyal na deadline ay paraan ng panggigipit.",
+    "Huminto muna: ang artipisyal na deadline ay paraan ng panggigipit.",
     "I-verify ang claim sa opisyal na channel bago kumilos.",
     "Kausapin muna ang taong pinagkakatiwalaan mo bago sumagot.",
   ],
   investment: [
     "Huwag magdeposito sa kahit sinong naghahandog ng investimento sa chat o text.",
     "Tingnan ang company sa advisory at registered list ng SEC (sec.gov.ph).",
-    "Imposible ang garantiyang mataas na tubo araw-araw — sapat na itong dahilan para hindi ito tuloy.",
+    "Imposible ang garantiyang mataas na tubo araw-araw, at sapat na itong dahilan para hindi ito tuloy.",
   ],
   loan: [
-    "Huwag magbayad ng advance na “release” fee — binabawas ng lehitimong lender ang fee sa loob ng loan.",
+    "Huwag magbayad ng advance na “release” fee, dahil binabawas ng lehitimong lender ang fee sa loob ng loan.",
     "I-verify ang lender sa SEC-registered lending companies at BSP-accredited firms.",
     "Huwag magpadala ng ID photo o selfie sa di-veripikadong lender; ginagamit ito sa identity fraud.",
   ],
   romance: [
     "Mag-ingat sa online na kakilala na mabilis umamin ng pagmamahal nang hindi pa nagkikita.",
     "Huwag magbayad ng customs, tiket, o hospital bill para sa taong hindi mo pa personal na nakikita.",
-    "Hilingin ang spontaneous na video call — palaging iniiwasan ng scammers ang live na verification.",
+    "Hilingin ang spontaneous na video call, dahil palaging iniiwasan ng scammers ang live na verification.",
   ],
 };
 
 const SAFE_DEFAULT_ACTIONS = [
   "Stay cautious even without clear red flags.",
-  "Never share OTPs, PINs, or passwords — no legitimate company will ask for them.",
+  "Never share OTPs, PINs, or passwords, because no legitimate company will ask for them.",
 ];
 
 const SAFE_DEFAULT_ACTIONS_FIL = [
   "Manatiling mapagbantay kahit walang malinaw na red flag.",
-  "Huwag kailan magbabahagi ng OTP, PIN, o password — walang tunay na company na hihingi ng mga ito.",
+  "Huwag kailan magbabahagi ng OTP, PIN, o password dahil walang tunay na company na hihingi ng mga ito.",
 ];
 
 const OTP_ACTION =
-  "Never share OTPs, PINs, or passwords — no legitimate company will ask for them.";
+  "Never share OTPs, PINs, or passwords, because no legitimate company will ask for them.";
 
 const OTP_ACTION_FIL =
-  "Huwag kailan magbibigay ng OTP, PIN, o password — walang lehitimong company na hihingi ang mga ito.";
+  "Huwag kailan magbibigay ng OTP, PIN, o password dahil walang lehitimong company na hihingi ang mga ito.";
 
 const BLOCK_ACTION = "Block the number or account that sent this message.";
 
@@ -127,10 +127,10 @@ const REPORT_ACTION_FIL =
   "I-report ang message sa platform o telco kung saan mo natanggap.";
 
 const WARN_ACTION =
-  "Warn family and friends — especially seniors who receive these often.";
+  "Warn family and friends, especially seniors who receive these often.";
 
 const WARN_ACTION_FIL =
-  "Ipaalam sa pamilya at kaibigan — lalo na sa matatanda na madalas biktima nito.";
+  "Ipaalam sa pamilya at kaibigan, lalo na sa matatanda na madalas biktima nito.";
 
 export function buildRecommendedActions(
   primaryCategory: SignalCategoryId | null,

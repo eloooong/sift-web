@@ -24,7 +24,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "urgency.last-chance": {
     label: "\"Last chance\" / huling abiso",
     explanation:
-      "Ang banta ng \"huling pagkakataon\" ay pampressure lang — hindi ito proseso ng lehitimong serbisyo.",
+      "Ang banta ng \"huling pagkakataon\" ay pampressure lang, hindi ito proseso ng lehitimong serbisyo.",
   },
   "urgency.taglish": {
     label: "Taglish na panggigipit (\"kailangan ngayon\")",
@@ -44,7 +44,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "prize.congratulations": {
     label: "Nagsisimula sa \"Congratulations\"",
     explanation:
-      "Ang di-inaasahang congratulations ay pambungad ng scam — masasaya ka bago ka pa makapag-isip.",
+      "Ang di-inaasahang congratulations ay pambungad ng scam: masasaya ka bago ka pa makapag-isip.",
   },
   "prize.winner": {
     label: "Balitang \"nanalo ka\"",
@@ -59,7 +59,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "prize.big-money": {
     label: "Napakalaking halaga ng pera",
     explanation:
-      "Ang napakalaking premyo ay pain — luma na pero epektibo pa ring panlilinlang.",
+      "Ang napakalaking premyo ay pain, luma na pero epektibo pa ring panlilinlang.",
   },
   "prize.raffle": {
     label: "Raffle / lottery na kuwento",
@@ -79,7 +79,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "financial.fees": {
     label: "Hinihingi ang bayad / fee",
     explanation:
-      "Humihingi ang message ng bayad bago pa man makatanggap ng ano man — red flag ito.",
+      "Humihingi ang message ng bayad bago pa man makatanggap ng ano man. Red flag ito.",
   },
   "financial.ewallet": {
     label: "Bayad sa e-wallet (GCash/Maya)",
@@ -129,7 +129,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "credential.personal-info": {
     label: "Personal na impormasyon ang hiniling",
     explanation:
-      "Humingi ang message ng buong pangalan, address, o birthday — pwedeng gamitin sa identity fraud.",
+      "Humingi ang message ng buong pangalan, address, o birthday na pwedeng gamitin sa identity fraud.",
   },
   "link.click-taglish": {
     label: "Taglish na utos i-click ang link (\"i-click mo ang link\")",
@@ -144,7 +144,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "link.shortener": {
     label: "Shortened link (bit.ly at iba pa)",
     explanation:
-      "Itinatago ng shortener ang tunay na destinasyon — paboritong gamit ng scammers.",
+      "Itinatago ng shortener ang tunay na destinasyon, paboritong gamit ng scammers.",
   },
   "link.high-risk-tld": {
     label: "Kahina-hinalang domain ending (.xyz, .top, atbp.)",
@@ -164,7 +164,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "link.insecure-http": {
     label: "Hindi secure na http:// link",
     explanation:
-      "Walang encryption ang connection — hindi ligtas maglagay ng anumang personal na detalye.",
+      "Walang encryption ang connection, kaya hindi ligtas maglagay ng anumang personal na detalye.",
   },
   "job.work-from-home": {
     label: "Work-from-home na alok",
@@ -194,7 +194,7 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "investment.guaranteed-return": {
     label: "\"Guaranteed\" na tubo",
     explanation:
-      "Sa totoong mundo, walang garantiya sa investment — ang pangako ng sigurado ay scam.",
+      "Sa totoong mundo, walang garantiya sa investment, dahil ang pangako ng sigurado ay scam.",
   },
   "investment.trading-group": {
     label: "Imbitasyon sa trading/crypto group",

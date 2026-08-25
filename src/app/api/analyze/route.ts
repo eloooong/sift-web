@@ -91,7 +91,7 @@ export async function POST(request: Request) {
 
   try {
     const report = await analyzeScamText(text, { source: "text", lang });
-    // History is recorded server-side, keyed by the verified session — the
+    // History is recorded server-side, keyed by the verified session; the
     // client never sends a user identifier.
     const user = await currentUser();
     if (user) {

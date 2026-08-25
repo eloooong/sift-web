@@ -75,7 +75,7 @@ export function formatToMimeType(format: ScreenshotFormat): string {
   return FORMAT_TO_MIME[format];
 }
 
-/** Magic-byte sniffing — never trust the declared MIME type alone. */
+/** Magic-byte sniffing; never trust the declared MIME type alone. */
 export function detectImageType(bytes: Uint8Array): ScreenshotFormat | null {
   // PNG: 89 50 4E 47 0D 0A 1A 0A
   if (

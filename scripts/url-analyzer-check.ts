@@ -1,5 +1,5 @@
 /**
- * Phase 7 sanity checks for the URL security scanner (pure logic only —
+ * Phase 7 sanity checks for the URL security scanner (pure logic only,
  * no network). Run with:
  *   npx tsx scripts/url-analyzer-check.ts
  */

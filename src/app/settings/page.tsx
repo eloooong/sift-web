@@ -70,7 +70,7 @@ export default async function SettingsPage() {
               <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success" />
               <p className="max-w-sm text-xs leading-relaxed text-muted-foreground">
                 Your scan history is private to this account and is checked
-                server-side on every request — signed-out visitors and other
+                server-side on every request; signed-out visitors and other
                 accounts can never read it.
               </p>
             </div>

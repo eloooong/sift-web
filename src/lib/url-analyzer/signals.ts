@@ -97,7 +97,7 @@ export function detectSignals({ parts, fullUrl }: SignalContext): {
       severity: "medium",
       weight: 14,
       explanation:
-        "Anything you type into an HTTP site — passwords, OTPs, personal details — travels unencrypted and can be intercepted. Legitimate login and payment pages are always HTTPS.",
+        "Anything you type into an HTTP site (passwords, OTPs, personal details) travels unencrypted and can be intercepted. Legitimate login and payment pages are always HTTPS.",
       evidence: `${protocol}://${hostname}`,
     });
   }
@@ -135,7 +135,7 @@ export function detectSignals({ parts, fullUrl }: SignalContext): {
       severity: "medium",
       weight: 16,
       explanation:
-        "Punycode domains can visually imitate familiar letters using look-alike characters from other alphabets — a classic brand-spoofing trick.",
+        "Punycode domains can visually imitate familiar letters using look-alike characters from other alphabets, a classic brand-spoofing trick.",
       evidence: hostname,
     });
   }
@@ -261,7 +261,7 @@ export function detectSignals({ parts, fullUrl }: SignalContext): {
       severity: "low",
       weight: 10,
       explanation:
-        "Endings like .xyz, .top, or .site cost pennies and need no verification, so scammers churn through them. Many legitimate sites use them too — this only matters alongside other signals.",
+        "Endings like .xyz, .top, or .site cost pennies and need no verification, so scammers churn through them. Many legitimate sites use them too; this only matters alongside other signals.",
       evidence: hostname.slice(hostname.lastIndexOf(".")),
     });
   }
@@ -278,7 +278,7 @@ export function detectSignals({ parts, fullUrl }: SignalContext): {
       severity: "medium",
       weight: doubleEncoded ? 18 : 12,
       explanation:
-        "Heavy %xx encoding — especially double encoding — is used to disguise where a link really goes and to slip past security filters.",
+        "Heavy %xx encoding (especially double encoding) is used to disguise where a link really goes and to slip past security filters.",
       evidence: doubleEncoded ? "%25…" : undefined,
     });
   }
@@ -306,7 +306,7 @@ export function detectSignals({ parts, fullUrl }: SignalContext): {
       severity: redirectLooksExternal ? "high" : "low",
       weight: redirectLooksExternal ? 22 : 6,
       explanation: redirectLooksExternal
-        ? "This link immediately forwards you somewhere else — a common way to bounce victims through an innocent-looking address to a phishing page."
+        ? "This link immediately forwards you somewhere else, a common way to bounce victims through an innocent-looking address to a phishing page."
         : "Parameters that control redirects, tokens, or one-time codes can be abused to hijack the destination or replay stolen session material.",
       evidence: redirectLooksExternal && redirectValue ? `${redirectValue.name}=${redirectValue.value.slice(0, 60)}` : riskyParams.join(", "),
     });

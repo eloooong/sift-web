@@ -120,15 +120,15 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
       <div className="grid grid-cols-3 gap-3">
         <StatBlock
           label="Reports"
-          value={feed ? String(feed.meta.approvedCount) : "—"}
+          value={feed ? String(feed.meta.approvedCount) : "-"}
         />
         <StatBlock
           label="Confirmations"
-          value={feed ? String(feed.meta.totalConfirmations) : "—"}
+          value={feed ? String(feed.meta.totalConfirmations) : "-"}
         />
         <StatBlock
           label="In review"
-          value={feed ? String(feed.meta.awaitingReview) : "—"}
+          value={feed ? String(feed.meta.awaitingReview) : "-"}
         />
       </div>
 
@@ -242,7 +242,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
           <p className="mt-1 text-sm text-muted-foreground">
             {hasActiveFilters
               ? "Try loosening the search or filters."
-              : "Be the first to warn others — submit a report."}
+              : "Be the first to warn others; submit a report."}
           </p>
         </div>
       ) : (

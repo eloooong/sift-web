@@ -3,7 +3,7 @@
  *
  * Keys are opaque (hashed IP + UA) and never persisted or returned to
  * clients. State lives on globalThis so Next.js dev HMR doesn't reset it,
- * and it is intentionally volatile — a restart clears all limits.
+ * and it is intentionally volatile: a restart clears all limits.
  */
 
 type Bucket = number[];

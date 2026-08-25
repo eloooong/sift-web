@@ -14,7 +14,7 @@ export const SESSION_COOKIE = "ss_session";
 /**
  * Read the signed-in user from the session cookie, or null.
  * Safe in server components and route handlers. The cookie is httpOnly, so
- * client code can never impersonate a user — everything derives from this.
+ * client code can never impersonate a user; everything derives from this.
  */
 export async function currentUser(): Promise<PublicUser | null> {
   const cookieStore = await cookies();
@@ -26,7 +26,7 @@ export async function currentUser(): Promise<PublicUser | null> {
 }
 
 /**
- * Page guard — redirects unauthenticated visitors to the sign-in screen with
+ * Page guard: redirects unauthenticated visitors to the sign-in screen with
  * a `next` parameter so they land back here after authenticating.
  */
 export async function requireUser(returnTo: string): Promise<PublicUser> {

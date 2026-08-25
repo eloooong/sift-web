@@ -266,7 +266,7 @@ function ShieldCheckIcon() {
   return (
     <>
       <Link2 aria-hidden="true" className="size-3.5" />
-      Analyzed structurally — never visited
+      Analyzed structurally, never visited
     </>
   );
 }

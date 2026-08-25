@@ -1,7 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 
 /**
- * In-memory auth store — ScamShield PH has no database yet.
+ * In-memory auth store: ScamShield PH has no database yet.
  *
  * Accounts and sessions live in server memory attached to globalThis (survives
  * dev hot-reloads; a server restart signs everyone out). Passwords are stored

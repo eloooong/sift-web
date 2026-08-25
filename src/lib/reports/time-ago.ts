@@ -19,7 +19,7 @@ const MONTHS_SHORT = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ] as const;
 
-/** "Aug 24, 2026" — deterministic formatting without locale drift. */
+/** "Aug 24, 2026": deterministic formatting without locale drift. */
 export function formatDay(iso: string): string {
   const date = new Date(iso.length === 10 ? `${iso}T00:00:00Z` : iso);
   return `${MONTHS_SHORT[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;

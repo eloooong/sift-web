@@ -13,7 +13,7 @@ import { getDashboardData } from "@/lib/dashboard/demo-data";
 export const metadata: Metadata = {
   title: "Dashboard",
   description:
-    "ScamShield PH analytics — scan volume, high-risk detections, scam category breakdowns, and recent activity across the platform.",
+    "ScamShield PH analytics: scan volume, high-risk detections, scam category breakdowns, and recent activity across the platform.",
 };
 
 export default function DashboardPage() {
@@ -38,7 +38,7 @@ export default function DashboardPage() {
                 Scam Intelligence Dashboard
               </h1>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                What the shield is seeing right now — scan volume, threat mix,
+                What the shield is seeing right now: scan volume, threat mix,
                 and where risk is concentrating for Filipino users.
               </p>
             </div>
@@ -63,7 +63,7 @@ export default function DashboardPage() {
                 Demo dataset.
               </span>{" "}
               ScamShield doesn&apos;t persist scans yet, so every figure below
-              is generated seed data for preview purposes — not live production
+              is generated seed data for preview purposes, not live production
               statistics.
             </p>
           </aside>

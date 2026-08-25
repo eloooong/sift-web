@@ -25,10 +25,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const report = getApprovedReport(id);
-  if (!report) return { title: "Report not found — ScamShield PH" };
+  if (!report) return { title: "Report not found | ScamShield PH" };
   const category = scamCategoryById(report.categoryId);
   return {
-    title: `${category.label} report ${report.id} — ScamShield PH`,
+    title: `${category.label} report ${report.id} | ScamShield PH`,
     description: report.shortDescription,
   };
 }
@@ -47,7 +47,7 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
       initiallyConfirmed = true;
     }
   } catch {
-    // Cookie access unavailable — treat as not confirmed.
+    // Cookie access unavailable; treat as not confirmed.
   }
 
   const category = scamCategoryById(report.categoryId);
@@ -155,7 +155,7 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
         <div className="mt-6 rounded-xl border border-dashed p-5">
           <h2 className="text-sm font-semibold">Received something similar?</h2>
           <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-            Don&apos;t engage — run it through the{" "}
+            Don&apos;t engage; run it through the{" "}
             <Link href="/" className="underline hover:text-foreground">
               scanner
             </Link>{" "}

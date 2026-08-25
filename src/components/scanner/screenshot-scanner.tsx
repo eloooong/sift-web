@@ -343,7 +343,7 @@ export function ScreenshotScanner() {
                 <p className="mx-auto mt-1.5 max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
                   Take a screenshot of the suspicious message, drop it above,
                   and we extract the text with OCR before running the full
-                  scam analysis — same engine, same explainable report.
+                  scam analysis: same engine, same explainable report.
                 </p>
               </div>
             </CardContent>

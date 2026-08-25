@@ -53,7 +53,7 @@ export type CommunityReport = {
   platform: ReportPlatform;
   description: string;
   shortDescription: string;
-  /** Masked scammer handle/domain — never the reporter's own details. */
+  /** Masked scammer handle/domain, never the reporter's own details. */
   sender: string | null;
   screenshot: StoredScreenshot | null;
   encounteredAt: string;
@@ -68,7 +68,7 @@ export type CommunityReport = {
   rejectionReason: string | null;
 };
 
-/** What the public feed receives — no internals, no screenshot payloads. */
+/** What the public feed receives: no internals, no screenshot payloads. */
 export type PublicReportSummary = {
   id: string;
   categoryId: ScamCategoryId;

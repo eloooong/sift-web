@@ -17,7 +17,7 @@ const VERDICT_SUMMARIES: Record<UrlVerdict, (domain: string) => string> = {
   caution: (domain) =>
     `“${domain}” raised minor concerns but nothing decisive. Open it only if you expected it, and double-check the domain spelling before entering any information.`,
   "no-signals": (domain) =>
-    `No structural red flags were found in “${domain}”. This checks the address itself — it cannot see the page content, so stay alert after opening any link.`,
+    `No structural red flags were found in “${domain}”. This checks the address itself; it cannot see the page content, so stay alert after opening any link.`,
   blocked: () =>
     "This input isn't a web address we can analyze. Only http/https links are supported.",
 };
@@ -51,7 +51,7 @@ function buildActions(
 
   if (isShortener) {
     actions.push(
-      "Expand the short link first — most shorteners show the real destination if you add “+” to the end of the URL."
+      "Expand the short link first: most shorteners show the real destination if you add “+” to the end of the URL."
     );
   }
   if (verdict === "dangerous" || verdict === "suspicious") {
@@ -59,7 +59,7 @@ function buildActions(
       "Do not click this link; type the service's official address yourself instead."
     );
     actions.push(
-      "Log in only through the official app or by typing the known domain — never through links that arrive by SMS or chat."
+      "Log in only through the official app or by typing the known domain, never through links that arrive by SMS or chat."
     );
     actions.push(
       "Report the link to the platform that delivered it and to the impersonated company's official support channel."
@@ -88,7 +88,7 @@ function buildActionsFil(verdict: UrlVerdict, isShortener: boolean): string[] {
 
   if (isShortener) {
     actions.push(
-      "Palawakin muna ang short link — kadalasang ipinapakita ng mga shortener ang tunay na destinasyon kapag dinagdag mo ang “+” sa dulo ng URL."
+      "Palawakin muna ang short link: kadalasang ipinapakita ng mga shortener ang tunay na destinasyon kapag dinagdag mo ang “+” sa dulo ng URL."
     );
   }
   if (verdict === "dangerous" || verdict === "suspicious") {
@@ -96,7 +96,7 @@ function buildActionsFil(verdict: UrlVerdict, isShortener: boolean): string[] {
       "Huwag i-click ang link; i-type mo mismo ang opisyal na address ng serbisyo."
     );
     actions.push(
-      "Mag-log in lang sa opisyal na app o sa pag-type ng kilalang domain — hindi sa mga link na dumating sa SMS o chat."
+      "Mag-log in lang sa opisyal na app o sa pag-type ng kilalang domain, hindi sa mga link na dumating sa SMS o chat."
     );
     actions.push(
       "I-report ang link sa platform kung saan ito dumating at sa opisyal na support channel ng inimpersonate na company."
@@ -139,8 +139,8 @@ function blockedReport(
     riskLevel: "low",
     verdict: "blocked",
     summary: fil
-      ? `${scheme ? `Hindi web address ang “${scheme}:” na link` : "Hindi ito web address na kayang suriin"} — tanging http/https link lang ang sinusuportahan.`
-      : `${scheme ? `“${scheme}:” links are not web addresses` : "This isn’t a web address we can analyze"} — only http/https links are supported.`,
+      ? `${scheme ? `Hindi web address ang “${scheme}:” na link` : "Hindi ito web address na kayang suriin"}, tanging http/https link lang ang sinusuportahan.`
+      : `${scheme ? `“${scheme}:” links are not web addresses` : "This isn’t a web address we can analyze"}; only http/https links are supported.`,
     signals: [
       {
         id: "dangerous-scheme",

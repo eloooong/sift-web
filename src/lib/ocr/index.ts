@@ -6,7 +6,7 @@ export type { OcrErrorKind, OcrProvider, OcrResult } from "./types";
 
 /**
  * Registry of OCR backends. To add a provider, implement `OcrProvider` and
- * register it here — callers stay untouched.
+ * register it here; callers stay untouched.
  */
 const PROVIDERS: Record<string, () => OcrProvider> = {
   tesseract: () => createTesseractProvider(),

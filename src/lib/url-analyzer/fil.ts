@@ -4,7 +4,7 @@ export const URL_SIGNAL_FIL: Record<string, UrlSignalCopy> = {
   "insecure-transport": {
     label: "Hindi secure na http:// link",
     explanation:
-      "Walang encryption ang connection — hindi ligtas maglagay ng anumang personal na detalye dito.",
+      "Walang encryption ang connection, kaya hindi ligtas maglagay ng anumang personal na detalye dito.",
   },
   "ip-literal-host": {
     label: "IP address ang host",
@@ -24,7 +24,7 @@ export const URL_SIGNAL_FIL: Record<string, UrlSignalCopy> = {
   "embedded-credentials": {
     label: "May username/password sa link mismo",
     explanation:
-      "May nakaipit na login details ang link — karaniwang paraan ito para linlangin ang mga tao.",
+      "May nakaipit na login details ang link, karaniwang paraan ito para linlangin ang mga tao.",
   },
   "unusual-port": {
     label: "Di-karaniwang port number",
@@ -39,7 +39,7 @@ export const URL_SIGNAL_FIL: Record<string, UrlSignalCopy> = {
   "shortened-url": {
     label: "Shortened link (bit.ly at iba pa)",
     explanation:
-      "Itinatago ng shortener ang tunay na destinasyon — paboritong gamit ng scammers.",
+      "Itinatago ng shortener ang tunay na destinasyon, paboritong gamit ng scammers.",
   },
   "brand-lookalike": {
     label: "Kamukha ng opisyal na brand",
@@ -53,7 +53,7 @@ export const URL_SIGNAL_FIL: Record<string, UrlSignalCopy> = {
   "suspicious-keywords": {
     label: "Kahina-hinalang mga salita sa link",
     explanation:
-      "May mga salita tulad ng \"login\", \"verify\", o \"free\" sa URL — madalas gamitin sa phishing page.",
+      "May mga salita tulad ng \"login\", \"verify\", o \"free\" sa URL, na madalas gamitin sa phishing page.",
   },
   "suspicious-tld": {
     label: "Kahina-hinalang domain ending (.xyz, .top, atbp.)",
@@ -88,7 +88,7 @@ export const URL_SIGNAL_FIL: Record<string, UrlSignalCopy> = {
   "reputation-clean": {
     label: "Wala sa listahan ng banta",
     explanation:
-      "Walang naitalang banta sa address na ito sa Google Safe Browsing. Hindi pa rin ito garantiya — maaari pa ring bagong gawa ang scam site.",
+      "Walang naitalang banta sa address na ito sa Google Safe Browsing. Hindi pa rin ito garantiya, dahil maaari pa ring bagong gawa ang scam site.",
   },
 };
 
@@ -103,7 +103,7 @@ export const VERDICT_SUMMARY_FIL: Record<
   caution: (domain) =>
     `May maliliit na bahala sa “${domain}” pero walang paniniyak. Buksan lang kung inaasahan mo ito, at i-double-check ang spelling ng domain bago maglagay ng anumang impormasyon.`,
   "no-signals": (domain) =>
-    `Walang natukoy na istruktural na red flag sa “${domain}”. Sinusuri lang nito ang address mismo — hindi nito nakikita ang laman ng page, kaya manatiling alerto pagkatapos buksan ang link.`,
+    `Walang natukoy na istruktural na red flag sa “${domain}”. Sinusuri lang nito ang address mismo, hindi nito nakikita ang laman ng page, kaya manatiling alerto pagkatapos buksan ang link.`,
   blocked: () =>
     "Hindi ito web address na kayang suriin. Tanging http/https link lang ang sinusuportahan.",
 };

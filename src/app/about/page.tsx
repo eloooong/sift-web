@@ -49,7 +49,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="About"
           title="Fighting scams, one message at a time"
-          description="ScamShield PH exists because scam messages in the Philippines are not an edge case — they are a daily reality in every inbox, SMS thread, and Messenger chat."
+          description="ScamShield PH exists because scam messages in the Philippines are not an edge case: they are a daily reality in every inbox, SMS thread, and Messenger chat."
         />
       </FadeIn>
 
@@ -68,12 +68,12 @@ export default function AboutPage() {
               mysterious “this is a scam” verdict, every analysis explains
               itself: a risk score, the detected scam category, the specific
               red flags found in the message, and clear next steps you can act
-              on — written so students, parents, and senior citizens can all
+              on, written so students, parents, and senior citizens can all
               understand them.
             </p>
             <p>
               The project is independent and educational. When analysis flags
-              an impersonated brand, that brand is the victim of imitation —
+              an impersonated brand, that brand is the victim of imitation,
               never the suspect.
             </p>
           </CardContent>
@@ -106,7 +106,7 @@ export default function AboutPage() {
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Examples, patterns, and language are grounded in how scams
-            actually reach people in the Philippines — including Taglish
+            actually reach people in the Philippines, including Taglish
             phrasing.
           </p>
           <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -129,7 +129,7 @@ export default function AboutPage() {
           <Scale className="mt-0.5 size-4 shrink-0 text-amber-600" />
           <p className="text-xs leading-relaxed text-amber-900">
             <span className="font-medium">Honest-use disclaimer.</span>{" "}
-            ScamShield PH is an independent educational tool — not legal,
+            ScamShield PH is an independent educational tool, not legal,
             financial, or security advice. It is not affiliated with GCash,
             Maya, any bank, Shopee, Lazada, LBC, J&amp;T Express, Grab, or any
             government agency; those names appear only as examples of brands

@@ -33,7 +33,7 @@ export function ProfileForm({
         const message =
           body && "error" in body && body.error
             ? body.error.message
-            : "Couldn't save — please try again.";
+            : "Couldn't save. Please try again.";
         setError(message);
         setState("idle");
         return;
@@ -41,7 +41,7 @@ export function ProfileForm({
       setState("saved");
       router.refresh();
     } catch {
-      setError("Network error — please try again.");
+      setError("Network error. Please try again.");
       setState("idle");
     }
   }
@@ -114,7 +114,7 @@ export function PasswordForm() {
         const message =
           body && "error" in body && body.error
             ? body.error.message
-            : "Couldn't change password — please try again.";
+            : "Couldn't change password. Please try again.";
         setError(message);
         return;
       }
@@ -122,7 +122,7 @@ export function PasswordForm() {
       setCurrentPassword("");
       setNewPassword("");
     } catch {
-      setError("Network error — please try again.");
+      setError("Network error. Please try again.");
     } finally {
       setSubmitting(false);
     }

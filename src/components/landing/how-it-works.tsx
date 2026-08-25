@@ -68,7 +68,7 @@ export function HowItWorks() {
           <Info className="mt-0.5 size-4 shrink-0 text-warning" />
           <p className="text-sm leading-relaxed text-muted-foreground">
             <span className="font-medium text-foreground">Hybrid analysis.</span> Every scan
-            runs an AI analyst alongside ScamShield’s transparent rule engine —
+            runs an AI analyst alongside ScamShield’s transparent rule engine;
             points still come from named, weighted red flags, and the AI
             explains its findings in plain language.
           </p>

@@ -27,7 +27,7 @@ function jsonError(status: number, code: string, message: string) {
  * 1. SSRF: the analyzed URL is parsed as a *string* only. This codebase never
  *    fetches it, resolves its DNS, follows redirects, or opens sockets to it.
  *    The sole outbound request goes to the reputation provider's fixed API
- *    endpoint, which receives the URL as JSON data — see
+ *    endpoint, which receives the URL as JSON data; see
  *    src/lib/url-analyzer/reputation/types.ts.
  *
  * 2. Protocol allowlist: only http/https inputs are accepted for analysis.
@@ -39,10 +39,10 @@ function jsonError(status: number, code: string, message: string) {
  *
  * 4. No internal-network probing: because nothing is ever requested from the
  *    target host, internal addresses (localhost, 169.254.x.x, RFC1918) can
- *    only ever be *described* in a report — never contacted.
+ *    only ever be *described* in a report, never contacted.
  *
  * 5. Reputation privacy: URLs pointing at internal/loopback hosts are never
- *    sent to the third-party reputation provider — the lookup is skipped so
+ *    sent to the third-party reputation provider; the lookup is skipped so
  *    internal hostnames and addresses never leave the server.
  */
 export async function POST(request: Request) {
@@ -102,7 +102,7 @@ export async function POST(request: Request) {
     );
   }
 
-  // Protocol allowlist — first line of defense before any parsing work.
+  // Protocol allowlist; first line of defense before any parsing work.
   const probe = parseUrl(trimmed);
   if (
     probe.ok &&

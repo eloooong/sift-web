@@ -63,7 +63,7 @@ const EXAMPLE_SEEDS = [
     summary:
       "A message forwarding you a real one-time PIN, then tricking you into \"confirming\" or sending it back so the scammer can take over your wallet.",
     summaryFil:
-      "Ipinapadala sa iyo ang tunay na OTP code tapos pinipilit kang \"i-confirm\" o ipadala pabalik —” para magamit ng scammer ang account mo.",
+      "Ipinapadala sa iyo ang tunay na OTP code tapos pinipilit kang \"i-confirm\" o ipadala pabalik para magamit ng scammer ang account mo.",
     redFlags: [
       "One-time PIN included in the text",
       "Urgent request to reply or confirm",
@@ -82,7 +82,7 @@ const EXAMPLE_SEEDS = [
     summary:
       "A shopping-app impersonation claiming free reward points that must be \"claimed\" through a lookalike page asking for your login.",
     summaryFil:
-      "Kunwari customer service ng shopping app, nagbibigay daw ng libreng points —” pero ang \"claim page\" ay nangongolekta ng login mo.",
+      "Kunwari customer service ng shopping app, nagbibigay daw ng libreng points, pero ang \"claim page\" ay nangongolekta ng login mo.",
     redFlags: [
       "Reward points you never earned",
       "Lookalike domain (shopee-ph.club)",
@@ -195,7 +195,7 @@ const EXAMPLE_SEEDS = [
     summary:
       "A too-eager Marketplace \"buyer\" who insists on paying through a link that actually steals your e-wallet login.",
     summaryFil:
-      "\"Buyer\" sa Marketplace na sobrang eager magbayad pero sa link daw —” kunwari payout page, peke pala at nangongolekta ng e-wallet login mo.",
+      "\"Buyer\" sa Marketplace na sobrang eager magbayad pero sa link daw, kunwari payout page, peke pala at nangongolekta ng e-wallet login mo.",
     redFlags: [
       "Buyer refuses to meet or use in-app checkout",
       "\"Claim your payment\" link before any sale",
@@ -203,7 +203,7 @@ const EXAMPLE_SEEDS = [
       "Rushed, scripted messages",
     ],
     sampleText:
-      "Hi po! Ako po yung interested buyer ng iPhone mo sa FB Marketplace. Confirmed po ako buy. Para safe po tayo, send ko muna ang full payment through this official GCash payout portal: https://gcash-payout-secure.cyou/claim —” just log in with your mobile number and MPIN para makuha mo agad ang pera bago ko pa i-book ang rider bukas.",
+      "Hi po! Ako po yung interested buyer ng iPhone mo sa FB Marketplace. Confirmed po ako buy. Para safe po tayo, send ko muna ang full payment through this official GCash payout portal: https://gcash-payout-secure.cyou/claim. Just log in with your mobile number and MPIN para makuha mo agad ang pera bago ko pa i-book ang rider bukas.",
   },
 ] as const;
 

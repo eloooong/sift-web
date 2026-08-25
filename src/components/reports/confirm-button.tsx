@@ -25,7 +25,7 @@ export function ConfirmButton({
     if (confirmed || busy) return;
     setBusy(true);
     setError(false);
-    // Optimistic — rolled back if the server disagrees.
+    // Optimistic; rolled back if the server disagrees.
     setConfirmed(true);
     setCount((value) => value + 1);
 
@@ -70,7 +70,7 @@ export function ConfirmButton({
       </button>
       {error ? (
         <span role="alert" className="text-[11px] text-danger">
-          Couldn&apos;t confirm — try again.
+          Couldn&apos;t confirm. Try again.
         </span>
       ) : null}
     </span>

@@ -55,8 +55,8 @@ export default function ScannerPage() {
                 Explainable hybrid engine.
               </span>{" "}
               The rule-engine pre-scan contributes named, weighted points,
-              while the AI analyst explains its findings in plain language —
-              no black box.
+              while the AI analyst explains its findings in plain language,
+              with no black box.
             </p>
           </div>
         </div>

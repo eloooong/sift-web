@@ -46,7 +46,7 @@ export const ALLOWED_PROTOCOLS = ["http:", "https:"] as const;
 export function normalizeInputUrl(raw: string): string {
   const trimmed = raw.trim().replace(/\s+/g, "");
   if (!trimmed) return "";
-  // Assume https when the user omits the scheme — but keep the original
+  // Assume https when the user omits the scheme, but keep the original
   // protocol visible in the report when they explicitly typed one.
   if (!/^[a-z][a-z0-9+.-]*:/i.test(trimmed)) {
     return `https://${trimmed}`;
@@ -84,7 +84,7 @@ export function parseUrl(rawInput: string): ParseOutcome {
     suffixLength = Math.min(3, labels.length);
   }
   if (labels.length < suffixLength + 1) {
-    // e.g. "localhost" or single-label hosts — treat whole host as domain.
+    // e.g. "localhost" or single-label hosts; treat whole host as domain.
     suffixLength = labels.length;
   }
 

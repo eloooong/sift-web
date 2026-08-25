@@ -69,7 +69,7 @@ export function ScannerProgress({
             </p>
             <p className="text-xs text-muted-foreground">
               {variant === "screenshot"
-                ? "OCR plus the full analysis pipeline — this can take up to a minute."
+                ? "OCR plus the full analysis pipeline; this can take up to a minute."
                 : "This usually takes a few seconds."}
             </p>
           </div>

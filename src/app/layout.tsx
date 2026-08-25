@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ScamShield PH — AI-powered scam detection for Filipinos",
+    default: "ScamShield PH: AI-powered scam detection for Filipinos",
     template: "%s · ScamShield PH",
   },
   description:

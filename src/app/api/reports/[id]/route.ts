@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * Public detail payload. Internals (anon confirmation tokens, moderation
- * bookkeeping) are deliberately omitted — only whitelisted fields ship.
+ * bookkeeping) are deliberately omitted; only whitelisted fields ship.
  */
 export async function GET(
   _request: Request,

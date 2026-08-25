@@ -3,7 +3,7 @@ import type { UrlReport } from "@/lib/url-analyzer";
 import { randomBytes } from "node:crypto";
 
 /**
- * Per-user scan history — in-memory (globalThis), consistent with the rest of
+ * Per-user scan history, in-memory (globalThis), consistent with the rest of
  * the demo. Entries are ONLY ever created/read/deleted through the helpers
  * below, which always scope by userId; API routes never accept a client-side
  * user identifier.
@@ -135,7 +135,7 @@ export function deleteUserHistoryEntry(
   userId: string,
   entryId: string
 ): boolean {
-  // Check ownership first — delete must never succeed cross-user.
+  // Check ownership first; delete must never succeed cross-user.
   if (!getUserHistoryEntry(userId, entryId)) return false;
   historyStore.entries.delete(entryId);
   return true;

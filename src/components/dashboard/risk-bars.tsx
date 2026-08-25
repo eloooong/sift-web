@@ -83,7 +83,7 @@ export function RiskBars({ risks }: { risks: RiskSlice[] }) {
 
           return (
             <g key={risk.level} className="group">
-              <title>{`${risk.label}: ${formatInt(risk.count)} scans — ${risk.description}`}</title>
+              <title>{`${risk.label}: ${formatInt(risk.count)} scans, ${risk.description}`}</title>
 
               {/* Invisible hover target spanning the full band */}
               <rect

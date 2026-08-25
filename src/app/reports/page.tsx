@@ -5,7 +5,7 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { ReportsView } from "@/components/reports/reports-view";
 
 export const metadata: Metadata = {
-  title: "Community Reports — ScamShield PH",
+  title: "Community Reports | ScamShield PH",
   description:
     "Browse anonymized scam reports from the community or submit your own. Every report is reviewed before it appears publicly.",
 };

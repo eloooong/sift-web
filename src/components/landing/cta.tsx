@@ -19,7 +19,7 @@ export function CtaSection() {
           </h2>
           <p className="relative mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-300 text-pretty sm:text-base">
             The next time a suspicious message lands, you’ll know exactly what
-            to do. Check it with ScamShield — free, fast, and explained in
+            to do. Check it with ScamShield: free, fast, and explained in
             plain language.
           </p>
           <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3">
