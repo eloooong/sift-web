@@ -226,6 +226,26 @@ export const SIGNAL_FIL: Record<string, SignalCopy> = {
     explanation:
       "Ang kwentong package o papeles mula ibang bansa ay sinusundan ng hingi ng bayad sa customs.",
   },
+  "prize.telco-rewards": {
+    label: "Peke na telco reward-points expiry",
+    explanation:
+      "Ang \"reward points expire today\" na text ay nagpapanggap na Smart/Globe promo para dalhin ka sa pekeng redemption page.",
+  },
+  "gambling.casino-games": {
+    label: "Promo ng casino / slots",
+    explanation:
+      "Ang mga text na nag-a-advertise ng online casino at slots ay humahantong sa di-lisensyadong betting sites.",
+  },
+  "gambling.deposit-bonus": {
+    label: "Betting deposit-bonus promo",
+    explanation:
+      "Ang \"welcome/deposit bonus\" na promos sa text ay pang-akit ng ilegal na betting sites para magdeposito ka.",
+  },
+  "gambling.bet-invite": {
+    label: "Imbitasyong tumaya sa unknown site",
+    explanation:
+      "Ang pag-register para tumaya sa site mula sa random na text ay pagpapadala ng pera sa hindi regulated na operator.",
+  },
   "intel.community-number": {
     label: "Numero na nasa community scam database",
     explanation:
@@ -243,5 +263,6 @@ export const BREAKDOWN_LABEL_FIL: Record<string, string> = {
   investment: "Pangako ng investimento",
   loan: "Loan na may fee",
   romance: "Romance manipulation",
+  gambling: "Taya at bonus promo",
   intel: "Intel mula sa komunidad",
 };

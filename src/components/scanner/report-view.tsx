@@ -18,6 +18,7 @@ import {
   Info,
   KeyRound,
   Link2,
+  Dices,
   PhoneOff,
   Quote,
   RotateCcw,
@@ -56,6 +57,7 @@ const CATEGORY_ICONS: Record<SignalCategoryId, LucideIcon> = {
   investment: TrendingUp,
   loan: HandCoins,
   romance: Heart,
+  gambling: Dices,
   intel: PhoneOff,
 };
 

@@ -12,6 +12,7 @@ export type SignalCategoryId =
   | "investment"
   | "loan"
   | "romance"
+  | "gambling"
   | "intel";
 
 export type DetectedSignal = {

@@ -75,6 +75,24 @@ const EXTRA_CASES: Array<{
     expectCategory: "Phishing",
   },
   {
+    name: "Betting-site deposit-bonus spam",
+    text: "GOOD NEWS! Register now and claim your welcome bonus up to P8,888 at gojackpot5.icu! Play online casino slots with free spins, deposit bonus araw-araw. Trusted website betting!",
+    expectMinScore: 45,
+    expectCategory: "Other Scam Pattern",
+  },
+  {
+    name: "Telco reward-points expiry phishing",
+    text: "Smart Prepaid: Your reward points (2,450) expire today! Redeem your gift before midnight at smartst.click/redeem. Register your number to claim.",
+    expectMinScore: 50,
+    expectCategory: "Phishing",
+  },
+  {
+    name: "Taglish earn-while-watching task scam",
+    text: "Kumita habang nanonood ng youtube o kahit tulog ka! Kumita ka ng hanggang P800 bawat araw, simple tasks lang. Makipag-ugnayan sa tutor namin dito: http://tutor-kita.online",
+    expectMinScore: 40,
+    expectCategory: "Online Job Scam",
+  },
+  {
     name: "Benign normal message",
     text: "Hi Ate, dito na yung padala ko bukas sa bahay ni Nanay. Salamat ha! Ingat ka lagi.",
     expectMaxScore: 19,

@@ -25,6 +25,7 @@ const BREAKDOWN_LABELS: Record<SignalCategoryId, string> = {
   investment: "Investment promises",
   loan: "Loan-fee demands",
   romance: "Romance manipulation",
+  gambling: "Betting & bonus promos",
   intel: "Community threat intel",
 };
 

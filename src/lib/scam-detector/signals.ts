@@ -19,7 +19,7 @@ export type SignalDefinition = {
 const URL_REGEX = /\b(?:https?:\/\/|www\.)[^\s<>"']+/gi;
 
 const BARE_DOMAIN_REGEX =
-  /\b(?:[a-z0-9-]+\.)+(?:com|net|org|ph|info|xyz|top|site|online|club|link|live|buzz|click|io|co)\b(?:\/[^\s<>"']*)?/gi;
+  /\b(?:[a-z0-9-]+\.)+(?:com|net|org|ph|info|xyz|top|site|online|club|link|live|buzz|click|io|co|icu|cyou|bond|shop|help|bid)\b(?:\/[^\s<>"']*)?/gi;
 
 const URL_SHORTENER_HOSTS = new Set([
   "bit.ly",
@@ -44,6 +44,13 @@ const HIGH_RISK_TLDS = new Set([
   "buzz",
   "click",
   "live",
+  // Observed repeatedly in the PH spam-SMS corpus:
+  "icu",
+  "cyou",
+  "bond",
+  "shop",
+  "help",
+  "bid",
 ]);
 
 const OFFICIAL_BRAND_DOMAINS = [
@@ -63,6 +70,8 @@ const OFFICIAL_BRAND_DOMAINS = [
   "grab.com",
   "sss.gov.ph",
   "pagcor.com.ph",
+  "globe.com.ph",
+  "smart.com.ph",
 ];
 
 const IMPERSONATED_BRAND_TOKENS = [
@@ -78,6 +87,45 @@ const IMPERSONATED_BRAND_TOKENS = [
   "lazada",
   "grab",
 ];
+
+/**
+ * Telco brands whose names are common English words, so they are matched
+ * against host segments with a small edit-distance allowance instead of
+ * plain substring checks. This catches typosquats like "glocbe-ph.com".
+ */
+const TELCO_BRAND_SEGMENTS = ["globe", "smart"];
+
+function levenshtein(a: string, b: string): number {
+  const previous = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    let diagonal = previous[0];
+    previous[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const above = previous[j];
+      previous[j] = Math.min(
+        previous[j] + 1,
+        previous[j - 1] + 1,
+        diagonal + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+      diagonal = above;
+    }
+  }
+  return previous[b.length];
+}
+
+function looksLikeTelcoTyposquat(host: string): boolean {
+  return host
+    .toLowerCase()
+    .split(/[.-]/)
+    .some(
+      (segment) =>
+        segment.length >= 5 &&
+        TELCO_BRAND_SEGMENTS.some((brand) => {
+          const distance = levenshtein(segment, brand);
+          return distance > 0 && distance <= 2;
+        })
+    );
+}
 
 function extractUrls(text: string): string[] {
   const matches = [...text.matchAll(URL_REGEX), ...text.matchAll(BARE_DOMAIN_REGEX)];
@@ -313,6 +361,23 @@ export const SIGNALS: SignalDefinition[] = [
     matcher: {
       kind: "pattern",
       patterns: [/\breward\b/i, /\bpremyo\b/i],
+    },
+  },
+  {
+    id: "prize.telco-rewards",
+    category: "prize",
+    label: "Telco reward-points expiry bait",
+    explanation:
+      "“Your reward points expire today” texts impersonate Smart/Globe promos and push fake redemption pages built to harvest your details.",
+    weight: 14,
+    matcher: {
+      kind: "pattern",
+      patterns: [
+        /reward\s+points?\s*(?:\(\d+\))?\s*(?:will\s+)?expir[ey]/i,
+        /expir(?:e|es|ed|ing)\s+today[^.?!]{0,80}(?:redeem|claim|register|visit)/i,
+        /\bredeem\b[^.?!]{0,40}\b(?:gift|reward|points?)\b/i,
+        /(?:credit|cash)\s+natanggap[^.?!]{0,40}mag[\s-]?registr/i,
+      ],
     },
   },
 
@@ -626,7 +691,9 @@ export const SIGNALS: SignalDefinition[] = [
           const brand = IMPERSONATED_BRAND_TOKENS.find((token) =>
             host.includes(token)
           );
-          if (brand) return { evidence: truncateEvidence(host, 40) };
+          if (brand || looksLikeTelcoTyposquat(host)) {
+            return { evidence: truncateEvidence(host, 40) };
+          }
         }
         return null;
       },
@@ -703,6 +770,7 @@ export const SIGNALS: SignalDefinition[] = [
         /\d[\d,]*\s*[-–]\s*(?:PHP|₱)?\s?\d[\d,]*\s+(?:daily|a\s+day|per\s+day)/i,
         /daily\s+(?:payout|income|salary|earnings)/i,
         /kita\s+(?:ka\s+ng\s+)?araw[- ]?araw/i,
+        /\bkumita(?:\s+ka)?\s+ng\b[^.?!]{0,40}\bbawat\s+araw\b/i,
       ],
     },
   },
@@ -721,6 +789,8 @@ export const SIGNALS: SignalDefinition[] = [
         /walang\s+karanasan/i,
         /instantly\s+hired?/i,
         /hiring\s+immediately/i,
+        /\bkumita\s+habang\b/i,
+        /(?:earn|make)\s+money\s+while\s+(?:watching|scrolling)/i,
       ],
     },
   },
@@ -873,6 +943,61 @@ export const SIGNALS: SignalDefinition[] = [
         /\b(?:deployed|stationed|working)\s+abroad\b/i,
         /\bcustoms?\s+(?:fee|clearance)\b/i,
         /\b(?:package|box|gift|balikbayan)\b[^.?!]{0,50}\b(?:customs|held|detained|released?)\b/i,
+      ],
+    },
+  },
+
+  {
+    id: "gambling.casino-games",
+    category: "gambling",
+    label: "Promotes casino / slots games",
+    explanation:
+      "Unsolicited texts promoting online casinos and slot games lead to unlicensed betting sites that can keep your deposits.",
+    weight: 14,
+    matcher: {
+      kind: "pattern",
+      patterns: [
+        /\bjackpot\b/i,
+        /\bcasino\b/i,
+        /\bonline\s+slots?\b/i,
+        /\bslot\s+(?:game|machine)s?\b/i,
+        /\bfree\s+spins?\b/i,
+        /\bbingo\b/i,
+      ],
+    },
+  },
+  {
+    id: "gambling.deposit-bonus",
+    category: "gambling",
+    label: "Betting deposit-bonus promo",
+    explanation:
+      "“Welcome/deposit bonus” promos pushed by text are how illegal betting sites bait players into depositing.",
+    weight: 10,
+    matcher: {
+      kind: "pattern",
+      patterns: [
+        /\b(?:welcome|deposit|first[- ]deposit|unang\s+deposito)[^.?!]{0,20}\bbonus\b/i,
+        /\bbonus\s+(?:up\s+to|araw[\s-]?araw)\b/i,
+        /\bdob(?:le|ol)\w*\s+[^.?!]{0,15}\bdeposit\b/i,
+        /\bdeposit\s+\d+%?\s*(?:bonus|cashback)\b/i,
+      ],
+    },
+  },
+  {
+    id: "gambling.bet-invite",
+    category: "gambling",
+    label: "Invitation to bet on an unknown site",
+    explanation:
+      "Registering to bet on a site promoted through random texts means sending money to an unregulated operator.",
+    weight: 8,
+    matcher: {
+      kind: "pattern",
+      patterns: [
+        /\b(?:libreng\s+)?tumaya\b|\btumataya\b/i,
+        /\bmaglaro\s+ng\s+(?:betting|casino|slots?)\b/i,
+        /\btrusted\s+(?:website|betting|casino|slot)\b/i,
+        /\bbet\s+(?:now|every\s+day|araw[\s-]?araw)\b/i,
+        /\bbetting\s+(?:site|platform|app)\b/i,
       ],
     },
   },

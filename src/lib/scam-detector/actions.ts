@@ -48,6 +48,11 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
     "Never pay customs, tickets, or hospital bills for someone you have not met in person.",
     "Request a spontaneous video call, since scammers consistently avoid live verification.",
   ],
+  gambling: [
+    "Do not deposit money on betting sites promoted through random texts.",
+    "Licensed Philippine casinos do not advertise through SMS links.",
+    "Unlicensed sites can refuse withdrawals anytime; treat every “bonus” as bait.",
+  ],
   intel: [
     "Do not call back, reply to, or transact with this number.",
     "Block the number and report it through your messaging app or telco.",
@@ -101,6 +106,11 @@ const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
     "Mag-ingat sa online na kakilala na mabilis umamin ng pagmamahal nang hindi pa nagkikita.",
     "Huwag magbayad ng customs, tiket, o hospital bill para sa taong hindi mo pa personal na nakikita.",
     "Hilingin ang spontaneous na video call, dahil palaging iniiwasan ng scammers ang live na verification.",
+  ],
+  gambling: [
+    "Huwag magdeposito sa betting sites na ina-advertise sa random na text.",
+    "Ang lisensyadong casino sa Pilipinas ay hindi nag-a-advertise gamit ang SMS links.",
+    "Kapag walang lisensya, pwede nilang tanggihan ang withdrawal mo; ituring na pain ang bawat “bonus”.",
   ],
   intel: [
     "Huwag tumawag, sumagot, o makipag-transaksyon sa numerong ito.",
