@@ -50,15 +50,16 @@ export default async function DashboardPage() {
                 Scam Intelligence Dashboard
               </h1>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                What the shield is seeing right now: scan volume, threat mix,
-                and where risk is concentrating for Filipino users.
+                What real Philippine spam looks like: volume, threat mix, and
+                how the shield scores it — mined from a public corpus of
+                1,021 texts shared by Filipino users.
               </p>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-lg border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground">
                 <CalendarDays aria-hidden="true" className="size-3.5" />
-                Last 30 days
+                Nov 2022 – Aug 2024
               </span>
             </div>
           </header>
@@ -72,12 +73,14 @@ export default async function DashboardPage() {
             />
             <p className="text-xs leading-relaxed text-muted-foreground">
               <span className="font-mono font-semibold tracking-wide text-foreground uppercase">
-                Demo dataset.
+                Research corpus.
               </span>{" "}
-              ScamShield doesn&apos;t persist scans yet, so the usage figures
-              below are generated seed data for preview purposes. The community
-              threat-intel card is live data from the open PH Scam DB project,
-              and the spam-patterns card summarizes a public research dataset.
+              ScamShield doesn&apos;t persist scans yet, so every breakdown on
+              this page comes from the public Kaggle dataset
+              &ldquo;Philippine Spam SMS Messages&rdquo; — 1,021 real texts,
+              scored offline by the actual rules engine. The community
+              threat-intel card is live data from the open PH Scam DB project;
+              recent-scan rows are illustrative samples with verified scores.
             </p>
           </aside>
         </FadeIn>

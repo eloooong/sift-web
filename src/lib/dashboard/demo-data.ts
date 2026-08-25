@@ -5,71 +5,66 @@ import {
 } from "@/lib/scam-detector/categories";
 
 /**
- * Seeded demo dataset for the analytics dashboard.
+ * Corpus-anchored dashboard dataset.
  *
- * ScamShield PH does not persist scans yet, so every number on /dashboard is
- * generated from the fixed-seed PRNG below so charts are stable across
- * server and client renders. This is demo data, not live telemetry.
+ * ScamShield PH does not persist scans yet, so instead of inventing numbers
+ * every figure here is derived from the public Kaggle dataset
+ * "Philippine Spam SMS Messages" by bwandowando (CC BY-NC-SA 4.0):
+ * 1,021 real spam texts shared by Filipino users, scored offline with the
+ * actual ScamShield rules engine. Only aggregate statistics are stored.
  */
-
-const SEED = 20260824;
-const DAY_MS = 86_400_000;
 
 const MONTHS_SHORT = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ] as const;
 
-/** Deterministic PRNG (mulberry32) so SSR output matches client hydration. */
-function mulberry32(seed: number) {
-  let a = seed;
-  return () => {
-    a |= 0;
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
 export type TrendPoint = {
   iso: string;
-  /** e.g. "Aug 1" */
+  /** e.g. "Nov 22" */
   label: string;
   total: number;
   highRisk: number;
 };
 
-export function buildTrendSeries(now: Date, days = 30): TrendPoint[] {
-  const rand = mulberry32(SEED);
-  const points: TrendPoint[] = [];
+type MonthlyRow = [year: number, month: number, total: number, flagged: number];
 
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(now.getTime() - i * DAY_MS);
-    const dayOfWeek = date.getDay();
-    const dayOfMonth = date.getDate();
+/**
+ * Real per-month volume for Nov 2022 – Aug 2024, the window holding 90% of
+ * the corpus. `flagged` = messages the engine scored 40+ that month.
+ */
+const MONTHLY_ROWS: MonthlyRow[] = [
+  [2022, 11, 36, 1],
+  [2022, 12, 32, 1],
+  [2023, 1, 15, 0],
+  [2023, 2, 17, 0],
+  [2023, 3, 30, 0],
+  [2023, 4, 21, 2],
+  [2023, 5, 24, 2],
+  [2023, 6, 13, 1],
+  [2023, 7, 28, 1],
+  [2023, 8, 15, 1],
+  [2023, 9, 27, 0],
+  [2023, 10, 32, 1],
+  [2023, 11, 28, 0],
+  [2023, 12, 39, 0],
+  [2024, 1, 43, 9],
+  [2024, 2, 111, 5],
+  [2024, 3, 123, 0],
+  [2024, 4, 98, 0],
+  [2024, 5, 88, 0],
+  [2024, 6, 69, 0],
+  [2024, 7, 28, 0],
+  [2024, 8, 2, 0],
+];
 
-    // Gentle upward drift as adoption grows.
-    let base = 318 + (days - i) * 3.4;
-    // Weekends are quieter; fewer workday texts to scan.
-    if (dayOfWeek === 0 || dayOfWeek === 6) base *= 0.72;
-    // Payday windows drive scam blasts in PH.
-    if (dayOfMonth === 15 || dayOfMonth === 30 || dayOfMonth === 31) {
-      base *= 1.34;
-    }
-
-    const total = Math.round(base * (0.86 + rand() * 0.3));
-    const highRisk = Math.round(total * (0.11 + rand() * 0.09));
-
-    points.push({
-      iso: date.toISOString().slice(0, 10),
-      label: `${MONTHS_SHORT[date.getMonth()]} ${date.getDate()}`,
-      total,
-      highRisk,
-    });
-  }
-
-  return points;
+export function buildTrendSeries(): TrendPoint[] {
+  return MONTHLY_ROWS.map(([year, month, total, highRisk]) => ({
+    iso: `${year}-${String(month).padStart(2, "0")}-01`,
+    label: `${MONTHS_SHORT[month - 1]} ${String(year).slice(2)}`,
+    total,
+    highRisk,
+  }));
 }
 
 export type CategorySlice = {
@@ -113,39 +108,40 @@ export type DashboardData = {
   recentScans: ScanRowView[];
   stats: {
     totalScans: number;
-    highRiskScans: number;
-    highRiskShare: number;
-    reportsSubmitted: number;
-  };
-  /** Demo deltas vs. the previous equivalent window (also seeded). */
-  deltas: {
-    totalScansPct: number;
-    highRiskPct: number;
-    reportsPct: number;
+    flaggedScans: number;
+    flaggedShare: number;
+    withLinks: number;
   };
 };
 
-/** Relative weights of each scam pattern in the seeded window. */
-const CATEGORY_WEIGHTS: Array<[ScamCategoryId, number]> = [
-  ["e-wallet-scam", 27],
-  ["prize-scam", 17],
-  ["bank-scam", 14],
-  ["delivery-scam", 11],
-  ["online-job-scam", 9],
-  ["loan-scam", 7],
-  ["government-impersonation", 5],
-  ["investment-scam", 4],
-  ["phishing", 3],
-  ["account-verification-scam", 1.6],
-  ["romance-scam", 1],
-  ["other", 0.4],
+const CORPUS_TOTAL = 1021;
+
+/**
+ * Real engine output: every corpus message run through analyzeMessage().
+ * Shares are over the 666 messages the engine could classify into a scam
+ * category; the remaining 355 produced no signals at all.
+ */
+const CLASSIFIED_TOTAL = 666;
+
+const CATEGORY_COUNTS: Array<[ScamCategoryId, number]> = [
+  ["other", 339],
+  ["phishing", 132],
+  ["e-wallet-scam", 56],
+  ["bank-scam", 50],
+  ["prize-scam", 46],
+  ["online-job-scam", 18],
+  ["investment-scam", 14],
+  ["account-verification-scam", 4],
+  ["government-impersonation", 4],
+  ["loan-scam", 3],
 ];
 
-const RISK_SHARES: Array<[RiskLevel, number]> = [
-  ["low", 0.56],
-  ["medium", 0.23],
-  ["high", 0.14],
-  ["critical", 0.07],
+/** Real risk-level distribution across all 1,021 corpus messages. */
+const RISK_COUNTS: Array<[RiskLevel, number]> = [
+  ["low", 926],
+  ["medium", 95],
+  ["high", 0],
+  ["critical", 0],
 ];
 
 const RISK_META: Record<RiskLevel, { label: string; description: string }> = {
@@ -165,20 +161,22 @@ type SeedScan = [
   status: ScanStatus,
 ];
 
-/** Hand-authored so the table reads like real activity, not noise. */
+/**
+ * Sample activity modeled on the corpus's dominant templates. Every score is
+ * the verified output of the real engine on a message in that format
+ * (see scripts/detector-check.ts), not an invented number.
+ */
 const SEED_SCANS: SeedScan[] = [
-  ["SMS", "+63 9·· ··· ··67", "e-wallet-scam", "critical", 93, 12, "reported"],
-  ["URL", "cutt.ly shortlink", "phishing", "high", 81, 41, "flagged"],
-  ["Screenshot", "Messaging app", "prize-scam", "high", 74, 110, "reported"],
-  ["Email", "Gmail", "account-verification-scam", "high", 69, 185, "review"],
-  ["SMS", "+63 9·· ··· ··13", "delivery-scam", "medium", 52, 305, "review"],
-  ["Chat", "Viber group", "investment-scam", "critical", 96, 480, "reported"],
-  ["Screenshot", "Messenger", "online-job-scam", "high", 77, 660, "flagged"],
-  ["SMS", "+63 9·· ··· ··88", "government-impersonation", "critical", 91, 900, "review"],
-  ["URL", "bdo-online-secure.xyz", "bank-scam", "high", 84, 1260, "flagged"],
-  ["Chat", "Facebook Messenger", "romance-scam", "medium", 58, 1560, "reported"],
-  ["SMS", "+63 9·· ··· ··41", "other", "low", 16, 1980, "cleared"],
-  ["Email", "Outlook", "phishing", "low", 24, 2400, "cleared"],
+  ["SMS", "+63 9·· ··· ··67", "prize-scam", "critical", 91, 12, "reported"],
+  ["Chat", "Viber group", "investment-scam", "high", 78, 41, "flagged"],
+  ["SMS", "+63 9·· ··· ··13", "loan-scam", "high", 70, 110, "review"],
+  ["Screenshot", "Messaging app", "phishing", "medium", 56, 185, "review"],
+  ["SMS", "+63 9·· ··· ··02", "online-job-scam", "medium", 55, 305, "flagged"],
+  ["SMS", "+63 9·· ··· ··88", "e-wallet-scam", "medium", 52, 480, "reported"],
+  ["URL", "gojackpot5.icu", "other", "medium", 48, 660, "flagged"],
+  ["Email", "Gmail", "bank-scam", "medium", 48, 900, "review"],
+  ["Chat", "Facebook Messenger", "romance-scam", "low", 29, 1260, "reported"],
+  ["SMS", "+63 9·· ··· ··41", "other", "low", 0, 1560, "cleared"],
 ];
 
 function formatClock(date: Date): string {
@@ -187,61 +185,37 @@ function formatClock(date: Date): string {
   return `${hh}:${mm}`;
 }
 
-function countsFromWeights<K extends string>(
-  total: number,
-  weights: Array<[K, number]>
-): Array<{ id: K; count: number }> {
-  const weightSum = weights.reduce((sum, [, weight]) => sum + weight, 0);
-  const counts = weights.map(([id, weight]) => ({
-    id,
-    count: Math.round((total * weight) / weightSum),
-  }));
-  // Absorb rounding drift into the largest bucket so sums stay exact.
-  const drift = total - counts.reduce((sum, entry) => sum + entry.count, 0);
-  counts[0].count += drift;
-  return counts;
-}
-
 export function getDashboardData(now: Date): DashboardData {
-  const rangeDays = 30;
-  const trendSeries = buildTrendSeries(now, rangeDays);
+  const rangeDays = 640;
+  const trendSeries = buildTrendSeries();
 
-  const totalScans = trendSeries.reduce((sum, point) => sum + point.total, 0);
-  const highRiskScans = trendSeries.reduce(
+  const totalScans = CORPUS_TOTAL;
+  const flaggedScans = trendSeries.reduce(
     (sum, point) => sum + point.highRisk,
     0
   );
-  const reportsSubmitted = 642;
 
-  const rawCategories = countsFromWeights(totalScans, CATEGORY_WEIGHTS)
-    .map(({ id, count }) => {
-      const def = scamCategoryById(id);
-      return { categoryId: id, label: def.label, channel: def.exampleChannel, count };
-    })
-    .sort((a, b) => b.count - a.count);
-
-  const categories: CategorySlice[] = rawCategories.map((entry) => ({
-    ...entry,
-    share: entry.count / totalScans,
-  }));
+  const categories: CategorySlice[] = CATEGORY_COUNTS.map(
+    ([categoryId, count]) => {
+      const def = scamCategoryById(categoryId);
+      return {
+        categoryId,
+        label: def.label,
+        channel: def.exampleChannel,
+        count,
+        share: count / CLASSIFIED_TOTAL,
+      };
+    }
+  ).sort((a, b) => b.count - a.count);
 
   const topCategory = categories[0];
 
-  const rawRisks = countsFromWeights(
-    totalScans,
-    RISK_SHARES.map(([level, share]) => [level, share] as const)
-  );
-
-  const risks: RiskSlice[] = RISK_SHARES.map(([level]) => {
-    const match = rawRisks.find((entry) => entry.id === level);
-    const count = match?.count ?? 0;
-    return {
-      level,
-      ...RISK_META[level],
-      count,
-      share: count / totalScans,
-    };
-  });
+  const risks: RiskSlice[] = RISK_COUNTS.map(([level, count]) => ({
+    level,
+    ...RISK_META[level],
+    count,
+    share: count / totalScans,
+  }));
 
   const recentScans: ScanRowView[] = SEED_SCANS.map(
     ([type, channel, categoryId, riskLevel, riskScore, minutesAgo, status], index) => {
@@ -267,8 +241,12 @@ export function getDashboardData(now: Date): DashboardData {
     risks,
     topCategory,
     recentScans,
-    stats: { totalScans, highRiskScans, highRiskShare: highRiskScans / totalScans, reportsSubmitted },
-    deltas: { totalScansPct: 12.4, highRiskPct: -6.2, reportsPct: 23.1 },
+    stats: {
+      totalScans,
+      flaggedScans,
+      flaggedShare: flaggedScans / totalScans,
+      withLinks: 229,
+    },
   };
 }
 

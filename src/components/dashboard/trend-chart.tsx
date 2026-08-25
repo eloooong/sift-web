@@ -88,10 +88,10 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div>
           <h2 className="font-heading text-base leading-snug font-medium">
-            Scam Detection Trends
+            Spam Volume Over Time
           </h2>
           <p className="mt-0.5 text-sm text-muted-foreground">
-            Daily scans analyzed over the last 30 days
+            Corpus texts per month · Nov 2022 – Aug 2024
           </p>
         </div>
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
@@ -101,7 +101,7 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
               className="h-0.5 w-4 rounded-full"
               style={{ background: ACCENT }}
             />
-            Total scans
+            Texts
           </span>
           <span className="inline-flex items-center gap-1.5">
             <span
@@ -109,7 +109,7 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
               className="h-0 w-4 border-t-2 border-dashed"
               style={{ borderColor: DANGER }}
             />
-            High risk
+            Flagged (40+)
           </span>
         </div>
       </div>
@@ -134,7 +134,7 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
               height={height}
               viewBox={`0 0 ${width} ${height}`}
               role="img"
-              aria-label={`Line chart of daily scans for the last ${series.length} days. Totals range from ${Math.min(...totals)} to ${yMax} scans per day.`}
+              aria-label={`Line chart of monthly corpus volume. Totals range from ${Math.min(...totals)} to ${yMax} texts per month.`}
               className="block"
             >
               <defs>
@@ -270,7 +270,7 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
                     className="size-1.5 rounded-full"
                     style={{ background: ACCENT }}
                   />
-                  {hover.total} scans
+                  {hover.total} texts
                 </p>
                 <p className="flex items-center gap-1.5 text-xs tabular-nums">
                   <span
@@ -278,7 +278,7 @@ export function TrendChart({ series }: { series: TrendPoint[] }) {
                     className="size-1.5 rounded-full"
                     style={{ background: DANGER }}
                   />
-                  {hover.highRisk} high risk
+                  {hover.highRisk} flagged
                 </p>
               </div>
             ) : null}

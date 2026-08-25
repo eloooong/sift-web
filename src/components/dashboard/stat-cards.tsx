@@ -1,41 +1,9 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  Flag,
-  ScanSearch,
-  ShieldAlert,
-} from "lucide-react";
+import { Link2, ScanSearch, ShieldAlert } from "lucide-react";
 
 import type { DashboardData } from "@/lib/dashboard/demo-data";
 import { formatInt, formatPct } from "@/lib/dashboard/demo-data";
 import { cn } from "@/lib/utils";
-
-type StatTone = "neutral" | "positive" | "negative";
-
-const TONE_STYLES: Record<StatTone, string> = {
-  neutral: "text-foreground bg-muted",
-  positive: "text-success bg-success/10",
-  negative: "text-danger bg-danger/10",
-};
-
-function DeltaChip({ pct, tone }: { pct: number; tone: StatTone }) {
-  const isUp = pct >= 0;
-  const Arrow = isUp ? ArrowUpRight : ArrowDownRight;
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold tabular-nums",
-        TONE_STYLES[tone]
-      )}
-    >
-      <Arrow aria-hidden="true" className="size-3" />
-      {isUp ? "+" : "−"}
-      {Math.abs(pct).toFixed(1)}%
-    </span>
-  );
-}
 
 function Sparkline({
   points,
@@ -123,18 +91,17 @@ function StatCard({
 }
 
 export function StatCards({ data }: { data: DashboardData }) {
-  const { stats, deltas, topCategory, trendSeries } = data;
+  const { stats, topCategory, trendSeries } = data;
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard
         icon={ScanSearch}
-        label="Total Scans"
+        label="Texts Analyzed"
         footer={
-          <>
-            <DeltaChip pct={deltas.totalScansPct} tone="neutral" />
-            <span className="text-xs text-muted-foreground">vs prev. period</span>
-          </>
+          <span className="text-xs leading-relaxed text-muted-foreground">
+            Public research dataset · Nov 2022 – Aug 2024
+          </span>
         }
       >
         <p className="text-3xl font-semibold tracking-tight tabular-nums">
@@ -148,18 +115,15 @@ export function StatCards({ data }: { data: DashboardData }) {
 
       <StatCard
         icon={ShieldAlert}
-        label="High Risk Scans"
+        label="Flagged Suspicious"
         footer={
-          <>
-            <DeltaChip pct={deltas.highRiskPct} tone="positive" />
-            <span className="text-xs text-muted-foreground">
-              {formatPct(stats.highRiskShare, 0)} of all scans
-            </span>
-          </>
+          <span className="text-xs leading-relaxed text-muted-foreground">
+            {formatPct(stats.flaggedShare, 0)} of texts scored 40 or higher
+          </span>
         }
       >
         <p className="text-3xl font-semibold tracking-tight tabular-nums text-danger">
-          {formatInt(stats.highRiskScans)}
+          {formatInt(stats.flaggedScans)}
         </p>
         <Sparkline
           points={trendSeries.map((point) => point.highRisk)}
@@ -168,20 +132,20 @@ export function StatCards({ data }: { data: DashboardData }) {
       </StatCard>
 
       <StatCard
-        icon={Flag}
-        label="Reports Submitted"
+        icon={Link2}
+        label="Contained a Link"
         footer={
-          <>
-            <DeltaChip pct={deltas.reportsPct} tone="positive" />
-            <span className="text-xs text-muted-foreground">vs prev. period</span>
-          </>
+          <span className="text-xs leading-relaxed text-muted-foreground">
+            Mostly betting promos and fake login pages.
+          </span>
         }
       >
         <p className="text-3xl font-semibold tracking-tight tabular-nums">
-          {formatInt(stats.reportsSubmitted)}
+          {formatInt(stats.withLinks)}
         </p>
         <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-          Forwarded by users to telcos, banks &amp; the NTC.
+          {formatPct(stats.withLinks / stats.totalScans, 0)} of all corpus
+          texts carried a URL.
         </p>
       </StatCard>
 
@@ -199,12 +163,12 @@ export function StatCards({ data }: { data: DashboardData }) {
           </p>
           <div
             role="img"
-            aria-label={`${topCategory.label} accounts for ${formatPct(topCategory.share)} of all scans`}
+            aria-label={`${topCategory.label} accounts for ${formatPct(topCategory.share)} of classified texts`}
             className="mt-3"
           >
             <div className="flex items-baseline justify-between gap-2 text-xs text-muted-foreground">
               <span className="tabular-nums">
-                {formatInt(topCategory.count)} scans
+                {formatInt(topCategory.count)} texts
               </span>
               <span className="font-mono font-semibold text-foreground tabular-nums">
                 {formatPct(topCategory.share)}

@@ -89,7 +89,7 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
           Scam Categories
         </h2>
         <p className="mt-0.5 text-sm text-muted-foreground">
-          Share of scans by scam pattern
+          Engine classification of the 666 flagged-pattern texts
         </p>
       </div>
 
@@ -145,7 +145,7 @@ export function CategoryDonut({ categories }: { categories: CategorySlice[] }) {
                   {formatInt(total)}
                 </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  scans classified
+                  texts classified
                 </p>
               </>
             )}

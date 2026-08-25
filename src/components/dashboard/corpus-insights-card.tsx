@@ -44,8 +44,8 @@ function FamilyRow({ family, max }: { family: CorpusFamily; max: number }) {
   return (
     <div className="group" title={family.hint}>
       <div className="flex items-baseline justify-between gap-3 text-sm">
-        <span className="truncate font-medium">{family.label}</span>
-        <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
+        <span className="min-w-0 truncate font-medium">{family.label}</span>
+        <span className="shrink-0 font-mono text-xs whitespace-nowrap text-muted-foreground tabular-nums">
           {formatPct(corpusShare(family.count))}{" "}
           <span className="text-foreground/70">· {family.count}</span>
         </span>
@@ -56,9 +56,35 @@ function FamilyRow({ family, max }: { family: CorpusFamily; max: number }) {
           style={{ width, background: barColor }}
         />
       </div>
-      <p className="mt-1 hidden text-xs text-muted-foreground sm:block sm:truncate">
-        {family.hint}
-      </p>
+    </div>
+  );
+}
+
+function KeywordRow({
+  term,
+  count,
+  max,
+}: {
+  term: string;
+  count: number;
+  max: number;
+}) {
+  const width = `${Math.max((count / max) * 100, 2)}%`;
+
+  return (
+    <div className="group flex items-center gap-3" title={`${count} messages contain “${term}”`}>
+      <span className="w-16 shrink-0 truncate font-mono text-[13px] font-medium lowercase">
+        {term}
+      </span>
+      <div className="h-2 min-w-0 flex-1 overflow-hidden rounded-full bg-muted">
+        <div
+          className="h-full rounded-full opacity-80 transition-opacity group-hover:opacity-100"
+          style={{ width, background: ACCENT }}
+        />
+      </div>
+      <span className="w-24 shrink-0 text-right font-mono text-xs whitespace-nowrap text-muted-foreground tabular-nums">
+        {formatPctRounded(corpusShare(count))} · {count}
+      </span>
     </div>
   );
 }
@@ -67,7 +93,6 @@ export function CorpusInsightsCard() {
   const { totals, families, keywords, tlds } = SPAM_CORPUS;
   const familyMax = Math.max(...families.map((family) => family.count));
   const keywordMax = Math.max(...keywords.map((keyword) => keyword.count));
-  const tldMax = Math.max(...tlds.map((entry) => entry.count));
 
   return (
     <div className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
@@ -111,45 +136,12 @@ export function CorpusInsightsCard() {
         <section aria-label="Share of corpus by message family">
           <h3 className="text-sm font-semibold">Threat mix</h3>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Each message grouped once, by its strongest signal
+            Each message grouped once, by its strongest signal — hover for
+            examples
           </p>
-          <div className="mt-4 space-y-4">
+          <div className="mt-4 space-y-3.5">
             {families.map((family) => (
               <FamilyRow key={family.id} family={family} max={familyMax} />
-            ))}
-          </div>
-        </section>
-
-        <section aria-label="Most common words in the corpus">
-          <h3 className="text-sm font-semibold">Most common words</h3>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            Share of messages containing each term
-          </p>
-          <div className="mt-4 space-y-3">
-            {keywords.map((keyword) => (
-              <div key={keyword.term} className="group">
-                <div className="flex items-baseline justify-between gap-3 text-sm">
-                  <span className="w-20 truncate font-mono text-[13px] font-medium lowercase">
-                    {keyword.term}
-                  </span>
-                  <div className="mx-2 h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full rounded-full opacity-80 transition-opacity group-hover:opacity-100"
-                      style={{
-                        width: `${Math.max(
-                          (keyword.count / keywordMax) * 100,
-                          2
-                        )}%`,
-                        background: ACCENT,
-                      }}
-                    />
-                  </div>
-                  <span className="w-14 shrink-0 text-right font-mono text-xs text-muted-foreground tabular-nums">
-                    {formatPctRounded(corpusShare(keyword.count))} ·{" "}
-                    {keyword.count}
-                  </span>
-                </div>
-              </div>
             ))}
           </div>
 
@@ -167,20 +159,29 @@ export function CorpusInsightsCard() {
                   <span className="font-mono text-xs font-semibold">
                     {entry.tld}
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{
-                      background: ACCENT,
-                      opacity: 0.35 + 0.65 * (entry.count / tldMax),
-                    }}
-                  />
                   <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
                     {entry.count}
                   </span>
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section aria-label="Most common words in the corpus">
+          <h3 className="text-sm font-semibold">Most common words</h3>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Share of messages containing each term
+          </p>
+          <div className="mt-4 space-y-3">
+            {keywords.map((keyword) => (
+              <KeywordRow
+                key={keyword.term}
+                term={keyword.term}
+                count={keyword.count}
+                max={keywordMax}
+              />
+            ))}
           </div>
         </section>
       </div>

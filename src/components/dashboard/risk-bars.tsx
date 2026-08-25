@@ -136,8 +136,9 @@ export function RiskBars({ risks }: { risks: RiskSlice[] }) {
       </div>
 
       <p className="mt-4 border-t pt-3 text-xs leading-relaxed text-muted-foreground">
-        Scores come from the hybrid rule + AI engine. Critical means the message
-        matched multiple high-weight scam signals.
+        Scores across the 1,021-text research corpus. Most bulk promo spam
+        scores low — only 9% trips enough signals to flag, and nothing in the
+        corpus reached the high bands.
       </p>
     </div>
   );
