@@ -8,7 +8,6 @@ import { CorpusInsightsCard } from "@/components/dashboard/corpus-insights-card"
 import { NetworkBreakdownCard } from "@/components/dashboard/network-breakdown-card";
 import { RecentScansTable } from "@/components/dashboard/recent-scans-table";
 import { RegionalIncidentsCard } from "@/components/dashboard/regional-incidents-card";
-import { RiskBars } from "@/components/dashboard/risk-bars";
 import { StatCards } from "@/components/dashboard/stat-cards";
 import { TrendChart } from "@/components/dashboard/trend-chart";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -113,20 +112,15 @@ export default async function DashboardPage() {
           <NetworkBreakdownCard />
         </FadeIn>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <FadeIn delay={0.32}>
-            <CategoryDonut categories={data.categories} />
-          </FadeIn>
-          <FadeIn delay={0.36}>
-            <RiskBars risks={data.risks} />
-          </FadeIn>
-        </div>
+        <FadeIn delay={0.32} className="mt-6">
+          <CategoryDonut categories={data.categories} />
+        </FadeIn>
 
-        <FadeIn delay={0.4} className="mt-6">
+        <FadeIn delay={0.36} className="mt-6">
           <RecentScansTable scans={data.recentScans} />
         </FadeIn>
 
-        <FadeIn delay={0.42}>
+        <FadeIn delay={0.4}>
           <p className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
             <span>
               Want these numbers to reflect your own suspicious messages?
