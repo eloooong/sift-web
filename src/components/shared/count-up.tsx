@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+
+import { usePrefersReducedMotion } from "@/components/shared/use-prefers-reduced-motion";
 
 export function CountUp({
   value,
@@ -12,7 +13,7 @@ export function CountUp({
   duration?: number;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const [animated, setAnimated] = useState(0);
   const frameRef = useRef<number | null>(null);
 

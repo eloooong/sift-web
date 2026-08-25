@@ -1,7 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+
+import { usePrefersReducedMotion } from "@/components/shared/use-prefers-reduced-motion";
 
 export function FadeIn({
   children,
@@ -12,7 +14,7 @@ export function FadeIn({
   delay?: number;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
