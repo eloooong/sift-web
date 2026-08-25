@@ -146,6 +146,13 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  /* Loading indicators are functional feedback, not decoration: keep
+     them rotating so users can tell a scan is still in progress. */
+  .animate-spin,
+  .animate-spin * {
+    animation-duration: 1s !important;
+    animation-iteration-count: infinite !important;
+  }
 }
 
 /* Slim, unobtrusive scrollbars */
