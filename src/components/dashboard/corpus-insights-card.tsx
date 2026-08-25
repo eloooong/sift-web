@@ -39,7 +39,7 @@ function StatCell({
 function FamilyRow({ family, max }: { family: CorpusFamily; max: number }) {
   const isMixed = family.id === "other";
   const barColor = isMixed ? MUTED_BAR : ACCENT;
-  const width = `${Math.max((family.count / max) * 100, 2)}%`;
+  const width = `${Math.max(Math.sqrt(family.count / max) * 100, 4)}%`;
 
   return (
     <div className="group" title={family.hint}>
@@ -111,7 +111,7 @@ export function CorpusInsightsCard() {
         </span>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-2.5 border-t border-border/70 pt-5 sm:grid-cols-4">
         <StatCell
           value={totals.messages.toLocaleString("en-US")}
           label="spam & promo texts analyzed"
@@ -132,20 +132,25 @@ export function CorpusInsightsCard() {
         />
       </div>
 
-      <div className="mt-6 grid gap-x-8 gap-y-6 lg:grid-cols-2">
-        <section aria-label="Share of corpus by message family">
-          <h3 className="text-sm font-semibold">Threat mix</h3>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            Each message grouped once, by its strongest signal — hover for
-            examples
-          </p>
-          <div className="mt-4 space-y-3.5">
-            {families.map((family) => (
-              <FamilyRow key={family.id} family={family} max={familyMax} />
-            ))}
-          </div>
+      <div className="mt-6 grid gap-y-6 border-t border-border/70 pt-6 max-lg:gap-6 lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-border/70">
+        <div className="min-w-0 space-y-6 lg:pr-8">
+          <section aria-label="Share of corpus by message family">
+            <h3 className="text-sm font-semibold">Threat mix</h3>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Each message grouped once, by its strongest signal — hover for
+              examples
+            </p>
+            <div className="mt-4 space-y-3.5">
+              {families.map((family) => (
+                <FamilyRow key={family.id} family={family} max={familyMax} />
+              ))}
+            </div>
+          </section>
 
-          <div className="mt-5 border-t pt-4">
+          <section
+            aria-label="High-risk domain endings in links"
+            className="border-t border-border/70 pt-4"
+          >
             <h3 className="text-sm font-semibold">
               High-risk domain endings in links
             </h3>
@@ -154,7 +159,7 @@ export function CorpusInsightsCard() {
                 <li
                   key={entry.tld}
                   title={`${entry.count} linked hosts used this ending`}
-                  className="inline-flex items-baseline gap-1.5 rounded-full border px-2.5 py-1"
+                  className="inline-flex items-baseline gap-1.5 rounded-full border bg-background px-2.5 py-1"
                 >
                   <span className="font-mono text-xs font-semibold">
                     {entry.tld}
@@ -165,28 +170,30 @@ export function CorpusInsightsCard() {
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <section aria-label="Most common words in the corpus">
-          <h3 className="text-sm font-semibold">Most common words</h3>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            Share of messages containing each term
-          </p>
-          <div className="mt-4 space-y-3">
-            {keywords.map((keyword) => (
-              <KeywordRow
-                key={keyword.term}
-                term={keyword.term}
-                count={keyword.count}
-                max={keywordMax}
-              />
-            ))}
-          </div>
-        </section>
+        <div className="min-w-0 lg:pl-8">
+          <section aria-label="Most common words in the corpus">
+            <h3 className="text-sm font-semibold">Most common words</h3>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Share of messages containing each term
+            </p>
+            <div className="mt-4 space-y-3">
+              {keywords.map((keyword) => (
+                <KeywordRow
+                  key={keyword.term}
+                  term={keyword.term}
+                  count={keyword.count}
+                  max={keywordMax}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
 
-      <p className="mt-6 border-t pt-3 text-xs leading-relaxed text-muted-foreground">
+      <p className="mt-6 border-t border-border/70 pt-3 text-xs leading-relaxed text-muted-foreground">
         Source:{" "}
         <a
           href={`${SPAM_CORPUS.source.url}`}

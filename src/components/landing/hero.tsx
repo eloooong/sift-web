@@ -4,6 +4,7 @@ import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { CountUp } from "@/components/shared/count-up";
 import { T } from "@/components/providers/t";
 import { RiskBadge } from "@/components/shared/risk-badge";
+import { RiskMeter } from "@/components/scanner/risk-meter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -101,7 +102,7 @@ export function Hero() {
 
               <div className="mt-4 flex items-end justify-between gap-4">
                 <RiskBadge level="critical" />
-                <p aria-label="Risk score 95 out of 100" className="leading-none">
+                <p className="leading-none">
                   <span className="text-3xl font-semibold tracking-tight tabular-nums">
                     <CountUp value={95} />
                   </span>
@@ -109,11 +110,8 @@ export function Hero() {
                 </p>
               </div>
 
-              <div
-                role="presentation"
-                className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted"
-              >
-                <div className="hero-bar-fill h-full w-[95%] rounded-full bg-red-600" />
+              <div className="mt-3">
+                <RiskMeter score={95} level="critical" />
               </div>
 
               <dl className="mt-5 space-y-2.5 text-sm">
