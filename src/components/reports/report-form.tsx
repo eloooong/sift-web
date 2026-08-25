@@ -254,7 +254,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
             type="text"
             value={sender}
             onChange={(event) => setSender(event.target.value)}
-            placeholder="+63 9·· ··· ··67 / lookalike-site.ph"
+            placeholder="+63 9·· ··· ··67"
             autoComplete="off"
             className="h-10 w-full rounded-lg border bg-background px-3 font-mono text-xs outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
           />
@@ -366,7 +366,7 @@ function Field({
 }) {
   return (
     <div>
-      <div className="mb-1 flex items-baseline justify-between gap-2">
+      <div className="mb-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-0">
         <label
           htmlFor={htmlFor}
           className="font-mono text-[10px] font-medium tracking-widest text-muted-foreground uppercase"
@@ -374,7 +374,9 @@ function Field({
           {label}
         </label>
         {hint ? (
-          <span className="text-[10px] text-muted-foreground/70">{hint}</span>
+          <span className="text-[10px] leading-snug text-muted-foreground/70">
+            {hint}
+          </span>
         ) : null}
       </div>
       {children}
