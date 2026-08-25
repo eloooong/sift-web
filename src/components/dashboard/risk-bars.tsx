@@ -69,7 +69,9 @@ export function RiskBars({ risks }: { risks: RiskSlice[] }) {
                 textAnchor="end"
                 className="fill-muted-foreground font-mono text-[10px] tabular-nums"
               >
-                {value >= 1000 ? `${Math.round(value / 1000)}k` : value}
+                {value >= 1000
+                  ? `${Math.round(value / 1000)}k`
+                  : Math.round(value)}
               </text>
             </g>
           );
