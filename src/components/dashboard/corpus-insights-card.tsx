@@ -128,7 +128,7 @@ export function CorpusInsightsCard() {
       </div>
 
       <div className="mt-6 grid gap-y-6 border-t border-border/70 pt-6 max-lg:gap-6 lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-border/70">
-        <div className="min-w-0 space-y-6 lg:pr-8">
+        <div className="min-w-0 lg:pr-8">
           <section aria-label="Share of corpus by message family">
             <h3 className="text-sm font-semibold">Threat mix</h3>
             <p className="mt-0.5 text-xs text-muted-foreground">
@@ -140,31 +140,6 @@ export function CorpusInsightsCard() {
                 <FamilyRow key={family.id} family={family} />
               ))}
             </div>
-          </section>
-
-          <section
-            aria-label="High-risk domain endings in links"
-            className="border-t border-border/70 pt-4"
-          >
-            <h3 className="text-sm font-semibold">
-              High-risk domain endings in links
-            </h3>
-            <ul className="mt-2.5 flex flex-wrap gap-1.5">
-              {tlds.map((entry) => (
-                <li
-                  key={entry.tld}
-                  title={`${entry.count} linked hosts used this ending`}
-                  className="inline-flex items-baseline gap-1.5 rounded-full border bg-background px-2.5 py-1"
-                >
-                  <span className="font-mono text-xs font-semibold">
-                    {entry.tld}
-                  </span>
-                  <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
-                    {entry.count}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </section>
         </div>
 
@@ -186,6 +161,31 @@ export function CorpusInsightsCard() {
           </section>
         </div>
       </div>
+
+      <section
+        aria-label="High-risk domain endings in links"
+        className="mt-6 border-t border-border/70 pt-4"
+      >
+        <h3 className="text-sm font-semibold">
+          High-risk domain endings in links
+        </h3>
+        <ul className="mt-2.5 flex flex-wrap gap-1.5">
+          {tlds.map((entry) => (
+            <li
+              key={entry.tld}
+              title={`${entry.count} linked hosts used this ending`}
+              className="inline-flex items-baseline gap-1.5 rounded-full border bg-background px-2.5 py-1"
+            >
+              <span className="font-mono text-xs font-semibold">
+                {entry.tld}
+              </span>
+              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+                {entry.count}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <p className="mt-6 border-t border-border/70 pt-3 text-xs leading-relaxed text-muted-foreground">
         Source:{" "}
