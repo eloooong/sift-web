@@ -12,7 +12,20 @@ const PROVIDERS: Record<string, () => OcrProvider> = {
   tesseract: () => createTesseractProvider(),
 };
 
+const globalForOcr = globalThis as unknown as {
+  __scamshieldOcrProvider?: OcrProvider;
+};
+
+/**
+ * One provider instance (and therefore one Tesseract worker) per server
+ * process. Worker startup is expensive (WASM init + language data), so it
+ * must be reused across requests instead of rebuilt for every scan.
+ */
 export function getOcrProvider(): OcrProvider {
+  if (globalForOcr.__scamshieldOcrProvider) {
+    return globalForOcr.__scamshieldOcrProvider;
+  }
+
   const requested = (process.env.OCR_PROVIDER ?? "tesseract")
     .toLowerCase()
     .trim();
@@ -23,5 +36,7 @@ export function getOcrProvider(): OcrProvider {
       `Unknown OCR provider "${requested}". Available: ${Object.keys(PROVIDERS).join(", ")}.`
     );
   }
-  return factory();
+  const provider = factory();
+  globalForOcr.__scamshieldOcrProvider = provider;
+  return provider;
 }

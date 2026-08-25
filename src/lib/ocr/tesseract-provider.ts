@@ -67,6 +67,10 @@ export function createTesseractProvider(options?: {
     return workerPromise;
   }
 
+  // Start building the worker immediately (WASM init + language data run in
+  // parallel with the rest of the request instead of serially before OCR).
+  void getWorker().catch(() => {});
+
   return {
     id: "tesseract",
 
