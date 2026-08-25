@@ -5,7 +5,9 @@ import { ArrowRight, CalendarDays, Database } from "lucide-react";
 import { CategoryDonut } from "@/components/dashboard/category-donut";
 import { CommunityIntelCard } from "@/components/dashboard/community-intel-card";
 import { CorpusInsightsCard } from "@/components/dashboard/corpus-insights-card";
+import { NetworkBreakdownCard } from "@/components/dashboard/network-breakdown-card";
 import { RecentScansTable } from "@/components/dashboard/recent-scans-table";
+import { RegionalIncidentsCard } from "@/components/dashboard/regional-incidents-card";
 import { RiskBars } from "@/components/dashboard/risk-bars";
 import { StatCards } from "@/components/dashboard/stat-cards";
 import { TrendChart } from "@/components/dashboard/trend-chart";
@@ -19,9 +21,9 @@ import { getDashboardData } from "@/lib/dashboard/demo-data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "Scam Intelligence",
   description:
-    "ScamShield PH analytics: scan volume, high-risk detections, scam category breakdowns, and recent activity across the platform.",
+    "Philippine scam intelligence: regional incident rates, network distribution, threat categories, corpus insights, and community-reported scam data.",
 };
 
 export default async function DashboardPage() {
@@ -44,15 +46,16 @@ export default async function DashboardPage() {
           <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div className="max-w-xl">
               <p className="font-mono text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-                Analytics
+                Intelligence
               </p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                Scam Intelligence Dashboard
+                PH Scam Intelligence
               </h1>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                What real Philippine spam looks like: volume, threat mix, and
-                how the shield scores it — mined from a public corpus of
-                1,021 texts shared by Filipino users.
+                What real Philippine spam looks like: volume, threat mix,
+                regional distribution, and how the shield scores it — backed by
+                a public corpus of 1,021 texts and a broader dataset of 5,545
+                scam reports shared by Filipino users.
               </p>
             </div>
 
@@ -76,11 +79,12 @@ export default async function DashboardPage() {
                 Research corpus.
               </span>{" "}
               ScamShield doesn&apos;t persist scans yet, so every breakdown on
-              this page comes from the public Kaggle dataset
-              &ldquo;Philippine Spam SMS Messages&rdquo; — 1,021 real texts,
-              scored offline by the actual rules engine. The community
-              threat-intel card is live data from the open PH Scam DB project;
-              recent-scan rows are illustrative samples with verified scores.
+              this page comes from two public datasets: the Kaggle
+              &ldquo;Philippine Spam SMS Messages&rdquo; corpus (1,021 texts)
+              and the ScamMessagesPhilippines project (5,545 scam reports
+              across 17 regions). The community threat-intel card is live data
+              from the open PH Scam DB project; recent-scan rows are
+              illustrative samples with verified scores.
             </p>
           </aside>
         </FadeIn>
@@ -98,23 +102,31 @@ export default async function DashboardPage() {
         </FadeIn>
 
         <FadeIn delay={0.2} className="mt-6">
+          <RegionalIncidentsCard />
+        </FadeIn>
+
+        <FadeIn delay={0.24} className="mt-6">
           <CorpusInsightsCard />
         </FadeIn>
 
+        <FadeIn delay={0.28} className="mt-6">
+          <NetworkBreakdownCard />
+        </FadeIn>
+
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <FadeIn delay={0.24}>
+          <FadeIn delay={0.32}>
             <CategoryDonut categories={data.categories} />
           </FadeIn>
-          <FadeIn delay={0.28}>
+          <FadeIn delay={0.36}>
             <RiskBars risks={data.risks} />
           </FadeIn>
         </div>
 
-        <FadeIn delay={0.3} className="mt-6">
+        <FadeIn delay={0.4} className="mt-6">
           <RecentScansTable scans={data.recentScans} />
         </FadeIn>
 
-        <FadeIn delay={0.32}>
+        <FadeIn delay={0.42}>
           <p className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
             <span>
               Want these numbers to reflect your own suspicious messages?

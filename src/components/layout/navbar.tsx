@@ -30,7 +30,7 @@ const PRIMARY_NAV_LINKS = [
 ] as const;
 
 const MORE_NAV_LINKS = [
-  { href: "/dashboard", label: "Dashboard", key: "nav.dashboard" },
+  { href: "/dashboard", label: "Scam Intelligence", key: "nav.scamIntelligence" },
   { href: "/about", label: "About", key: "nav.about" },
 ] as const;
 
