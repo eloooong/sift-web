@@ -7,7 +7,6 @@ import {
 } from "@/lib/corpus/spam-corpus-insights";
 
 const ACCENT = "var(--chart-1)";
-const MUTED_BAR = "var(--muted-foreground)";
 
 function formatPct(share: number): string {
   return `${(share * 100).toFixed(1)}%`;
@@ -36,10 +35,9 @@ function StatCell({
   );
 }
 
-function FamilyRow({ family, max }: { family: CorpusFamily; max: number }) {
-  const isMixed = family.id === "other";
-  const barColor = isMixed ? MUTED_BAR : ACCENT;
-  const width = `${Math.max(Math.sqrt(family.count / max) * 100, 4)}%`;
+function FamilyRow({ family }: { family: CorpusFamily }) {
+  // Bar length mirrors the printed share-of-corpus percentage exactly.
+  const width = `${Math.max(corpusShare(family.count) * 100, 1)}%`;
 
   return (
     <div className="group" title={family.hint}>
@@ -53,7 +51,7 @@ function FamilyRow({ family, max }: { family: CorpusFamily; max: number }) {
       <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted">
         <div
           className="h-full rounded-full opacity-80 transition-opacity group-hover:opacity-100"
-          style={{ width, background: barColor }}
+          style={{ width, background: ACCENT }}
         />
       </div>
     </div>
@@ -63,13 +61,12 @@ function FamilyRow({ family, max }: { family: CorpusFamily; max: number }) {
 function KeywordRow({
   term,
   count,
-  max,
 }: {
   term: string;
   count: number;
-  max: number;
 }) {
-  const width = `${Math.max((count / max) * 100, 2)}%`;
+  // Bar length mirrors the printed share-of-corpus percentage exactly.
+  const width = `${Math.max(corpusShare(count) * 100, 1)}%`;
 
   return (
     <div className="group flex items-center gap-3" title={`${count} messages contain “${term}”`}>
@@ -91,8 +88,6 @@ function KeywordRow({
 
 export function CorpusInsightsCard() {
   const { totals, families, keywords, tlds } = SPAM_CORPUS;
-  const familyMax = Math.max(...families.map((family) => family.count));
-  const keywordMax = Math.max(...keywords.map((keyword) => keyword.count));
 
   return (
     <div className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
@@ -142,7 +137,7 @@ export function CorpusInsightsCard() {
             </p>
             <div className="mt-4 space-y-3.5">
               {families.map((family) => (
-                <FamilyRow key={family.id} family={family} max={familyMax} />
+                <FamilyRow key={family.id} family={family} />
               ))}
             </div>
           </section>
@@ -185,7 +180,6 @@ export function CorpusInsightsCard() {
                   key={keyword.term}
                   term={keyword.term}
                   count={keyword.count}
-                  max={keywordMax}
                 />
               ))}
             </div>
