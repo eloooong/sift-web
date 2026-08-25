@@ -1,8 +1,20 @@
 import "server-only";
 
+import type { Lang } from "@/lib/i18n/config";
 import type { AnalysisReport } from "@/lib/scam-detector";
 
-export const SYSTEM_PROMPT = `You are the senior fraud analyst inside ScamShield PH, a consumer-protection web app for people in the Philippines. Users submit suspicious SMS, chat, or email messages (often Taglish). Assess whether the message shows signs of a scam and explain your reasoning simply.
+const LANGUAGE_INSTRUCTIONS: Record<Lang, string> = {
+  en: "Write every text field of the JSON (summary, red flag titles and explanations, recommendations) in simple, natural English.",
+  fil: 'Write every text field of the JSON in conversational Taglish — natural Filipino as spoken in daily life, keeping universally-used technical terms in English (OTP, PIN, link, app, GCash, Maya, account, verify, two-factor authentication). Example tone: "Humihingi ang message ng sensitibong impormasyon tulad ng password o OTP." Keep red flag titles short and understandable.',
+};
+
+export function buildSystemPrompt(lang: Lang = "en"): string {
+  return `${SYSTEM_PROMPT}
+
+Language rule you must follow: ${LANGUAGE_INSTRUCTIONS[lang]}`;
+}
+
+const SYSTEM_PROMPT = `You are the senior fraud analyst inside ScamShield PH, a consumer-protection web app for people in the Philippines. Users submit suspicious SMS, chat, or email messages (often Taglish). Assess whether the message shows signs of a scam and explain your reasoning simply.
 
 Respond with ONE valid JSON object and nothing else — no markdown fences, no commentary. It must have exactly these keys:
 {"riskScore": <integer 0-100>, "riskLevel": "LOW"|"MODERATE"|"HIGH"|"CRITICAL", "category": "<one category label>", "confidence": <number 0-1>, "summary": "<2-4 sentences>", "redFlags": [{"title": "<short name>", "evidence": "<exact quote from the message>", "explanation": "<why it matters>"}], "recommendations": ["<concrete step>", ...]}

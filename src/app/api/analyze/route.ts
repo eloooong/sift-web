@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { currentUser } from "@/lib/auth/session";
+import type { Lang } from "@/lib/i18n/config";
 import { MAX_INPUT_CHARS } from "@/lib/examples";
 import { recordScan } from "@/lib/history/store";
 import {
@@ -68,6 +69,11 @@ export async function POST(request: Request) {
   }
 
   const text = rawText.trim();
+  const requestedLang =
+    typeof body === "object" && body !== null && "lang" in body
+      ? (body as { lang?: unknown }).lang
+      : undefined;
+  const lang: Lang = requestedLang === "fil" ? "fil" : "en";
   if (!text) {
     return jsonError(
       400,
@@ -84,7 +90,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const report = await analyzeScamText(text, { source: "text" });
+    const report = await analyzeScamText(text, { source: "text", lang });
     // History is recorded server-side, keyed by the verified session — the
     // client never sends a user identifier.
     const user = await currentUser();

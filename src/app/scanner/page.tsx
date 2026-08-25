@@ -6,6 +6,7 @@ import { ScannerInput } from "@/components/scanner/scanner-input";
 import { ScannerModeTabs } from "@/components/scanner/scanner-mode-tabs";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { FadeIn } from "@/components/shared/fade-in";
+import { T } from "@/components/providers/t";
 
 export const metadata: Metadata = {
   title: "Scam Scanner",
@@ -20,8 +21,8 @@ export default function ScannerPage() {
         <SectionHeading
           align="left"
           eyebrow="Analysis"
-          title="Scam Scanner"
-          description="Paste any suspicious message or link below. An AI analyst working with our rule-based engine checks it for Philippine scam patterns — impersonation, urgency pressure, pay-to-claim fees, phishing links, and more."
+          title={<T k="scanner.page.title" />}
+          description={<T k="scanner.page.description" />}
         />
       </FadeIn>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 
+import { T } from "@/components/providers/t";
 import { RiskBadge } from "@/components/shared/risk-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 const HERO_CHECKS = [
-  "Built for Philippine scam patterns",
-  "Explains red flags in plain language",
-  "Free to use — no account required",
+  { key: "hero.check.builtForPh" },
+  { key: "hero.check.plainLanguage" },
+  { key: "hero.check.free" },
 ] as const;
 
 const SAMPLE_EVIDENCE = [
@@ -33,25 +34,24 @@ export function Hero() {
             className="mb-5 h-auto gap-1.5 rounded-full border-border px-3 py-1.5 text-muted-foreground"
           >
             <Sparkles className="text-muted-foreground" />
-            Free to use · No sign-up required
+            <T k="hero.badge" />
           </Badge>
 
           <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]">
-            Think it’s a scam?{" "}
+            <T k="hero.title.pre" />{" "}
             <span className="underline decoration-[3px] decoration-warning underline-offset-[10px]">
-              Let ScamShield check.
+              <T k="hero.title.highlight" />
             </span>
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
-            AI-powered scam detection built to help Filipinos identify
-            suspicious messages, links, and online threats.
+            <T k="hero.subhead" />
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button asChild size="lg" className="h-11 px-6 text-sm">
               <Link href="/scanner">
-                Scan Something Suspicious
+                <T k="hero.cta.scan" />
                 <ArrowRight data-icon="inline-end" />
               </Link>
             </Button>
@@ -61,18 +61,18 @@ export function Hero() {
               size="lg"
               className="h-11 px-6 text-sm"
             >
-              <Link href="/#how-it-works">How It Works</Link>
+              <Link href="/#how-it-works"><T k="hero.cta.how" /></Link>
             </Button>
           </div>
 
           <ul className="mt-8 flex max-w-xl flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-5">
             {HERO_CHECKS.map((check) => (
               <li
-                key={check}
+                key={check.key}
                 className="flex items-center gap-2 text-xs text-muted-foreground"
               >
                 <Check className="size-3.5 shrink-0 text-green-600" />
-                {check}
+                <T k={check.key} />
               </li>
             ))}
           </ul>
@@ -88,7 +88,7 @@ export function Hero() {
             <CardContent>
               <div className="flex items-center justify-between gap-3">
                 <p className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
-                  Analysis Report
+                  <T k="hero.sample.reportLabel" />
                 </p>
                 <Badge variant="secondary" className="font-mono text-[10px]">
                   SAMPLE
@@ -146,9 +146,9 @@ export function Hero() {
               </div>
 
               <p className="mt-4 text-[11px] leading-relaxed text-muted-foreground/80">
-                Sample output — run your own scan on the{" "}
+                <T k="hero.sample.note" />{" "}
                 <Link href="/scanner" className="underline underline-offset-2 hover:text-foreground">
-                  scanner page
+                  <T k="hero.sample.noteLink" />
                 </Link>
                 .
               </p>

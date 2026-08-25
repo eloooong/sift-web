@@ -22,6 +22,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { useLang } from "@/components/providers/language-provider";
+import type { DictKey } from "@/lib/i18n/dictionary";
 import { RiskBadge } from "@/components/shared/risk-badge";
 import { RiskMeter } from "@/components/scanner/risk-meter";
 import type { UrlReport, UrlSeverity, UrlVerdict } from "@/lib/url-analyzer";
@@ -38,46 +40,46 @@ import { cn } from "@/lib/utils";
 
 const SEVERITY_STYLES: Record<
   UrlSeverity,
-  { icon: LucideIcon; className: string; badgeClassName: string; label: string }
+  { icon: LucideIcon; className: string; badgeClassName: string; labelKey: DictKey }
 > = {
   critical: {
     icon: ShieldAlert,
     className: "bg-danger/10 text-danger",
     badgeClassName: "border-danger/40 bg-danger/10 text-danger",
-    label: "Critical",
+    labelKey: "url.severity.critical",
   },
   high: {
     icon: TriangleAlert,
     className: "bg-danger/10 text-danger",
     badgeClassName: "border-danger/30 bg-danger/5 text-danger",
-    label: "High concern",
+    labelKey: "url.severity.high",
   },
   medium: {
     icon: AlertCircle,
     className: "bg-warning/10 text-warning",
     badgeClassName: "border-amber-300 bg-amber-50 text-amber-700",
-    label: "Medium concern",
+    labelKey: "url.severity.medium",
   },
   low: {
     icon: Info,
     className: "bg-muted text-muted-foreground",
     badgeClassName: "border-border bg-muted/60 text-muted-foreground",
-    label: "Low concern",
+    labelKey: "url.severity.low",
   },
   info: {
     icon: CircleDot,
     className: "bg-muted text-muted-foreground",
     badgeClassName: "border-border bg-background text-muted-foreground",
-    label: "Info",
+    labelKey: "url.severity.info",
   },
 };
 
-const VERDICT_LABELS: Record<UrlVerdict, string> = {
-  "no-signals": "No obvious issues",
-  caution: "Minor concerns",
-  suspicious: "Suspicious link",
-  dangerous: "Dangerous link",
-  blocked: "Not a web address",
+const VERDICT_LABEL_KEYS: Record<UrlVerdict, DictKey> = {
+  "no-signals": "url.verdict.no-signals",
+  caution: "url.verdict.caution",
+  suspicious: "url.verdict.suspicious",
+  dangerous: "url.verdict.dangerous",
+  blocked: "url.verdict.blocked",
 };
 
 const VERDICT_CHIP_STYLES: Record<UrlVerdict, string> = {
@@ -110,6 +112,7 @@ export function UrlReportView({
 }) {
   const [copied, setCopied] = useState(false);
   const [showParams, setShowParams] = useState(false);
+  const { t } = useLang();
 
   const strongCount = useMemo(
     () =>
@@ -148,7 +151,7 @@ export function UrlReportView({
                     VERDICT_CHIP_STYLES[report.verdict]
                   )}
                 >
-                  {VERDICT_LABELS[report.verdict]}
+                  {t(VERDICT_LABEL_KEYS[report.verdict])}
                 </span>
                 {report.reputation ? (
                   <span className="inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium">
@@ -174,18 +177,18 @@ export function UrlReportView({
           <RiskMeter score={report.riskScore} level={report.riskLevel} />
 
           <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground">
-            {report.signals.length} security signal
-            {report.signals.length === 1 ? "" : "s"}
+            {report.signals.length}{" "}
+            {report.signals.length === 1 ? t("url.signalFound") : t("url.signalsFound")}
             <span aria-hidden="true" className="text-border">|</span>
-            {strongCount} strong
+            {strongCount} {t("url.signalsStrong")}
             <span aria-hidden="true" className="text-border">|</span>
-            The link was never opened or visited
+            {t("url.neverVisited")}
           </p>
         </CardHeader>
 
         <CardContent>
           <Separator className="mb-4" />
-          <h2 className="mb-1.5 text-sm font-semibold">What this means</h2>
+          <h2 className="mb-1.5 text-sm font-semibold">{t("report.whatThisMeans")}</h2>
           <p className="text-sm leading-relaxed">{report.summary}</p>
         </CardContent>
       </Card>
@@ -194,39 +197,39 @@ export function UrlReportView({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Link2 />
-            Address breakdown
+            {t("url.addressBreakdown")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
           <UrlRow
             icon={report.protocol === "https" ? Lock : LockOpen}
-            label="Protocol"
+            label={t("url.protocol")}
             value={report.protocol.toUpperCase()}
             tone={report.protocol === "https" ? "ok" : "warn"}
           />
-          <UrlRow icon={Globe} label="Domain" value={report.domain} mono />
+          <UrlRow icon={Globe} label={t("url.domain")} value={report.domain} mono />
           <UrlRow
             icon={AtSign}
-            label="Hostname"
+            label={t("url.hostname")}
             value={report.hostname}
             mono
           />
           {report.subdomains.length > 0 ? (
             <UrlRow
               icon={ListTree}
-              label="Subdomains"
+              label={t("url.subdomains")}
               value={report.subdomains.join(" · ")}
               mono
             />
           ) : null}
-          <UrlRow icon={Link2} label="Path" value={report.path || "/"} mono />
+          <UrlRow icon={Link2} label={t("url.path")} value={report.path || "/"} mono />
           <UrlRow
             icon={ListTree}
-            label="Query parameters"
+            label={t("url.queryParams")}
             value={
               report.queryParams.length === 0
-                ? "None"
-                : `${report.queryParams.length} parameter${report.queryParams.length === 1 ? "" : "s"}`
+                ? t("url.paramsNone")
+                : `${report.queryParams.length} ${report.queryParams.length === 1 ? t("url.paramCount") : t("url.paramCountPlural")}`
             }
           />
           {report.queryParams.length > 0 ? (
@@ -236,7 +239,7 @@ export function UrlReportView({
               aria-expanded={showParams}
               className="mt-1 w-full cursor-pointer rounded-lg border bg-muted/40 px-3 py-2 text-left text-[11px] font-medium text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
-              {showParams ? "Hide" : "Show"} raw parameters
+              {showParams ? t("url.hideParams") : t("url.showParams")}
             </button>
           ) : null}
           {showParams ? (
@@ -257,7 +260,7 @@ export function UrlReportView({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <SearchCheck />
-            Security signals
+            {t("url.securitySignals")}
             <span className="font-normal text-muted-foreground">
               ({report.signals.length})
             </span>
@@ -266,7 +269,7 @@ export function UrlReportView({
         <CardContent>
           {report.signals.length === 0 ? (
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Nothing suspicious was found in the address structure itself.
+              {t("url.noSignalsBody")}
             </p>
           ) : (
             <ul className="space-y-3">
@@ -299,7 +302,7 @@ export function UrlReportView({
                           style.badgeClassName
                         )}
                       >
-                        {style.label}
+                        {t(style.labelKey)}
                       </span>
                     </div>
 
@@ -327,17 +330,17 @@ export function UrlReportView({
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Fingerprint className="text-danger" />
-              Potential impersonation
+              {t("url.impersonationTitle")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <p className="text-sm leading-relaxed">
-              This address appears to imitate{" "}
+              {t("url.imitates")}{" "}
               <span className="font-semibold">{report.impersonation.brandLabel}</span>.
               {" "}{report.impersonation.reason}
             </p>
             <p className="flex flex-wrap items-center gap-2 pt-1 text-xs text-muted-foreground">
-              Official domain:
+              {t("url.officialDomain")}
               <span className="rounded-md border bg-muted/50 px-2 py-0.5 font-mono text-[11px] font-semibold text-foreground">
                 {report.impersonation.officialDomain}
               </span>
@@ -350,7 +353,7 @@ export function UrlReportView({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CheckCircle2 className="text-success" />
-            Recommended action
+            {t("report.whatToDo")}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -371,18 +374,18 @@ export function UrlReportView({
         <CardFooter className="justify-between gap-3">
           <Button onClick={onReset}>
             <RotateCcw data-icon="inline-start" />
-            Check Another Link
+            {t("url.checkAnother")}
           </Button>
           <Button variant="ghost" size="sm" onClick={handleCopy}>
             {copied ? (
               <>
                 <Check data-icon="inline-start" />
-                Copied
+                {t("report.copied")}
               </>
             ) : (
               <>
                 <Copy data-icon="inline-start" />
-                Copy Report
+                {t("report.copyReport")}
               </>
             )}
           </Button>
@@ -390,10 +393,7 @@ export function UrlReportView({
       </Card>
 
       <p className="px-1 text-xs leading-relaxed text-muted-foreground">
-        This assessment inspects the address itself — patterns, structure, and
-        (if configured) reputation databases. The link is never visited by our
-        servers, and page content can’t be seen, so a clean result is not a
-        guarantee of safety.
+        {t("url.disclaimer")}
       </p>
     </div>
   );
@@ -438,7 +438,7 @@ function buildPlainText(report: UrlReport): string {
     "SCAMSHIELD PH — URL SECURITY REPORT",
     `Scanned: ${formatScanTime(report.createdAt)}`,
     `URL: ${report.normalizedUrl}`,
-    `Risk score: ${report.riskScore}/100 (${report.riskLevel.toUpperCase()} — ${VERDICT_LABELS[report.verdict]})`,
+    `Risk score: ${report.riskScore}/100 (${report.riskLevel.toUpperCase()})`,
     `Protocol: ${report.protocol.toUpperCase()}   Domain: ${report.domain}`,
     ...(report.impersonation
       ? [

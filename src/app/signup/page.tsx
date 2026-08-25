@@ -4,6 +4,7 @@ import { ScanLine } from "lucide-react";
 
 import { AuthForm } from "@/components/auth/auth-form";
 import { FadeIn } from "@/components/shared/fade-in";
+import { T } from "@/components/providers/t";
 import { currentUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
@@ -39,11 +40,10 @@ export default async function SignUpPage({
             <ScanLine aria-hidden="true" className="size-5 text-primary" />
           </span>
           <h1 className="mt-4 text-2xl font-semibold tracking-tight">
-            Create your account
+            <T k="auth.signup.title" />
           </h1>
           <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-            Free, no personal details beyond an email — scans made while signed
-            in are saved to your private history.
+            <T k="auth.signup.body" />
           </p>
         </FadeIn>
 

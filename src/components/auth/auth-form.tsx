@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 
+import { useLang } from "@/components/providers/language-provider";
+
 type Mode = "signin" | "signup";
 
 export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
   const router = useRouter();
+  const { t } = useLang();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -47,7 +50,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
         const message =
           body && "error" in body && body.error
             ? body.error.message
-            : "Something went wrong. Please try again.";
+            : t("auth.genericError");
         setError(message);
         return;
       }
@@ -57,7 +60,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
       // but protected pages benefit from a fresh render pass).
       router.refresh();
     } catch {
-      setError("Network error — check your connection and try again.");
+      setError(t("auth.networkError"));
     } finally {
       setSubmitting(false);
     }
@@ -70,7 +73,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
       className="flex flex-col gap-4 rounded-xl bg-card p-6 ring-1 ring-foreground/10 sm:p-7"
     >
       {mode === "signup" ? (
-        <Field label="Display name" htmlFor="af-name" hint="Optional · how you'll appear in the app">
+        <Field label={t("auth.displayName")} htmlFor="af-name" hint={t("auth.nameHint")}>
           <input
             id="af-name"
             type="text"
@@ -84,7 +87,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
         </Field>
       ) : null}
 
-      <Field label="Email" htmlFor="af-email">
+      <Field label={t("auth.email")} htmlFor="af-email">
         <input
           id="af-email"
           type="email"
@@ -98,10 +101,10 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
       </Field>
 
       <Field
-        label="Password"
+        label={t("auth.password")}
         htmlFor="af-password"
         hint={
-          mode === "signup" ? "At least 8 characters" : undefined
+          mode === "signup" ? t("auth.passwordHint") : undefined
         }
       >
         <input
@@ -131,34 +134,34 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
         {submitting ? (
           <>
             <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
-            {mode === "signin" ? "Signing in…" : "Creating account…"}
+            {mode === "signin" ? t("auth.signingIn") : t("auth.creating")}
           </>
         ) : mode === "signin" ? (
-          "Sign in"
+          t("nav.signIn")
         ) : (
-          "Create account"
+          t("auth.submitUp")
         )}
       </button>
 
       <p className="text-center text-xs leading-relaxed text-muted-foreground">
         {mode === "signin" ? (
           <>
-            New here?{" "}
+            {t("auth.newHere")}{" "}
             <Link
               href={`/signup${nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""}`}
               className="font-medium underline hover:text-foreground"
             >
-              Create an account
+              {t("auth.createLink")}
             </Link>
           </>
         ) : (
           <>
-            Already have an account?{" "}
+            {t("auth.haveAccount")}{" "}
             <Link
               href={`/signin${nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""}`}
               className="font-medium underline hover:text-foreground"
             >
-              Sign in
+              {t("nav.signIn")}
             </Link>
           </>
         )}

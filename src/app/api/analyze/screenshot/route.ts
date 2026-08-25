@@ -187,10 +187,13 @@ export async function POST(request: Request) {
   }
 
   const analysisText = extractedText.slice(0, MAX_INPUT_CHARS);
+  const requestedLang = formData.get("lang");
+  const lang = requestedLang === "fil" ? "fil" : "en";
 
   try {
     const report = await analyzeScamText(analysisText, {
       source: "screenshot",
+      lang,
     });
     report.extractedText = extractedText.slice(0, MAX_INPUT_CHARS);
     const user = await currentUser();

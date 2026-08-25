@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Globe, ImageUp, Keyboard } from "lucide-react";
 
+import { useLang } from "@/components/providers/language-provider";
 import { cn } from "@/lib/utils";
 
 const MODES = [
@@ -10,18 +11,21 @@ const MODES = [
     key: "text",
     href: "/scanner",
     label: "Paste Text",
+    labelFil: "I-paste ang Text",
     icon: Keyboard,
   },
   {
     key: "screenshot",
     href: "/scanner/screenshot",
     label: "Upload Screenshot",
+    labelFil: "Mag-upload ng Screenshot",
     icon: ImageUp,
   },
   {
     key: "url",
     href: "/scanner/url",
     label: "Check URL",
+    labelFil: "I-check ang Link",
     icon: Globe,
   },
 ] as const;
@@ -29,10 +33,11 @@ const MODES = [
 export type ScannerMode = (typeof MODES)[number]["key"];
 
 export function ScannerModeTabs({ active }: { active: ScannerMode }) {
+  const { lang, t } = useLang();
   return (
     <div
       role="tablist"
-      aria-label="Scanner input mode"
+      aria-label={t("scanner.aria.modeTabs")}
       className="inline-flex w-full rounded-xl border bg-muted/50 p-1 sm:w-auto"
     >
       {MODES.map((mode) => {
@@ -53,7 +58,7 @@ export function ScannerModeTabs({ active }: { active: ScannerMode }) {
             )}
           >
             <Icon aria-hidden="true" className="size-4" />
-            {mode.label}
+            {lang === "fil" ? mode.labelFil : mode.label}
           </Link>
         );
       })}

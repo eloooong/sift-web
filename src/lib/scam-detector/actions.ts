@@ -1,3 +1,4 @@
+import type { Lang } from "@/lib/i18n/config";
 import type { SignalCategoryId } from "./types";
 
 const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
@@ -49,38 +50,106 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
   ],
 };
 
+const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
+  prize: [
+    "Huwag sumagot, mag-click ng link, o magbayad ng anumang “claim” fee.",
+    "Ang tunay na raffle ay hindi humihingi ng bayad bago ibigay ang premyo.",
+    "I-verify sa opisyal na channel ng organisasyon — hindi sa mga detalyeng nakasulat sa message.",
+  ],
+  financial: [
+    "Huwag magpadala ng pera o magbigay ng detalye ng e-wallet o bangko.",
+    "Tawagan ang opisyal na hotline ng company para i-confirm ang sinasabing singil.",
+    "Walang lehitimong company na kumokolekta ng bayad sa personal na e-wallet o remittance number.",
+    "Kung nagbayad ka na, makipag-ugnayan agad sa e-wallet o bangko mo para subukang maibalik ang pera.",
+  ],
+  credential: [
+    "Huwag buksan ang link o maglagay ng login details mo.",
+    "Kung nabuksan mo na, palitan agad ang password mo at i-enable ang two-factor authentication.",
+    "Buksan ang opisyal na app o i-type nang mano-mano ang website address sa halip na maniwala sa message.",
+  ],
+  link: [
+    "Huwag pindutin ang link.",
+    "Suriin nang mabuti ang domain — gumagamit ang scammers ng spelling na kamukha ng tunay na site.",
+    "Pumasok lang sa serbisyo gamit ang opisyal na app o website nito.",
+  ],
+  job: [
+    "Huwag magbayad para mag-apply o “i-activate” ang alok na trabaho.",
+    "Alamin muna ang company; walang lehitimong recruiter na kumokolekta ng fee sa aplikante.",
+    "Humingi ng opisyal na company email at i-verify ang pagkakakilanlan ng recruiter.",
+  ],
+  urgency: [
+    "Huminto muna — ang artipisyal na deadline ay paraan ng panggigipit.",
+    "I-verify ang claim sa opisyal na channel bago kumilos.",
+    "Kausapin muna ang taong pinagkakatiwalaan mo bago sumagot.",
+  ],
+  investment: [
+    "Huwag magdeposito sa kahit sinong naghahandog ng investimento sa chat o text.",
+    "Tingnan ang company sa advisory at registered list ng SEC (sec.gov.ph).",
+    "Imposible ang garantiyang mataas na tubo araw-araw — sapat na itong dahilan para hindi ito tuloy.",
+  ],
+  loan: [
+    "Huwag magbayad ng advance na “release” fee — binabawas ng lehitimong lender ang fee sa loob ng loan.",
+    "I-verify ang lender sa SEC-registered lending companies at BSP-accredited firms.",
+    "Huwag magpadala ng ID photo o selfie sa di-veripikadong lender; ginagamit ito sa identity fraud.",
+  ],
+  romance: [
+    "Mag-ingat sa online na kakilala na mabilis umamin ng pagmamahal nang hindi pa nagkikita.",
+    "Huwag magbayad ng customs, tiket, o hospital bill para sa taong hindi mo pa personal na nakikita.",
+    "Hilingin ang spontaneous na video call — palaging iniiwasan ng scammers ang live na verification.",
+  ],
+};
+
 const SAFE_DEFAULT_ACTIONS = [
   "Stay cautious even without clear red flags.",
   "Never share OTPs, PINs, or passwords — no legitimate company will ask for them.",
 ];
 
+const SAFE_DEFAULT_ACTIONS_FIL = [
+  "Manatiling mapagbantay kahit walang malinaw na red flag.",
+  "Huwag kailan magbabahagi ng OTP, PIN, o password — walang tunay na company na hihingi ng mga ito.",
+];
+
 const OTP_ACTION =
   "Never share OTPs, PINs, or passwords — no legitimate company will ask for them.";
 
+const OTP_ACTION_FIL =
+  "Huwag kailan magbibigay ng OTP, PIN, o password — walang lehitimong company na hihingi ang mga ito.";
+
 const BLOCK_ACTION = "Block the number or account that sent this message.";
+
+const BLOCK_ACTION_FIL =
+  "I-block ang numero o account na nagpadala ng message na ito.";
 
 const REPORT_ACTION =
   "Report the message to the platform or telco you received it through.";
 
+const REPORT_ACTION_FIL =
+  "I-report ang message sa platform o telco kung saan mo natanggap.";
+
 const WARN_ACTION =
   "Warn family and friends — especially seniors who receive these often.";
 
+const WARN_ACTION_FIL =
+  "Ipaalam sa pamilya at kaibigan — lalo na sa matatanda na madalas biktima nito.";
+
 export function buildRecommendedActions(
   primaryCategory: SignalCategoryId | null,
-  riskScore: number
+  riskScore: number,
+  lang: Lang = "en"
 ): string[] {
+  const fil = lang === "fil";
   const actions = primaryCategory
-    ? [...CATEGORY_ACTIONS[primaryCategory]]
-    : [...SAFE_DEFAULT_ACTIONS];
+    ? [...(fil ? CATEGORY_ACTIONS_FIL : CATEGORY_ACTIONS)[primaryCategory]]
+    : [...(fil ? SAFE_DEFAULT_ACTIONS_FIL : SAFE_DEFAULT_ACTIONS)];
 
   if (riskScore >= 50) {
-    actions.push(OTP_ACTION, BLOCK_ACTION);
+    actions.push(fil ? OTP_ACTION_FIL : OTP_ACTION, fil ? BLOCK_ACTION_FIL : BLOCK_ACTION);
   }
   if (primaryCategory || riskScore >= 30) {
-    actions.push(REPORT_ACTION);
+    actions.push(fil ? REPORT_ACTION_FIL : REPORT_ACTION);
   }
   if (riskScore >= 50) {
-    actions.push(WARN_ACTION);
+    actions.push(fil ? WARN_ACTION_FIL : WARN_ACTION);
   }
 
   return actions.slice(0, 7);

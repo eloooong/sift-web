@@ -4,6 +4,7 @@ import { KeyRound } from "lucide-react";
 
 import { AuthForm } from "@/components/auth/auth-form";
 import { FadeIn } from "@/components/shared/fade-in";
+import { T } from "@/components/providers/t";
 import { currentUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
@@ -39,10 +40,10 @@ export default async function SignInPage({
             <KeyRound aria-hidden="true" className="size-5 text-primary" />
           </span>
           <h1 className="mt-4 text-2xl font-semibold tracking-tight">
-            Welcome back
+            <T k="auth.signin.title" />
           </h1>
           <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-            Sign in to open your private scan history.
+            <T k="auth.signin.body" />
           </p>
         </FadeIn>
 

@@ -1,9 +1,10 @@
 import "server-only";
 
+import type { Lang } from "@/lib/i18n/config";
 import type { AnalysisReport } from "@/lib/scam-detector";
 import { AiError, requestChatJson, type AiErrorKind } from "./client";
 import { getAiConfig } from "./config";
-import { buildUserPrompt, SYSTEM_PROMPT } from "./prompt";
+import { buildSystemPrompt, buildUserPrompt } from "./prompt";
 import { parseAiAnalysis, type AiAnalysis } from "./schemas";
 
 export type AiRunOutcome =
@@ -12,7 +13,8 @@ export type AiRunOutcome =
 
 export async function runAiAnalysis(
   text: string,
-  rulesReport: AnalysisReport
+  rulesReport: AnalysisReport,
+  lang: Lang = "en"
 ): Promise<AiRunOutcome> {
   const config = getAiConfig();
   if (!config) {
@@ -22,7 +24,7 @@ export async function runAiAnalysis(
   try {
     const raw = await requestChatJson(
       config,
-      SYSTEM_PROMPT,
+      buildSystemPrompt(lang),
       buildUserPrompt(text, rulesReport)
     );
     return { ok: true, analysis: parseAiAnalysis(raw), model: config.model };

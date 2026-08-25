@@ -30,6 +30,7 @@ import {
 import { RiskBadge } from "@/components/shared/risk-badge";
 import { CategoryBadge } from "@/components/shared/category-badge";
 import { RiskMeter } from "@/components/scanner/risk-meter";
+import { useLang } from "@/components/providers/language-provider";
 import type { SignalCategoryId } from "@/lib/scam-detector";
 import type { ScanFlag, ScanReport } from "@/lib/scan-report";
 import { Button } from "@/components/ui/button";
@@ -166,6 +167,7 @@ export function ReportView({
 }) {
   const [copied, setCopied] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
+  const { t } = useLang();
 
   const isAiMode = report.analysisMode === "ai";
   const isScreenshot = report.source === "screenshot";
@@ -219,19 +221,19 @@ export function ReportView({
                 {isScreenshot ? (
                   <span className="inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium">
                     <Camera className="size-3 text-muted-foreground" />
-                    Analyzed from screenshot
+                    {t("report.fromScreenshot")}
                   </span>
                 ) : null}
                 <span className="inline-flex items-center gap-1.5 rounded-full border bg-muted/60 px-2.5 py-0.5 text-xs font-medium">
                   {isAiMode ? (
                     <>
                       <Sparkles className="size-3 text-muted-foreground" />
-                      AI analysis
+                      {t("report.chip.ai")}
                     </>
                   ) : (
                     <>
                       <ShieldCheck className="size-3 text-muted-foreground" />
-                      Rule-based engine
+                      {t("report.chip.rules")}
                     </>
                   )}
                 </span>
@@ -258,27 +260,25 @@ export function ReportView({
           <RiskMeter score={report.riskScore} level={report.riskLevel} />
 
           <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground">
-            Engine confidence{" "}
+            {t("report.engineConfidence")}{" "}
             <span className="font-semibold tabular-nums text-foreground">
               {report.confidence}%
             </span>
             <span aria-hidden="true" className="text-border">
               |
             </span>
-            {report.flags.length} red flag
-            {report.flags.length === 1 ? "" : "s"} found
+            {report.flags.length}{" "}
+            {report.flags.length === 1 ? t("report.flag") : t("report.flagsFound")}
             <span aria-hidden="true" className="text-border">
               |
             </span>
-            {isAiMode
-              ? "AI judgment cross-checked with the rule engine"
-              : "Deterministic rule engine"}
+            {isAiMode ? t("report.engineAi") : t("report.engineRules")}
           </p>
         </CardHeader>
 
         <CardContent>
           <Separator className="mb-4" />
-          <h2 className="mb-1.5 text-sm font-semibold">What this means</h2>
+          <h2 className="mb-1.5 text-sm font-semibold">{t("report.whatThisMeans")}</h2>
           <p className="text-sm leading-relaxed">{report.summary}</p>
         </CardContent>
       </Card>
@@ -287,7 +287,7 @@ export function ReportView({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Flag />
-            Red flags found
+            {t("report.redFlags")}
             <span className="font-normal text-muted-foreground">
               ({report.flags.length})
             </span>
@@ -296,8 +296,7 @@ export function ReportView({
         <CardContent>
           {report.flags.length === 0 ? (
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Nothing in this message was identified as a red flag. Review the
-              sender carefully anyway — new scams appear all the time.
+              {t("report.redFlagsEmpty")}
             </p>
           ) : (
             <ul className="space-y-3">
@@ -334,7 +333,7 @@ export function ReportView({
                           “{flag.evidence}”
                         </p>
                         <p className="mt-1 text-[10px] tracking-wide text-danger/80 uppercase">
-                          Found in your message
+                          {t("report.foundInMessage")}
                         </p>
                       </blockquote>
                     ) : null}
@@ -354,7 +353,7 @@ export function ReportView({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator />
-            How the score was calculated
+            {t("report.howScoreCalculated")}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -374,21 +373,19 @@ export function ReportView({
             </ul>
           ) : (
             <p className="text-sm text-muted-foreground">
-              No points were added — nothing suspicious matched.
+              {t("report.breakdownNone")}
             </p>
           )}
           <Separator className="my-3" />
           <div className="flex items-center justify-between gap-4">
-            <span className="text-sm font-semibold">Total risk score</span>
+            <span className="text-sm font-semibold">{t("report.totalScore")}</span>
             <span className="font-mono text-sm font-bold tabular-nums">
               {report.riskScore}
               <span className="font-normal text-muted-foreground">/100</span>
             </span>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            {isAiMode
-              ? "The points above come from the deterministic rule-engine pre-scan of your message. The final score combines that pre-scan with the AI analyst’s independent assessment."
-              : "Each matched pattern adds points based on how dangerous it is. Points are combined and scaled into the final 0–100 score shown above."}
+            {isAiMode ? t("report.pointsNote.ai") : t("report.pointsNote.rules")}
           </p>
         </CardContent>
       </Card>
@@ -397,7 +394,7 @@ export function ReportView({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CheckCircle2 className="text-success" />
-            What you should do
+            {t("report.whatToDo")}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -418,18 +415,20 @@ export function ReportView({
         <CardFooter className="justify-between gap-3">
           <Button onClick={onReset}>
             <RotateCcw data-icon="inline-start" />
-            {isScreenshot ? "Analyze Another Screenshot" : "Analyze Another Message"}
+            {isScreenshot
+              ? t("report.analyzeAnotherScreenshot")
+              : t("report.analyzeAnother")}
           </Button>
           <Button variant="ghost" size="sm" onClick={handleCopy}>
             {copied ? (
               <>
                 <Check data-icon="inline-start" />
-                Copied
+                {t("report.copied")}
               </>
             ) : (
               <>
                 <Copy data-icon="inline-start" />
-                Copy Report
+                {t("report.copyReport")}
               </>
             )}
           </Button>
@@ -446,9 +445,12 @@ export function ReportView({
           >
             <CardTitle className="flex items-center gap-2">
               <Quote />
-              {isScreenshot ? "Extracted text from screenshot" : "Original message"}
+              {isScreenshot
+                ? t("report.extractedText")
+                : t("report.originalMessage")}
               <span className="font-normal text-muted-foreground">
-                ({analyzedText.length.toLocaleString()} characters)
+                ({analyzedText.length.toLocaleString()}{" "}
+                {t("report.characters")})
               </span>
             </CardTitle>
             <ChevronDown
@@ -488,8 +490,7 @@ export function ReportView({
                   </p>
                   {isScreenshot ? (
                     <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
-                      Text recovered with OCR — minor misreads are possible.
-                      The analysis above is based on this extracted content.
+                      {t("report.ocrNote")}
                     </p>
                   ) : highlightCount > 0 ? (
                     <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted-foreground">
@@ -497,7 +498,7 @@ export function ReportView({
                         aria-hidden="true"
                         className="inline-block h-2.5 w-2.5 rounded-sm bg-danger/15 ring-1 ring-danger/40"
                       />
-                      Highlighted phrases matched the red flags above.
+                      {t("report.highlightNote")}
                     </p>
                   ) : null}
                 </div>
@@ -508,9 +509,7 @@ export function ReportView({
       </Card>
 
       <p className="px-1 text-xs leading-relaxed text-muted-foreground">
-        {isAiMode
-          ? "This report was produced by an AI analyst working alongside our deterministic rule engine. AI can misjudge unusual wording — treat it as guidance, not a verdict, and independently verify important information through official channels."
-          : "This result comes from ScamShield’s transparent rule-based engine — deterministic pattern matching, not AI. Heuristics can miss new tactics or flag unusual wording. Treat it as guidance and verify through official channels before acting."}
+        {isAiMode ? t("report.disclaimer.ai") : t("report.disclaimer.rules")}
       </p>
     </div>
   );

@@ -1,5 +1,6 @@
 import { runAiAnalysis } from "@/lib/ai/analyzer";
 import type { AiErrorKind } from "@/lib/ai/client";
+import type { Lang } from "@/lib/i18n/config";
 import { normalizeCategory } from "@/lib/ai/schemas";
 import { scamCategoryFromLabel } from "@/lib/scam-detector/categories";
 import { analyzeMessage } from "@/lib/scam-detector";
@@ -9,17 +10,33 @@ import { ruleReportToScan, type ScanReport, type ScanSource } from "@/lib/scan-r
 const AI_SCORE_WEIGHT = 0.65;
 const RULES_SCORE_WEIGHT = 0.35;
 
-export const FALLBACK_WARNINGS: Record<AiErrorKind | "not_configured", string> = {
-  not_configured:
-    "AI analysis isn’t configured on this deployment, so your report comes from the built-in rule engine only.",
-  timeout:
-    "The AI analyst took too long to respond, so your report was completed with the built-in rule engine.",
-  rate_limit:
-    "The AI analyst is handling heavy traffic right now, so your report comes from the built-in rule engine. Please try again in a few minutes.",
-  unavailable:
-    "We couldn’t reach the AI analyst, so your report comes from the built-in rule engine. You can retry for a full AI assessment.",
-  invalid_response:
-    "The AI analyst returned an answer we couldn’t verify, so your report comes from the built-in rule engine.",
+type FallbackWarning = Record<AiErrorKind | "not_configured", string>;
+
+const FALLBACK_WARNINGS: Record<Lang, FallbackWarning> = {
+  en: {
+    not_configured:
+      "AI analysis isn't configured on this deployment, so your report comes from the built-in rule engine only.",
+    timeout:
+      "The AI analyst took too long to respond, so your report was completed with the built-in rule engine.",
+    rate_limit:
+      "The AI analyst is handling heavy traffic right now, so your report comes from the built-in rule engine. Please try again in a few minutes.",
+    unavailable:
+      "We couldn't reach the AI analyst, so your report comes from the built-in rule engine. You can retry for a full AI assessment.",
+    invalid_response:
+      "The AI analyst returned an answer we couldn't verify, so your report comes from the built-in rule engine.",
+  },
+  fil: {
+    not_configured:
+      "Walang naka-set up na AI analysis sa deployment na ito, kaya galing lang ang report mo sa built-in rule engine.",
+    timeout:
+      "Masyadong natagal ang sagot ng AI analyst, kaya natapos ang report mo gamit ang built-in rule engine.",
+    rate_limit:
+      "Marami pang ibang scan ang hina-handle ng AI analyst kaya galing sa built-in rule engine ang report mo. Subukan ulit pagkatapos ng ilang minuto.",
+    unavailable:
+      "Hindi kami nakakonekta sa AI analyst, kaya galing sa built-in rule engine ang report mo. Maaari kang mag-retry para sa buong pagsusuri ng AI.",
+    invalid_response:
+      "May sagot ang AI analyst na hindi namin ma-verify, kaya galing sa built-in rule engine ang report mo.",
+  },
 };
 
 /**
@@ -29,12 +46,13 @@ export const FALLBACK_WARNINGS: Record<AiErrorKind | "not_configured", string> =
  */
 export async function analyzeScamText(
   text: string,
-  options?: { source?: ScanSource }
+  options?: { source?: ScanSource; lang?: Lang }
 ): Promise<ScanReport> {
   const source: ScanSource = options?.source ?? "text";
+  const lang: Lang = options?.lang === "fil" ? "fil" : "en";
 
-  const rulesReport = analyzeMessage(text);
-  const aiOutcome = await runAiAnalysis(text, rulesReport);
+  const rulesReport = analyzeMessage(text, { lang });
+  const aiOutcome = await runAiAnalysis(text, rulesReport, lang);
 
   const id = crypto.randomUUID();
   const createdAt = new Date().toISOString();
@@ -75,6 +93,6 @@ export async function analyzeScamText(
   return {
     ...ruleReportToScan(rulesReport, id, createdAt),
     source,
-    warning: FALLBACK_WARNINGS[aiOutcome.reason],
+    warning: FALLBACK_WARNINGS[lang][aiOutcome.reason],
   };
 }

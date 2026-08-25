@@ -1,5 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import type { RiskLevel } from "@/lib/scam-detector";
+
+import { useLang } from "@/components/providers/language-provider";
 
 const RISK_BADGE_STYLES: Record<
   RiskLevel,
@@ -27,6 +31,13 @@ const RISK_BADGE_STYLES: Record<
   },
 };
 
+const RISK_LABEL_KEY = {
+  low: "risk.low",
+  medium: "risk.medium",
+  high: "risk.high",
+  critical: "risk.critical",
+} as const;
+
 export function RiskBadge({
   level,
   className,
@@ -35,6 +46,7 @@ export function RiskBadge({
   className?: string;
 }) {
   const style = RISK_BADGE_STYLES[level];
+  const { t } = useLang();
 
   return (
     <span
@@ -48,7 +60,7 @@ export function RiskBadge({
         aria-hidden="true"
         className={cn("size-1.5 rounded-full", style.dotClassName)}
       />
-      {style.label}
+      {t(RISK_LABEL_KEY[level])}
     </span>
   );
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import type { LucideIcon } from "lucide-react";
 import {
   Briefcase,
@@ -13,6 +15,8 @@ import {
   TrendingUp,
   Wallet,
 } from "lucide-react";
+
+import { useLang } from "@/components/providers/language-provider";
 
 import type { ScamCategoryDef, ScamCategoryId } from "@/lib/scam-detector/categories";
 import { cn } from "@/lib/utils";
@@ -32,6 +36,21 @@ const CATEGORY_ICONS: Record<ScamCategoryId, LucideIcon> = {
   other: HelpCircle,
 };
 
+const CATEGORY_LABEL_FIL: Record<ScamCategoryId, string> = {
+  "bank-scam": "Bank Scam",
+  "e-wallet-scam": "E-wallet Scam",
+  "prize-scam": "Prize Scam",
+  "delivery-scam": "Delivery Scam",
+  "online-job-scam": "Fake na Job Offer",
+  "loan-scam": "Loan Scam",
+  "government-impersonation": "Pangangapit sa Gobyerno",
+  "account-verification-scam": "Account Verification Scam",
+  "investment-scam": "Investment Scam",
+  "romance-scam": "Romance Scam",
+  phishing: "Phishing",
+  other: "Ibang Uri ng Scam",
+};
+
 export function CategoryBadge({
   category,
   className,
@@ -39,6 +58,8 @@ export function CategoryBadge({
   category: ScamCategoryDef | null;
   className?: string;
 }) {
+  const { lang } = useLang();
+
   if (!category) {
     return (
       <span
@@ -47,7 +68,7 @@ export function CategoryBadge({
           className
         )}
       >
-        No specific category
+        {lang === "fil" ? "Walang tukoy na kategorya" : "No specific category"}
       </span>
     );
   }
@@ -62,7 +83,9 @@ export function CategoryBadge({
       )}
     >
       <Icon aria-hidden="true" className="size-3 text-muted-foreground" />
-      {category.label}
+      {lang === "fil"
+        ? (CATEGORY_LABEL_FIL[category.id] ?? category.label)
+        : category.label}
     </span>
   );
 }

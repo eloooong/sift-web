@@ -5,6 +5,7 @@ import { UrlScanner } from "@/components/scanner/url-scanner";
 import { ScannerModeTabs } from "@/components/scanner/scanner-mode-tabs";
 import { FadeIn } from "@/components/shared/fade-in";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { T } from "@/components/providers/t";
 
 export const metadata: Metadata = {
   title: "URL Security Scanner",
@@ -19,8 +20,8 @@ export default function UrlScannerPage() {
         <SectionHeading
           align="left"
           eyebrow="Analysis"
-          title="URL Security Scanner"
-          description="Paste a suspicious link below. We break down the address itself — protocol, domain, subdomains, keywords, lookalike brands, shorteners, and redirects — without ever opening it."
+          title={<T k="url.page.title" />}
+          description={<T k="url.page.description" />}
         />
       </FadeIn>
 
@@ -38,29 +39,27 @@ export default function UrlScannerPage() {
             <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success" />
             <p className="text-xs leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">
-                Zero-click analysis.
+                <T k="url.note.zeroClick.title" />
               </span>{" "}
-              The link is parsed as text on our server — we never visit it,
-              resolve it, or render it, so checking is completely safe.
+              <T k="url.note.zeroClick.body" />
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-dashed px-4 py-3.5">
             <Globe className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
             <p className="text-xs leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">
-                Reputation-aware.
+                <T k="url.note.reputation.title" />
               </span>{" "}
-              Where a reputation service is configured, results are
-              cross-checked against known phishing and malware databases.
+              <T k="url.note.reputation.body" />
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-dashed px-4 py-3.5 sm:col-span-2">
             <Info className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
             <p className="text-xs leading-relaxed text-muted-foreground">
-              <span className="font-medium text-foreground">Fair scoring.</span>{" "}
-              A single weak signal (like a shortened link) never labels an
-              address dangerous on its own — verdicts require multiple
-              independent or strong indicators.
+              <span className="font-medium text-foreground">
+                <T k="url.note.fairScoring.title" />
+              </span>{" "}
+              <T k="url.note.fairScoring.body" />
             </p>
           </div>
         </div>

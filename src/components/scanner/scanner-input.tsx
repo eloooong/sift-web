@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+
+import { useLang } from "@/components/providers/language-provider";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Eraser,
@@ -54,6 +56,7 @@ async function readErrorMessage(response: Response): Promise<string> {
 
 export function ScannerInput() {
   const searchParams = useSearchParams();
+  const { lang, t } = useLang();
   const [initialExample] = useState(() => {
     const exampleId = searchParams.get("example");
     return EXAMPLE_SCAMS.find((item) => item.id === exampleId) ?? null;
@@ -119,7 +122,7 @@ export function ScannerInput() {
       const response = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text, lang }),
         signal: controller.signal,
       });
 
@@ -176,7 +179,7 @@ export function ScannerInput() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between gap-4">
                 <label htmlFor="scanner-input" className="text-sm font-medium">
-                  Suspicious message or link
+                  {t("input.label")}
                 </label>
                 <p
                   aria-live="polite"
@@ -203,14 +206,14 @@ export function ScannerInput() {
                     void handleAnalyze();
                   }
                 }}
-                placeholder="Paste the SMS, email, chat message, or link you want to check…"
+                placeholder={t("input.placeholder")}
                 maxLength={MAX_INPUT_CHARS}
                 rows={8}
                 className="resize-none font-mono text-sm leading-relaxed"
                 aria-describedby="scanner-input-hint"
               />
               <p id="scanner-input-hint" className="sr-only">
-                Press Control plus Enter to run the analysis.
+                {t("input.keyboardHint")}
               </p>
 
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -221,7 +224,7 @@ export function ScannerInput() {
                   disabled={!value}
                 >
                   <Eraser data-icon="inline-start" />
-                  Clear
+                  {t("input.clear")}
                 </Button>
 
                 <Button
@@ -230,13 +233,13 @@ export function ScannerInput() {
                   className="min-w-[10.5rem]"
                 >
                   <ShieldAlert data-icon="inline-start" />
-                  Analyze Message
+                  {t("input.analyze")}
                 </Button>
               </div>
 
               <div className="border-t pt-4">
                 <p className="mb-2 text-xs font-medium text-muted-foreground">
-                  No message handy? Load a real-world example:
+                  {t("input.exampleLead")}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {EXAMPLE_SCAMS.map((example) => (
@@ -252,7 +255,9 @@ export function ScannerInput() {
                           "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
                       )}
                     >
-                      {example.label}
+                      {lang === "fil"
+                        ? (example.labelFil ?? example.label)
+                        : example.label}
                     </Button>
                   ))}
                 </div>
@@ -264,12 +269,10 @@ export function ScannerInput() {
                     <MessageSquareWarning className="size-5 text-muted-foreground" />
                   </span>
                   <h2 className="mt-4 text-sm font-medium">
-                    Nothing to analyze yet
+                    {t("input.emptyTitle")}
                   </h2>
                   <p className="mx-auto mt-1.5 max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                    Paste a suspicious SMS, email, chat message, or link above
-                    — or tap one of the example scams to see how ScamShield
-                    breaks down a threat.
+                    {t("input.emptyBody")}
                   </p>
                   <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
                     {EMPTY_STATE_CHANNELS.map((channel) => (
@@ -302,21 +305,24 @@ export function ScannerInput() {
                 <TriangleAlert className="size-5 text-danger" />
               </span>
               <h2 className="mt-4 text-base font-semibold">
-                Scan didn’t finish
+                {lang === "fil" ? "Hindi natapos ang scan" : "Scan didn’t finish"}
               </h2>
               <p
                 role="alert"
                 className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-muted-foreground"
               >
-                {errorMessage ?? GENERIC_ERROR_MESSAGE}
+                {errorMessage ??
+                  (lang === "fil"
+                    ? "Hindi namin natapos ang scan mo. Pakisuri ang koneksyon at subukan ulit."
+                    : GENERIC_ERROR_MESSAGE)}
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <Button onClick={() => void handleAnalyze()}>
                   <RefreshCw data-icon="inline-start" />
-                  Try Again
+                  {lang === "fil" ? "Subukan ulit" : "Try Again"}
                 </Button>
                 <Button variant="outline" onClick={handleReset}>
-                  Start Over
+                  {lang === "fil" ? "Magsimula ulit" : "Start Over"}
                 </Button>
               </div>
             </CardContent>

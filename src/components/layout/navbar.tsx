@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, Menu } from "lucide-react";
 
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo } from "@/components/layout/logo";
+import { useLang } from "@/components/providers/language-provider";
 import { SignOutButton } from "@/components/account/account-forms";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,18 +21,19 @@ import {
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/scanner", label: "Scanner" },
-  { href: "/scams", label: "Scam Library" },
-  { href: "/reports", label: "Reports" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "Home", key: "nav.home" },
+  { href: "/scanner", label: "Scanner", key: "nav.scanner" },
+  { href: "/scams", label: "Scam Library", key: "nav.scamLibrary" },
+  { href: "/reports", label: "Reports", key: "nav.reports" },
+  { href: "/dashboard", label: "Dashboard", key: "nav.dashboard" },
+  { href: "/about", label: "About", key: "nav.about" },
 ] as const;
 
 type MeUser = { id: string; email: string; displayName: string };
 
 export function Navbar() {
   const pathname = usePathname();
+  const { t } = useLang();
   const router = useRouter();
   const [user, setUser] = useState<MeUser | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -81,7 +84,9 @@ export function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  const links = user ? [...NAV_LINKS, { href: "/history", label: "History" }] : [...NAV_LINKS];
+  const links = user
+    ? [...NAV_LINKS, { href: "/history", label: "History", key: "nav.history" as const }]
+    : [...NAV_LINKS];
   const initial = user?.displayName.trim().charAt(0).toUpperCase() || "?";
 
   return (
@@ -102,12 +107,13 @@ export function Navbar() {
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher className="hidden sm:inline-flex" />
           {/* Account area — reserved space avoids layout shift while loading */}
           <div className="hidden items-center md:flex">
             {!loaded ? (
@@ -161,10 +167,10 @@ export function Navbar() {
             ) : (
               <>
                 <Button asChild variant="ghost" size="sm">
-                  <Link href="/signin">Sign in</Link>
+                  <Link href="/signin">{t("nav.signIn")}</Link>
                 </Button>
                 <Button asChild size="sm">
-                  <Link href="/signup">Create account</Link>
+                  <Link href="/signup">{t("nav.signUp")}</Link>
                 </Button>
               </>
             )}
@@ -204,28 +210,29 @@ export function Navbar() {
                         : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                     )}
                   >
-                    {link.label}
+                    {t(link.key)}
                   </Link>
                 ))}
               </nav>
               <div className="mt-auto flex flex-col gap-2 p-4">
+                <LanguageSwitcher />
                 {user ? (
                   <>
                     <p className="truncate px-1 text-xs text-muted-foreground">
                       Signed in as <span className="font-medium">{user.email}</span>
                     </p>
                     <Button asChild variant="outline" className="w-full">
-                      <Link href="/settings">Settings</Link>
+                      <Link href="/settings">{t("nav.settings")}</Link>
                     </Button>
                     <SignOutButton full onSignedOut={handleSignedOut} />
                   </>
                 ) : (
                   <>
                     <Button asChild className="w-full">
-                      <Link href="/signin">Sign in</Link>
+                      <Link href="/signin">{t("nav.signIn")}</Link>
                     </Button>
                     <Button asChild variant="outline" className="w-full">
-                      <Link href="/signup">Create account</Link>
+                      <Link href="/signup">{t("nav.signUp")}</Link>
                     </Button>
                   </>
                 )}

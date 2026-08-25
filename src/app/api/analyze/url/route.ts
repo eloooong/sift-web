@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { currentUser } from "@/lib/auth/session";
+import type { Lang } from "@/lib/i18n/config";
 import { recordScan } from "@/lib/history/store";
 import {
   clientKey,
@@ -115,7 +116,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const report = await analyzeUrl(trimmed);
+    const requestedLang =
+      typeof body === "object" && body !== null && "lang" in body
+        ? (body as { lang?: unknown }).lang
+        : undefined;
+    const lang: Lang = requestedLang === "fil" ? "fil" : "en";
+    const report = await analyzeUrl(trimmed, { lang });
     const user = await currentUser();
     if (user) {
       recordScan({
