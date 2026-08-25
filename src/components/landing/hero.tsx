@@ -53,7 +53,10 @@ export function Hero() {
             <Button asChild size="lg" className="h-11 px-6 text-sm">
               <Link href="/scanner">
                 <T k="hero.cta.scan" />
-                <ArrowRight data-icon="inline-end" />
+                <ArrowRight
+                  data-icon="inline-end"
+                  className="transition-transform group-hover/button:translate-x-0.5"
+                />
               </Link>
             </Button>
             <Button
@@ -110,7 +113,7 @@ export function Hero() {
                 role="presentation"
                 className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted"
               >
-                <div className="h-full w-[95%] rounded-full bg-red-600" />
+                <div className="hero-bar-fill h-full w-[95%] rounded-full bg-red-600" />
               </div>
 
               <dl className="mt-5 space-y-2.5 text-sm">
@@ -124,10 +127,11 @@ export function Hero() {
                 <div className="flex items-start justify-between gap-4">
                   <dt className="shrink-0 text-muted-foreground">Evidence</dt>
                   <dd className="flex flex-wrap justify-end gap-1.5">
-                    {SAMPLE_EVIDENCE.map((flag) => (
+                    {SAMPLE_EVIDENCE.map((flag, index) => (
                       <span
                         key={flag}
-                        className="rounded-full border border-red-100 bg-red-50 px-2 py-0.5 text-[11px] font-medium text-red-700"
+                        style={{ animationDelay: `${0.7 + index * 0.12}s` }}
+                        className="hero-badge-pop rounded-full border border-red-100 bg-red-50 px-2 py-0.5 text-[11px] font-medium text-red-700"
                       >
                         {flag}
                       </span>

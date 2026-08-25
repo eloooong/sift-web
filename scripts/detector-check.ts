@@ -167,6 +167,9 @@ assert(
 const deliveryExample = EXAMPLE_SCAMS.find(
   (example) => example.id === "lazada-delivery-scam"
 );
+if (!deliveryExample) {
+  throw new Error("delivery sample missing from EXAMPLE_SCAMS");
+}
 const deliveryReport = analyzeMessage(deliveryExample.sampleText);
 assert(
   deliveryReport.category?.label === "Delivery Scam",

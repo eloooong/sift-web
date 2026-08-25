@@ -1,4 +1,4 @@
-import { FileSearch, Info, ScanSearch, Upload } from "lucide-react";
+import { ArrowRight, FileSearch, Info, ScanSearch, Upload } from "lucide-react";
 
 import { SectionHeading } from "@/components/shared/section-heading";
 import { FadeIn } from "@/components/shared/fade-in";
@@ -40,7 +40,15 @@ export function HowItWorks() {
 
         <ol className="mt-10 grid gap-4 md:grid-cols-3">
           {STEPS.map((step, index) => (
-            <li key={step.number}>
+            <li key={step.number} className="relative">
+              {index > 0 ? (
+                <span
+                  aria-hidden="true"
+                  className="absolute top-1/2 -left-[24px] hidden -translate-y-1/2 md:block"
+                >
+                  <ArrowRight className="size-4 text-muted-foreground/40" />
+                </span>
+              ) : null}
               <FadeIn delay={index * 0.05}>
               <Card className="relative h-full transition-colors hover:ring-foreground/20">
                 <CardContent className="flex h-full flex-col gap-3 pt-1">

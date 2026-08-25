@@ -1,4 +1,5 @@
 import {
+  ArrowUpRight,
   ClipboardPaste,
   Link2,
   Mail,
@@ -82,12 +83,16 @@ export function ScanTypes() {
             const card = (
               <Card
                 className={cn(
-                  "h-full transition-colors hover:ring-foreground/20",
-                  type.href && "hover:border-primary/40"
+                  "relative h-full transition-all duration-200",
+                  "hover:-translate-y-0.5 hover:shadow-md hover:ring-foreground/20"
                 )}
               >
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="absolute top-4 right-4 size-4 text-muted-foreground/40 transition-all duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 group-hover/card:text-foreground"
+                />
                 <CardHeader>
-                  <span className="mb-1 flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/60 text-foreground">
+                  <span className="mb-1 flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/60 text-foreground transition-colors group-hover/card:border-foreground/25">
                     <type.icon className="size-[18px]" />
                   </span>
                   <CardTitle className="flex items-center gap-2">

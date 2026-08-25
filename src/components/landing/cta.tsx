@@ -26,7 +26,10 @@ export function CtaSection() {
             <Button asChild size="lg" className="h-11 bg-white px-6 text-sm text-slate-900 hover:bg-slate-200">
               <Link href="/scanner">
                 Scan Something Suspicious
-                <ArrowRight data-icon="inline-end" />
+                <ArrowRight
+                  data-icon="inline-end"
+                  className="transition-transform group-hover/button:translate-x-0.5"
+                />
               </Link>
             </Button>
             <Button

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, Menu } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo } from "@/components/layout/logo";
@@ -20,11 +21,15 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-const NAV_LINKS = [
+// Primary destinations stay visible; everything else groups under "More".
+const PRIMARY_NAV_LINKS = [
   { href: "/", label: "Home", key: "nav.home" },
   { href: "/scanner", label: "Scanner", key: "nav.scanner" },
   { href: "/scams", label: "Scam Library", key: "nav.scamLibrary" },
   { href: "/reports", label: "Reports", key: "nav.reports" },
+] as const;
+
+const MORE_NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard", key: "nav.dashboard" },
   { href: "/about", label: "About", key: "nav.about" },
 ] as const;
@@ -38,7 +43,9 @@ export function Navbar() {
   const [user, setUser] = useState<MeUser | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const moreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -58,14 +65,22 @@ export function Navbar() {
     };
   }, [pathname]);
 
-  // Close the account menu on outside click / Escape.
+  // Close any open menu on outside click / Escape.
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen && !moreOpen) return;
     function onPointerDown(event: PointerEvent) {
-      if (!menuRef.current?.contains(event.target as Node)) setMenuOpen(false);
+      if (menuOpen && !menuRef.current?.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+      if (moreOpen && !moreRef.current?.contains(event.target as Node)) {
+        setMoreOpen(false);
+      }
     }
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        setMoreOpen(false);
+      }
     }
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -73,7 +88,7 @@ export function Navbar() {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen]);
+  }, [menuOpen, moreOpen]);
 
   const handleSignedOut = useCallback(() => {
     setUser(null);
@@ -84,9 +99,16 @@ export function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  const links = user
-    ? [...NAV_LINKS, { href: "/history", label: "History", key: "nav.history" as const }]
-    : [...NAV_LINKS];
+  const HISTORY_LINK = {
+    href: "/history",
+    label: "History",
+    key: "nav.history",
+  } as const;
+  const moreLinks = user
+    ? [...MORE_NAV_LINKS, HISTORY_LINK]
+    : [...MORE_NAV_LINKS];
+  const allLinks = [...PRIMARY_NAV_LINKS, ...moreLinks];
+  const moreActive = moreLinks.some((link) => isActive(link.href));
   const initial = user?.displayName.trim().charAt(0).toUpperCase() || "?";
 
   return (
@@ -95,21 +117,70 @@ export function Navbar() {
         <Logo />
 
         <nav aria-label="Main navigation" className="hidden items-center gap-1 md:flex">
-          {links.map((link) => (
+          {PRIMARY_NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={cn(
                 "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
-                isActive(link.href)
-                  ? "bg-muted text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                link.href === "/scanner"
+                  ? "font-semibold text-primary hover:bg-muted"
+                  : isActive(link.href)
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
               )}
             >
               {t(link.key)}
             </Link>
           ))}
+
+          <div ref={moreRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setMoreOpen((value) => !value)}
+              aria-expanded={moreOpen}
+              aria-haspopup="menu"
+              className={cn(
+                "flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+                moreOpen || moreActive
+                  ? "bg-muted text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {t("nav.more")}
+              <ChevronDown
+                aria-hidden="true"
+                className={cn("size-3.5 transition-transform", moreOpen && "rotate-180")}
+              />
+            </button>
+
+            {moreOpen ? (
+              <div
+                role="menu"
+                aria-label="More pages"
+                className="absolute left-0 top-full z-50 mt-1.5 w-44 rounded-xl bg-card p-1.5 shadow-lg ring-1 ring-foreground/10"
+              >
+                {moreLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    role="menuitem"
+                    href={link.href}
+                    onClick={() => setMoreOpen(false)}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    className={cn(
+                      "block rounded-lg px-3 py-2 text-sm transition-colors",
+                      isActive(link.href)
+                        ? "bg-muted font-medium text-foreground"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    )}
+                  >
+                    {t(link.key)}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -177,7 +248,13 @@ export function Navbar() {
           </div>
 
           <Button asChild size="sm" className="hidden lg:inline-flex">
-            <Link href="/scanner">Scan Now</Link>
+            <Link href="/scanner">
+              Scan Now
+              <ArrowRight
+                data-icon="inline-end"
+                className="transition-transform group-hover/button:translate-x-0.5"
+              />
+            </Link>
           </Button>
 
           <Sheet>
@@ -199,7 +276,7 @@ export function Navbar() {
                 </SheetDescription>
               </SheetHeader>
               <nav aria-label="Mobile navigation" className="flex flex-col gap-1 overflow-y-auto px-4">
-                {links.map((link) => (
+                {allLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}

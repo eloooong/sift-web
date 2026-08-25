@@ -179,3 +179,26 @@
     transform: translateX(420%);
   }
 }
+
+/* Landing page sample report card entrance */
+@keyframes hero-bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes hero-badge-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+  }
+}
+
+.hero-bar-fill {
+  transform-origin: left;
+  animation: hero-bar-fill 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+.hero-badge-pop {
+  animation: hero-badge-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
