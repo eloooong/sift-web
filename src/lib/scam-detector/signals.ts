@@ -33,6 +33,8 @@ const URL_SHORTENER_HOSTS = new Set([
   "rebrandly.com",
   "shorturl.at",
   "tiny.cc",
+  // Widely abused e-commerce redirector in PH SMS spam
+  "s.lazada.com.ph",
 ]);
 
 const HIGH_RISK_TLDS = new Set([
