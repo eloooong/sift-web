@@ -101,7 +101,7 @@ export default function ScamsPage() {
                     />
                     Realistic example (fictional)
                   </h3>
-                  <blockquote className="rounded-r-md border-l-2 border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
+                  <blockquote className="rounded-md border border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
                     <p className="font-mono text-[11px] leading-relaxed break-words text-foreground/80">
                       “{category.exampleText}”
                     </p>

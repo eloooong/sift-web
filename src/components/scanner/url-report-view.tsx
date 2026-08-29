@@ -308,7 +308,7 @@ export function UrlReportView({
                     </div>
 
                     {signal.evidence ? (
-                      <blockquote className="mt-2.5 rounded-r-md border-l-2 border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
+                      <blockquote className="mt-2.5 rounded-md border border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
                         <p className="font-mono text-[11px] leading-relaxed break-all text-foreground/80">
                           {signal.evidence}
                         </p>
