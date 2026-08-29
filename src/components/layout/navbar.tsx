@@ -159,7 +159,7 @@ export function Navbar() {
               <div
                 role="menu"
                 aria-label="More pages"
-                className="absolute left-0 top-full z-50 mt-1.5 w-44 rounded-xl bg-card p-1.5 shadow-lg ring-1 ring-foreground/10"
+                className="absolute left-0 top-full z-50 mt-1.5 w-44 rounded-xl bg-card p-1.5 border-border ring-1 ring-foreground/10"
               >
                 {moreLinks.map((link) => (
                   <Link
@@ -214,7 +214,7 @@ export function Navbar() {
                   <div
                     role="menu"
                     aria-label="Account menu"
-                    className="absolute right-0 top-11 w-56 rounded-xl bg-card p-2 shadow-lg ring-1 ring-foreground/10"
+                    className="absolute right-0 top-11 w-56 rounded-xl bg-card p-2 border-border ring-1 ring-foreground/10"
                   >
                     <div className="px-3 py-2">
                       <p className="truncate text-sm font-medium">{user.displayName}</p>

@@ -76,7 +76,7 @@ export function Hero() {
                 key={check.key}
                 className="flex items-center gap-2 text-xs text-muted-foreground"
               >
-                <Check className="size-3.5 shrink-0 text-green-600" />
+                <Check className="size-3.5 shrink-0 text-success" />
                 <T k={check.key} />
               </li>
             ))}
@@ -89,7 +89,7 @@ export function Hero() {
             className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-tr from-slate-200/80 via-slate-100 to-transparent blur-2xl"
           />
 
-          <Card className="shadow-lg shadow-slate-200/70">
+          <Card className="border-border">
             <CardContent>
               <div className="flex items-center justify-between gap-3">
                 <p className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
@@ -129,7 +129,7 @@ export function Hero() {
                       <span
                         key={flag}
                         style={{ animationDelay: `${0.7 + index * 0.12}s` }}
-                        className="hero-badge-pop rounded-full border border-red-100 bg-red-50 px-2 py-0.5 text-[11px] font-medium text-red-700"
+                        className="hero-badge-pop rounded-full border border-danger/30 bg-danger/10 px-2 py-0.5 text-[11px] font-medium text-danger"
                       >
                         {flag}
                       </span>

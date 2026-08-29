@@ -84,7 +84,7 @@ export function ScanTypes() {
               <Card
                 className={cn(
                   "relative h-full transition-all duration-200",
-                  "hover:-translate-y-0.5 hover:shadow-md hover:ring-foreground/20"
+                  "hover:-translate-y-0.5 hover:ring-foreground/20"
                 )}
               >
                 <ArrowUpRight

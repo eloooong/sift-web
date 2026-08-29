@@ -16,7 +16,7 @@ export function ReportCard({
   confirmed: boolean;
 }) {
   return (
-    <article className="flex flex-col rounded-xl bg-card p-4 ring-1 ring-foreground/10 transition-shadow hover:shadow-sm sm:p-5">
+    <article className="flex flex-col rounded-xl bg-card p-4 ring-1 ring-foreground/10 sm:p-5">
       <div className="flex flex-wrap items-center gap-2">
         <CategoryBadge category={scamCategoryById(report.categoryId)} />
         <span className="rounded-full border border-dashed px-2.5 py-0.5 font-mono text-[10px] tracking-wide text-muted-foreground uppercase">

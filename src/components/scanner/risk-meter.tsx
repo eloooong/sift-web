@@ -12,8 +12,8 @@ const SEGMENTS: Array<{
   color: string;
 }> = [
   { level: "low", label: "Low", width: 30, color: "var(--success)" },
-  { level: "medium", label: "Moderate", width: 30, color: "#f59e0b" },
-  { level: "high", label: "High", width: 20, color: "#f97316" },
+  { level: "medium", label: "Moderate", width: 30, color: "var(--warning)" },
+  { level: "high", label: "High", width: 20, color: "var(--risk-meter)" },
   { level: "critical", label: "Critical", width: 20, color: "var(--danger)" },
 ];
 
@@ -25,7 +25,6 @@ export function RiskMeter({
   level: RiskLevel;
 }) {
   const activeSegment = SEGMENTS.find((segment) => segment.level === level);
-  const glowColor = activeSegment?.color ?? "var(--success)";
 
   return (
     <div
@@ -55,8 +54,7 @@ export function RiskMeter({
           className="absolute inset-y-0 left-0 rounded-full"
           style={{
             background:
-              "linear-gradient(to right, var(--success) 0%, var(--success) 30%, #f59e0b 30%, #f59e0b 60%, #f97316 60%, #f97316 80%, var(--danger) 80%, var(--danger) 100%)",
-            boxShadow: `0 0 10px ${glowColor}55`,
+              "linear-gradient(to right, var(--success) 0%, var(--success) 30%, var(--warning) 30%, var(--warning) 60%, var(--risk-meter) 60%, var(--risk-meter) 80%, var(--danger) 80%, var(--danger) 100%)",
           }}
         />
         {[30, 60, 80].map((tick) => (

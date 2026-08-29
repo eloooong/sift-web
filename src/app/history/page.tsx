@@ -83,7 +83,7 @@ export default async function HistoryPage() {
             return (
               <li key={entry.id}>
                 <FadeIn delay={Math.min(index * 0.04, 0.24)}>
-                  <article className="flex items-center gap-3 rounded-xl bg-card p-3.5 ring-1 ring-foreground/10 transition-shadow hover:shadow-sm sm:p-4">
+                  <article className="flex items-center gap-3 rounded-xl bg-card p-3.5 ring-1 ring-foreground/10 sm:p-4">
                     <span
                       aria-hidden="true"
                       title={meta.label}

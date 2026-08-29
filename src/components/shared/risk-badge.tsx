@@ -11,22 +11,22 @@ const RISK_BADGE_STYLES: Record<
 > = {
   low: {
     label: "Low Risk",
-    badgeClassName: "border-green-200 bg-green-50 text-green-700",
-    dotClassName: "bg-green-500",
+    badgeClassName: "border-success/30 bg-success/10 text-success",
+    dotClassName: "bg-success",
   },
   medium: {
     label: "Moderate Risk",
-    badgeClassName: "border-amber-200 bg-amber-50 text-amber-700",
-    dotClassName: "bg-amber-500",
+    badgeClassName: "border-warning/30 bg-warning/10 text-warning",
+    dotClassName: "bg-warning",
   },
   high: {
     label: "High Risk",
-    badgeClassName: "border-red-200 bg-red-50 text-red-700",
-    dotClassName: "bg-red-500",
+    badgeClassName: "border-danger/30 bg-danger/10 text-danger",
+    dotClassName: "bg-danger",
   },
   critical: {
     label: "Critical",
-    badgeClassName: "border-red-600 bg-red-600 text-white",
+    badgeClassName: "border-danger bg-danger text-white",
     dotClassName: "bg-white",
   },
 };
