@@ -11,7 +11,7 @@ import { T } from "@/components/providers/t";
 export const metadata: Metadata = {
   title: "Scam Scanner",
   description:
-    "Paste a suspicious SMS, email, chat message, or link and let ScamShield PH check it for known Philippine scam patterns.",
+    "Paste a suspicious SMS, email, chat message, or link and let Sift check it for known Philippine scam patterns.",
 };
 
 export default function ScannerPage() {

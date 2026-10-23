@@ -13,4 +13,4 @@ function resolveSiteUrl(): string {
 
 export const SITE_URL = resolveSiteUrl();
 
-export const SITE_NAME = "ScamShield PH";
+export const SITE_NAME = "Sift";

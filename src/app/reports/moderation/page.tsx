@@ -30,7 +30,7 @@ import {
 } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Moderation | ScamShield PH",
+  title: "Moderation",
   description: "Moderator queue for community scam reports.",
   robots: { index: false },
 };

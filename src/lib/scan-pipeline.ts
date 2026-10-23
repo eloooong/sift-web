@@ -42,7 +42,7 @@ const FALLBACK_WARNINGS: Record<Lang, FallbackWarning> = {
 };
 
 /**
- * The full ScamShield pipeline for an already-extracted message body:
+ * The full Sift pipeline for an already-extracted message body:
  * rule-engine pre-scan → AI analysis → blended security report.
  * Shared by the text scanner and the screenshot scanner (post-OCR).
  */

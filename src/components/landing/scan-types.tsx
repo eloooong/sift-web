@@ -75,7 +75,7 @@ export function ScanTypes() {
         <SectionHeading
           eyebrow="Supported Scan Types"
           title="If it looks fishy, scan it"
-          description="ScamShield PH is designed to handle the channels Filipinos actually get scammed on."
+          description="Sift is designed to handle the channels Filipinos actually get scammed on."
         />
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

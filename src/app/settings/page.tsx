@@ -11,7 +11,7 @@ import { requireUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Settings",
-  description: "Manage your ScamShield PH account.",
+  description: "Manage your Sift account.",
 };
 
 export default async function SettingsPage() {

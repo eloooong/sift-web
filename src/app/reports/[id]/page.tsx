@@ -25,10 +25,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const report = await getApprovedReport(id);
-  if (!report) return { title: "Report not found | ScamShield PH" };
+  if (!report) return { title: "Report not found" };
   const category = scamCategoryById(report.categoryId);
   return {
-    title: `${category.label} report ${report.id} | ScamShield PH`,
+    title: `${category.label} report ${report.id}`,
     description: report.shortDescription,
   };
 }

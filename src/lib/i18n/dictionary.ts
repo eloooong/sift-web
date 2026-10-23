@@ -99,7 +99,7 @@ export const DICT = {
     "input.exampleLead": "No message handy? Load a real-world example:",
     "input.emptyTitle": "Nothing to analyze yet",
     "input.emptyBody":
-      "Paste a suspicious SMS, email, chat message, or link above, or tap one of the example scams to see how ScamShield breaks down a threat.",
+      "Paste a suspicious SMS, email, chat message, or link above, or tap one of the example scams to see how Sift breaks down a threat.",
 
     "report.scannedWith": "Scanned with",
     "report.whatThisMeans": "What this means",
@@ -137,7 +137,7 @@ export const DICT = {
     "report.disclaimer.ai":
       "This report was produced by an AI analyst working alongside our rule-based engine. AI can misjudge unusual wording, so treat it as guidance, not a verdict, and independently verify important information through official channels.",
     "report.disclaimer.rules":
-      "This result comes from ScamShield's transparent rule-based engine (pattern matching, not AI). Rules can miss new tactics or flag unusual wording. Treat it as guidance and verify through official channels before acting.",
+      "This result comes from Sift's transparent rule-based engine (pattern matching, not AI). Rules can miss new tactics or flag unusual wording. Treat it as guidance and verify through official channels before acting.",
 
     "risk.low": "Low Risk",
     "risk.medium": "Moderate Risk",
@@ -148,7 +148,7 @@ export const DICT = {
 
     "hero.badge": "Free to use · No sign-up required",
     "hero.title.pre": "Think it's a scam?",
-    "hero.title.highlight": "Let ScamShield check.",
+    "hero.title.highlight": "Let Sift check.",
     "hero.subhead":
       "AI-assisted scam risk assessment built to help Filipinos evaluate suspicious messages, links, and online threats.",
     "hero.cta.scan": "Scan Something Suspicious",
@@ -175,11 +175,11 @@ export const DICT = {
     "footer.link.library": "Scam Library",
     "footer.link.scanTypes": "Supported Scan Types",
     "footer.link.howItWorks": "How It Works",
-    "footer.link.about": "About ScamShield",
+    "footer.link.about": "About Sift",
     "footer.link.examples": "Common PH Scam Patterns",
     "footer.link.privacy": "Privacy Principles",
     "footer.disclaimer":
-      "ScamShield PH is an independent educational tool. It is not affiliated with, endorsed by, or connected to GCash, Maya, any bank, Shopee, Lazada, LBC, J&T Express, Grab, or any government agency mentioned in examples or sample content. Brand names appear only to illustrate impersonation tactics commonly used by scammers. Analysis output is informational only and is not legal, financial, or security advice.",
+      "Sift is an independent educational tool. It is not affiliated with, endorsed by, or connected to GCash, Maya, any bank, Shopee, Lazada, LBC, J&T Express, Grab, or any government agency mentioned in examples or sample content. Brand names appear only to illustrate impersonation tactics commonly used by scammers. Analysis output is informational only and is not legal, financial, or security advice.",
     "footer.copyright": "All rights reserved.",
     "auth.displayName": "Display name",
     "auth.nameHint": "Optional · how you'll appear in the app",
@@ -299,7 +299,7 @@ export const DICT = {
     "input.exampleLead": "Walang maisamaing message? Subukan ang mga tunay na halimbawa:",
     "input.emptyTitle": "Wala pang sasuriin",
     "input.emptyBody":
-      "I-paste ang kahina-hinalang SMS, email, chat message, o link sa itaas, o pindutin ang isa sa mga halimbawang scam para makita kung paano sinusuri ng ScamShield ang isang banta.",
+      "I-paste ang kahina-hinalang SMS, email, chat message, o link sa itaas, o pindutin ang isa sa mga halimbawang scam para makita kung paano sinusuri ng Sift ang isang banta.",
 
     "report.scannedWith": "Sinuri gamit ang",
     "report.whatThisMeans": "Ano ang ibig sabihin nito",
@@ -337,7 +337,7 @@ export const DICT = {
     "report.disclaimer.ai":
       "Ang report na ito ay gawa ng AI analyst na katulong ng aming rule-based engine. Maaaring magkamali ang AI sa pambihirang phrasing, kaya ituring itong gabay, hindi hatol, at i-verify ang mahahalagang impormasyon sa opisyal na channel.",
     "report.disclaimer.rules":
-      "Ang resulta na ito ay galing sa transparent na rule-based engine ng ScamShield (pattern matching, hindi AI). Maaaring makalusot ang bagong modus o maflag ang pambihirang phrasing. Ituring na gabay at i-verify muna sa opisyal na channel bago kumilos.",
+      "Ang resulta na ito ay galing sa transparent na rule-based engine ng Sift (pattern matching, hindi AI). Maaaring makalusot ang bagong modus o maflag ang pambihirang phrasing. Ituring na gabay at i-verify muna sa opisyal na channel bago kumilos.",
 
     "risk.low": "Mababang Panganib",
     "risk.medium": "Katamtamang Panganib",
@@ -348,7 +348,7 @@ export const DICT = {
 
     "hero.badge": "Libreng gamitin · Walang kailangang sign-up",
     "hero.title.pre": "Mukhang scam?",
-    "hero.title.highlight": "Ipa-check sa ScamShield.",
+    "hero.title.highlight": "Ipa-check sa Sift.",
     "hero.subhead":
       "AI-assisted na risk assessment para matulungan ang mga Pilipino na tasahin ang kahina-hinalang messages, links, at online threats.",
     "hero.cta.scan": "Mag-scan ng Kahina-hinala",
@@ -375,11 +375,11 @@ export const DICT = {
     "footer.link.library": "Scam Library",
     "footer.link.scanTypes": "Mga Sinusuportahang Uri ng Scan",
     "footer.link.howItWorks": "Paano Ito Gumagana",
-    "footer.link.about": "Tungkol sa ScamShield",
+    "footer.link.about": "Tungkol sa Sift",
     "footer.link.examples": "Mga Karaniwang Scam sa Pilipinas",
     "footer.link.privacy": "Mga Prinsipyo sa Privacy",
     "footer.disclaimer":
-      "Ang ScamShield PH ay isang independenteng educational tool. Hindi ito kaakibat, inendorso, o konektado sa GCash, Maya, kahit anong bangko, Shopee, Lazada, LBC, J&T Express, Grab, o kahit anong ahensya ng gobyerno na binabanggit sa mga halimbawa o sample content. Ang mga brand name ay lumilitaw lamang para ipakita ang mga modus ng pagpapanggap na karaniwang ginagamit ng mga scammer. Ang output ng pagsusuri ay para sa impormasyon lamang at hindi legal, pinansyal, o security advice.",
+      "Ang Sift ay isang independenteng educational tool. Hindi ito kaakibat, inendorso, o konektado sa GCash, Maya, kahit anong bangko, Shopee, Lazada, LBC, J&T Express, Grab, o kahit anong ahensya ng gobyerno na binabanggit sa mga halimbawa o sample content. Ang mga brand name ay lumilitaw lamang para ipakita ang mga modus ng pagpapanggap na karaniwang ginagamit ng mga scammer. Ang output ng pagsusuri ay para sa impormasyon lamang at hindi legal, pinansyal, o security advice.",
     "footer.copyright": "Nakalaan ang lahat ng karapatan.",
     "auth.displayName": "Pangalang ipapakita",
     "auth.nameHint": "Opsyonal · ganito ka makikita sa app",

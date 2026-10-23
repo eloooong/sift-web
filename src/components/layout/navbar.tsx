@@ -20,6 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { SITE_NAME } from "@/lib/site";
 
 // Primary destinations stay visible; everything else groups under "More".
 const PRIMARY_NAV_LINKS = [
@@ -270,7 +271,7 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" className="w-72">
               <SheetHeader>
-                <SheetTitle>ScamShield PH</SheetTitle>
+                <SheetTitle>{SITE_NAME}</SheetTitle>
                 <SheetDescription>
                   AI-assisted scam risk assessment for Filipinos
                 </SheetDescription>

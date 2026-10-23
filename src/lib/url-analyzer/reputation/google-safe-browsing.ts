@@ -39,7 +39,7 @@ export function createSafeBrowsingProvider(options?: {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            client: { clientId: "scamshield-ph", clientVersion: "1.0.0" },
+            client: { clientId: "sift", clientVersion: "1.0.0" },
             threatInfo: {
               threatTypes: ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE"],
               platformTypes: ["ANY_PLATFORM"],

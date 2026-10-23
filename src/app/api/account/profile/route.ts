@@ -15,7 +15,7 @@ export async function PATCH(request: Request) {
       NextResponse,
       403,
       "forbidden_origin",
-      "This request didn't come from ScamShield."
+      "This request didn't come from Sift."
     );
   }
 

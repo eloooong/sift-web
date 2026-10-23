@@ -21,7 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "ScamShield PH is an independent, educational scam-detection tool built for Filipino internet users. Learn what it checks and who it is for.",
+    "Sift is an independent, educational scam-detection tool built for Filipino internet users. Learn what it checks and who it is for.",
 };
 
 const DETECTION_CHECKS = [
@@ -50,7 +50,7 @@ export default function AboutPage() {
           as="h1"
           eyebrow="About"
           title="Fighting scams, one message at a time"
-          description="ScamShield PH exists because scam messages in the Philippines are not an edge case: they are a daily reality in every inbox, SMS thread, and Messenger chat."
+          description="Sift exists because scam messages in the Philippines are not an edge case: they are a daily reality in every inbox, SMS thread, and Messenger chat."
         />
       </FadeIn>
 
@@ -65,7 +65,7 @@ export default function AboutPage() {
               branding, pressuring you to act before you can think.
             </p>
             <p>
-              ScamShield PH is built to break that pattern. Instead of a
+              Sift is built to break that pattern. Instead of a
               mysterious “this is a scam” verdict, every analysis explains
               itself: a risk score, the detected scam category, the specific
               red flags found in the message, and clear next steps you can act
@@ -84,7 +84,7 @@ export default function AboutPage() {
       <FadeIn delay={0.08}>
         <section className="mt-14">
           <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-            What ScamShield looks for
+            What Sift looks for
           </h2>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2">
             {DETECTION_CHECKS.map((check) => (
@@ -130,7 +130,7 @@ export default function AboutPage() {
           <Scale className="mt-0.5 size-4 shrink-0 text-amber-600" />
           <p className="text-xs leading-relaxed text-amber-900">
             <span className="font-medium">Honest-use disclaimer.</span>{" "}
-            ScamShield PH is an independent educational tool, not legal,
+            Sift is an independent educational tool, not legal,
             financial, or security advice. It is not affiliated with GCash,
             Maya, any bank, Shopee, Lazada, LBC, J&amp;T Express, Grab, or any
             government agency; those names appear only as examples of brands

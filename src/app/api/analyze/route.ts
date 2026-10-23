@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     return jsonError(
       403,
       "forbidden_origin",
-      "That request didn’t come from ScamShield. Please scan from the app."
+      "That request didn’t come from Sift. Please scan from the app."
     );
   }
 

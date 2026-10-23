@@ -14,7 +14,7 @@ export function buildSystemPrompt(lang: Lang = "en"): string {
 Language rule you must follow: ${LANGUAGE_INSTRUCTIONS[lang]}`;
 }
 
-const SYSTEM_PROMPT = `You are the senior fraud analyst inside ScamShield PH, a consumer-protection web app for people in the Philippines. Users submit suspicious SMS, chat, or email messages (often Taglish). Assess whether the message shows signs of a scam and explain your reasoning simply.
+const SYSTEM_PROMPT = `You are the senior fraud analyst inside Sift, a consumer-protection web app for people in the Philippines. Users submit suspicious SMS, chat, or email messages (often Taglish). Assess whether the message shows signs of a scam and explain your reasoning simply.
 
 Respond with ONE valid JSON object and nothing else: no markdown fences, no commentary. It must have exactly these keys:
 {"riskScore": <integer 0-100>, "riskLevel": "LOW"|"MODERATE"|"HIGH"|"CRITICAL", "category": "<one category label>", "confidence": <number 0-1>, "summary": "<2-4 sentences>", "redFlags": [{"title": "<short name>", "evidence": "<exact quote from the message>", "explanation": "<why it matters>"}], "recommendations": ["<concrete step>", ...]}

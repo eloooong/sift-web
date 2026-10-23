@@ -9,7 +9,7 @@ import { currentUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Sign in",
-  description: "Sign in to ScamShield PH to view your private scan history.",
+  description: "Sign in to Sift to view your private scan history.",
 };
 
 type SearchParams = Promise<{ next?: string }>;

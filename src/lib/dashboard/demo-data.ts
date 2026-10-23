@@ -7,11 +7,11 @@ import {
 /**
  * Corpus-anchored dashboard dataset.
  *
- * ScamShield PH does not persist scans yet, so instead of inventing numbers
+ * Sift does not persist scans yet, so instead of inventing numbers
  * every figure here is derived from the public Kaggle dataset
  * "Philippine Spam SMS Messages" by bwandowando (CC BY-NC-SA 4.0):
  * 1,021 real spam texts shared by Filipino users, scored offline with the
- * actual ScamShield rules engine. Only aggregate statistics are stored.
+ * actual Sift rules engine. Only aggregate statistics are stored.
  */
 
 const MONTHS_SHORT = [

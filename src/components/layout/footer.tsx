@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
 
+import { Logo } from "@/components/layout/logo";
 import { T } from "@/components/providers/t";
+import { SITE_NAME } from "@/lib/site";
 
 const PRODUCT_LINKS = [
   { href: "/scanner", key: "footer.link.scanner" },
@@ -23,17 +24,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="max-w-sm">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <ShieldCheck className="size-[18px]" />
-              </span>
-              <span className="text-[15px] font-semibold tracking-tight">
-                ScamShield
-                <span className="ml-1.5 rounded-md border bg-background px-1.5 py-0.5 align-middle font-mono text-[10px] font-medium text-muted-foreground">
-                  PH
-                </span>
-              </span>
-            </div>
+            <Logo />
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               <T k="footer.tagline" />
             </p>
@@ -84,7 +75,7 @@ export function Footer() {
 
         <div className="mt-8 flex flex-col items-start justify-between gap-2 border-t pt-6 sm:flex-row sm:items-center">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} ScamShield PH. <T k="footer.copyright" />
+            © {new Date().getFullYear()} {SITE_NAME}. <T k="footer.copyright" />
           </p>
           <p className="font-mono text-xs text-muted-foreground/80">
             v0.4, hybrid engine · AI analysis + rule-based pre-scan

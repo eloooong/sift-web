@@ -1,12 +1,12 @@
-# Security Notes: ScamShield PH
+# Security Notes: Sift
 
-This document summarizes the security posture of ScamShield PH and the
+This document summarizes the security posture of Sift and the
 specific measures taken in each area. It is aimed at reviewers and future
 maintainers.
 
 ## Threat model in one line
 
-ScamShield PH accepts **fully untrusted input from anonymous users**
+Sift accepts **fully untrusted input from anonymous users**
 (scam messages, screenshots, URLs, community reports) and shows that input
 back to other users, so every trust boundary is treated as hostile.
 

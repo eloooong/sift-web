@@ -29,7 +29,7 @@ export async function POST(
   const { id } = await params;
 
   if (!requestSameOrigin(request)) {
-    return jsonError(403, "forbidden_origin", "This request didn't come from ScamShield.");
+    return jsonError(403, "forbidden_origin", "This request didn't come from Sift.");
   }
 
   if (!(await getApprovedReport(id))) {

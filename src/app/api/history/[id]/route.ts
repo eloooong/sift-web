@@ -38,7 +38,7 @@ export async function GET(_request: Request, { params }: { params: Params }) {
 export async function DELETE(request: Request, { params }: { params: Params }) {
   if (!requestSameOrigin(request)) {
     return NextResponse.json(
-      { error: { code: "forbidden_origin", message: "This request didn't come from ScamShield." } },
+      { error: { code: "forbidden_origin", message: "This request didn't come from Sift." } },
       { status: 403 }
     );
   }

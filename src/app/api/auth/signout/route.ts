@@ -12,7 +12,7 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   if (!requestSameOrigin(request)) {
     return NextResponse.json(
-      { error: { code: "forbidden_origin", message: "This request didn't come from ScamShield." } },
+      { error: { code: "forbidden_origin", message: "This request didn't come from Sift." } },
       { status: 403 }
     );
   }

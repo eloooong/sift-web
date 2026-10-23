@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sift
+
+Scam risk assessment for Filipinos. Check suspicious messages, links, and screenshots with clear explanations of the warning signs.
+
+Built with [Next.js](https://nextjs.org).
 
 ## Getting Started
 

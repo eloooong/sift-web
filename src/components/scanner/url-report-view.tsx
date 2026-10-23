@@ -436,7 +436,7 @@ function UrlRow({
 
 function buildPlainText(report: UrlReport): string {
   const lines = [
-    "SCAMSHIELD PH: URL SECURITY REPORT",
+    "SIFT: URL SECURITY REPORT",
     `Scanned: ${formatScanTime(report.createdAt)}`,
     `URL: ${report.normalizedUrl}`,
     `Risk score: ${report.riskScore}/100 (${report.riskLevel.toUpperCase()})`,

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE_NAME}`,
   },
   description:
-    "Check suspicious SMS, emails, chat messages, and links. ScamShield PH scores the risk, explains the red flags, and tells you what to do next.",
+    "Check suspicious SMS, emails, chat messages, and links. Sift scores the risk, explains the red flags, and tells you what to do next.",
   applicationName: SITE_NAME,
   openGraph: {
     type: "website",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: `${SITE_NAME}: AI-assisted scam risk assessment for Filipinos`,
     description:
-      "Assess the risk of suspicious messages, links, and screenshots. ScamShield PH highlights potential warning signs — always verify through official channels.",
+      "Assess the risk of suspicious messages, links, and screenshots. Sift highlights potential warning signs — always verify through official channels.",
     locale: "en_PH",
     alternateLocale: ["fil_PH"],
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE_NAME}: AI-assisted scam risk assessment for Filipinos`,
     description:
-      "Assess the risk of suspicious messages, links, and screenshots. ScamShield PH highlights potential warning signs — always verify through official channels.",
+      "Assess the risk of suspicious messages, links, and screenshots. Sift highlights potential warning signs — always verify through official channels.",
   },
   robots: {
     index: true,

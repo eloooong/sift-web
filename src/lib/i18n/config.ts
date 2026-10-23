@@ -7,6 +7,7 @@ export const LANGS: Array<{ code: Lang; name: string; short: string }> = [
 
 export const DEFAULT_LANG: Lang = "en";
 
+// Keep the original key so language preferences survive the Sift rebrand.
 export const LANG_STORAGE_KEY = "scamshield-lang";
 
 export function isLang(value: unknown): value is Lang {

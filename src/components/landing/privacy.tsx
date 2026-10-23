@@ -9,7 +9,7 @@ const PRIVACY_POINTS = [
     icon: Lock,
     title: "Private by design",
     description:
-      "Scanned messages are processed in real time through our secured server to build your report, never stored by ScamShield, never sold, never used for advertising.",
+      "Scanned messages are processed in real time through our secured server to build your report, never stored by Sift, never sold, never used for advertising.",
   },
   {
     icon: UserX,
@@ -40,11 +40,11 @@ export function Privacy() {
             align="left"
             eyebrow="Safety & Privacy"
             title="Your safety includes your data"
-            description="ScamShield is built on a simple principle: a tool that protects you from scams should never become a risk to your privacy. No sign-ups, no data selling, no mystery verdicts, just clear analysis you can verify yourself."
+            description="Sift is built on a simple principle: a tool that protects you from scams should never become a risk to your privacy. No sign-ups, no data selling, no mystery verdicts, just clear analysis you can verify yourself."
           />
           <p className="mt-6 rounded-xl border border-dashed p-4 text-xs leading-relaxed text-muted-foreground">
             Trademark notice: GCash, Maya, Shopee, Lazada, LBC, J&amp;T
-            Express, Grab, and bank names referenced anywhere in ScamShield PH
+            Express, Grab, and bank names referenced anywhere in Sift
             belong to their respective owners. They appear strictly as
             examples of brands commonly impersonated by scammers.
           </p>

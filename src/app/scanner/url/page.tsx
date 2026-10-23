@@ -10,7 +10,7 @@ import { T } from "@/components/providers/t";
 export const metadata: Metadata = {
   title: "URL Security Scanner",
   description:
-    "Paste a suspicious link and ScamShield PH checks its structure, lookalike domains, shorteners, and reputation, all without ever visiting the URL.",
+    "Paste a suspicious link and Sift checks its structure, lookalike domains, shorteners, and reputation, all without ever visiting the URL.",
 };
 
 export default function UrlScannerPage() {

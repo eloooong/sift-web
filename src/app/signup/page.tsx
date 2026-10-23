@@ -9,7 +9,7 @@ import { currentUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
   title: "Create account",
-  description: "Create your free ScamShield PH account to keep a private scan history.",
+  description: "Create your free Sift account to keep a private scan history.",
 };
 
 type SearchParams = Promise<{ next?: string }>;

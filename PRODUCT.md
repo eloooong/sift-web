@@ -14,11 +14,11 @@ Secondary: Consumer-protection advocates and community moderators who curate sca
 
 ## Product Purpose
 
-ScamShield PH is an AI-assisted scam risk assessment tool. Users paste text, a URL, or upload a screenshot; the app scores the risk (Low / Medium / High), highlights the specific red flags found, explains why each flag matters, and tells the user what to do next (report, block, verify via official channel). Success means the user avoids the scam, reports it, and returns when another suspicious message arrives.
+Sift is an AI-assisted scam risk assessment tool. Users paste text, a URL, or upload a screenshot; the app scores the risk (Low / Medium / High), highlights the specific red flags found, explains why each flag matters, and tells the user what to do next (report, block, verify via official channel). Success means the user avoids the scam, reports it, and returns when another suspicious message arrives.
 
 ## Positioning
 
-Unlike generic phishing checkers that only scan URLs, ScamShield PH evaluates the *message content* (SMS/email/chat text) using a blended rule-based + LLM pipeline tuned for Philippine scam patterns (fake promos, fake job offers, bank impersonation, parcel-delivery lures, GCash/PayMaya phishing). The explainable red-flag breakdown is the differentiator — users learn the pattern, not just the verdict.
+Unlike generic phishing checkers that only scan URLs, Sift evaluates the *message content* (SMS/email/chat text) using a blended rule-based + LLM pipeline tuned for Philippine scam patterns (fake promos, fake job offers, bank impersonation, parcel-delivery lures, GCash/PayMaya phishing). The explainable red-flag breakdown is the differentiator — users learn the pattern, not just the verdict.
 
 ## Operating Context
 
@@ -45,10 +45,10 @@ Unlike generic phishing checkers that only scan URLs, ScamShield PH evaluates th
 
 ## Brand Commitments
 
-- Name: **ScamShield PH** (or **ScamShield** when PH context is implicit).
+- Name: **Sift**.
 - Tagline: "AI-assisted scam risk assessment for Filipinos".
 - Voice: calm, clinical, no hype. Anti-references: purple gradients, glassmorphism, "boost your productivity", marketing fluff.
-- Visual identity: no custom logo yet; Geist Sans wordmark.
+- Visual identity: Scout owl in the website's slate palette, paired with the Geist Sans wordmark. The owl's reading lens signals careful inspection; a simplified owl is used for the favicon.
 - Color commitments: danger `#dc2626` (red-600) for high-risk, success `#16a34a` (green-600) for safe actions, warning `#f59e0b` (amber-500) for medium.
 - Neutral palette: slate `#f8fafc` / `#0f172a` light/dark backgrounds (already in globals.css).
 

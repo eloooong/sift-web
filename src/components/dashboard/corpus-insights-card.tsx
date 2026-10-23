@@ -200,7 +200,7 @@ export function CorpusInsightsCard() {
         </a>{" "}
         by {SPAM_CORPUS.source.publisher} on Kaggle ({SPAM_CORPUS.source.license}).
         Only aggregate statistics are shown — no message contents. These same
-        patterns power ScamShield&apos;s detector rules.
+        patterns power Sift&apos;s detector rules.
       </p>
     </div>
   );

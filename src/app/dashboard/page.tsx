@@ -77,7 +77,7 @@ export default async function DashboardPage() {
               <span className="font-mono font-semibold tracking-wide text-foreground uppercase">
                 Research corpus.
               </span>{" "}
-              ScamShield doesn&apos;t persist scans yet, so every breakdown on
+              Sift doesn&apos;t persist scans yet, so every breakdown on
               this page comes from two public datasets: the Kaggle
               &ldquo;Philippine Spam SMS Messages&rdquo; corpus (1,021 texts)
               and the ScamMessagesPhilippines project (5,545 scam reports

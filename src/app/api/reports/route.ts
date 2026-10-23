@@ -84,7 +84,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   // --- CSRF / origin check --------------------------------------------------
   if (!requestSameOrigin(request)) {
-    return jsonError(403, "forbidden_origin", "This request didn't come from ScamShield.");
+    return jsonError(403, "forbidden_origin", "This request didn't come from Sift.");
   }
 
   // --- Request size precheck (multipart buffers in memory) -------------------

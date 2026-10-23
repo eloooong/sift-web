@@ -1,5 +1,5 @@
 ---
-name: ScamShield PH
+name: Sift
 description: Clinical, trust-building UI for AI-assisted scam risk assessment — pale slate neutrals, Geist type, rounded cards, functional red/amber/green risk colors.
 colors:
   background: "#f8fafc"
@@ -116,13 +116,13 @@ spacing:
   xl: "16px"
 ---
 
-# Design System: ScamShield PH
+# Design System: Sift
 
 ## Overview
 
 **Creative North Star: "The Clinical Watchtower"**
 
-A restrained, function-first system built for trust. ScamShield PH looks like a tool — not a toy — because trust is the product. Every visual choice prioritises clarity, scannability, and calm authority. The palette is almost entirely neutral, with colour reserved exclusively for semantic risk signals (danger/amber/success) and data visualisation. There are no decorative gradients, no glassmorphism, no purple "AI magic" aesthetics. The system earns credibility through plainness: pale slate surfaces, crisp borders, generous whitespace, and Geist's modern, engineered letterforms.
+A restrained, function-first system built for trust. Sift looks like a tool — not a toy — because trust is the product. Every visual choice prioritises clarity, scannability, and calm authority. The palette is almost entirely neutral, with colour reserved exclusively for semantic risk signals (danger/amber/success) and data visualisation. There are no decorative gradients, no glassmorphism, no purple "AI magic" aesthetics. The system earns credibility through plainness: pale slate surfaces, crisp borders, generous whitespace, and Geist's modern, engineered letterforms.
 
 **Key Characteristics:**
 - Near-monochrome neutral palette with functional colour reserves
@@ -182,7 +182,8 @@ A deliberately quiet palette; colour carries semantic meaning, never decoration.
 - **Micro** (10px, 400, 1.6): Dense metadata, table cells, legal fine print.
 - **Nano** (9px): Extreme-density labels (rare; charts, incident maps).
 - **Chart-label** (8px, mono, 400, 1.4): Axis labels and ticks on data visualisations (Recharts/Charts). Monospace for numeric alignment.
-- **Logo-wordmark** (15px, 600, 1.2): Nav/logo wordmark "ScamShield" only.
+- **Logo-wordmark** (15px, 600, 1.2): Nav/logo wordmark "Sift" only, without a regional badge.
+- **Brand mark:** the approved Scout owl uses foreground, background, muted-foreground, and secondary tokens. Keep its reading lens and silhouette; use the simplified drawing below 24px. Header and footer share the same mark and Geist wordmark.
 - **Button** (12.8px / 0.8rem, weight 500, 1.4): All button and control labels.
 - **Mono** (11px): Scanned text evidence, code-like data.
 - **Mono-sm** (10px) / **Mono-xs** (9px): Dense evidence blocks and OCR output.

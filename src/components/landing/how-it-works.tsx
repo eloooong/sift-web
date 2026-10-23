@@ -17,7 +17,7 @@ const STEPS = [
     number: "02",
     title: "AI checks for red flags",
     description:
-      "ScamShield compares the content against known Philippine scam patterns, impersonation tactics, and phishing techniques.",
+      "Sift compares the content against known Philippine scam patterns, impersonation tactics, and phishing techniques.",
   },
   {
     icon: FileSearch,
@@ -33,7 +33,7 @@ export function HowItWorks() {
     <section id="how-it-works" className="scroll-mt-24">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <SectionHeading
-          eyebrow="How ScamShield Works"
+          eyebrow="How Sift Works"
           title="From suspicious to certain in three steps"
           description="No jargon, no black-box verdicts. Every result shows its evidence and tells you what to do next."
         />
@@ -78,7 +78,7 @@ export function HowItWorks() {
           <Info className="mt-0.5 size-4 shrink-0 text-warning" />
           <p className="text-sm leading-relaxed text-muted-foreground">
             <span className="font-medium text-foreground">Hybrid analysis.</span> Every scan
-            runs an AI analyst alongside ScamShield&apos;s transparent rule engine;
+            runs an AI analyst alongside Sift&apos;s transparent rule engine;
             points still come from named, weighted red flags, and the AI
             explains its findings in plain language.
           </p>
