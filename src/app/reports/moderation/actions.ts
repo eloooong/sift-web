@@ -9,12 +9,9 @@ import { moderateReport } from "@/lib/reports/store";
 
 const MOD_COOKIE = "ss_mod";
 
-/**
- * Dev fallback keeps the demo usable without configuration; production should
- * always set MODERATION_TOKEN in the environment.
- */
-function expectedToken(): string {
-  return process.env.MODERATION_TOKEN ?? "scamshield-demo";
+/** Moderation stays locked until an operator sets a private token. */
+function expectedToken(): string | null {
+  return process.env.MODERATION_TOKEN?.trim() || null;
 }
 
 /** Only a hash of the token is stored client-side. */
@@ -27,20 +24,24 @@ function tokenFingerprint(token: string): string {
 
 /** Session check shared by the page and the actions below. */
 export async function isModerator(): Promise<boolean> {
+  const token = expectedToken();
+  if (!token) return false;
+
   const cookieStore = await cookies();
   return (
-    cookieStore.get(MOD_COOKIE)?.value === tokenFingerprint(expectedToken())
+    cookieStore.get(MOD_COOKIE)?.value === tokenFingerprint(token)
   );
 }
 
 export async function signInModerator(formData: FormData) {
   const token = String(formData.get("token") ?? "").trim();
-  if (token !== expectedToken()) {
+  const configuredToken = expectedToken();
+  if (!configuredToken || token !== configuredToken) {
     redirect("/reports/moderation?error=invalid");
   }
 
   const cookieStore = await cookies();
-  cookieStore.set(MOD_COOKIE, tokenFingerprint(expectedToken()), {
+  cookieStore.set(MOD_COOKIE, tokenFingerprint(configuredToken), {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",

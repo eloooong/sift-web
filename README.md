@@ -1,40 +1,42 @@
 # Sift
 
-Scam risk assessment for Filipinos. Check suspicious messages, links, and screenshots with clear explanations of the warning signs.
+Sift helps people in the Philippines assess suspicious messages, links, and screenshots. It explains the warning signs and suggests safe next steps.
 
-Built with [Next.js](https://nextjs.org).
+## Run locally
 
-## Getting Started
-
-First, run the development server:
+Requirements: Node.js 22.18 or newer and npm.
 
 ```bash
+npm ci
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The app runs without external services using its built-in scam examples and in-memory storage. In-memory data is cleared when the server restarts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set these in `.env.local` as needed:
 
-## Learn More
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URL` | PostgreSQL persistence for accounts, sessions, scan history, reports, and rate limits. Run `npm run db:migrate` after configuring it. |
+| `AI_API_KEY` | Enables optional AI-assisted message analysis. `AI_BASE_URL` and `AI_MODEL` can select a compatible API and model. |
+| `GOOGLE_SAFE_BROWSING_API_KEY` | Enables optional URL reputation checks. |
+| `MODERATION_TOKEN` | Private token required to access `/reports/moderation`. Moderation remains locked when this is unset. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL used for metadata and sitemap generation. |
 
-To learn more about Next.js, take a look at the following resources:
+`.env.local` is ignored by Git. Do not commit credentials.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Useful commands
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run lint
+npm run lint:design
+npm run build
+npm run db:migrate
+```
 
-## Deploy on Vercel
+## Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, PostgreSQL, and Tesseract.js OCR. The interface supports English and Filipino; user-facing translations live in `src/lib/i18n/dictionary.ts`.

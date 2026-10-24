@@ -24,8 +24,6 @@ export function RiskMeter({
   score: number;
   level: RiskLevel;
 }) {
-  const activeSegment = SEGMENTS.find((segment) => segment.level === level);
-
   return (
     <div
       role="meter"
