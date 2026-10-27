@@ -14,7 +14,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       role="group"
       aria-label={t("nav.language")}
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-full border bg-muted/50 p-0.5",
+        "inline-flex items-center gap-0.5 rounded-md border bg-muted/50 p-0.5",
         className
       )}
     >
@@ -32,9 +32,9 @@ export function LanguageSwitcher({ className }: { className?: string }) {
             aria-pressed={isActive}
             title={option.name}
             className={cn(
-              "min-h-9 rounded-full px-3 py-1 font-mono text-[11px] font-semibold tracking-wide uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-8 sm:px-2.5",
+              "min-h-11 rounded-md px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-2.5",
               isActive
-                ? "bg-background text-foreground shadow-sm"
+                ? "bg-background text-foreground"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >

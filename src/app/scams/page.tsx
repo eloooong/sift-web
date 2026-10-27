@@ -1,164 +1,107 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  CheckCircle2,
-  ShieldAlert,
-  TriangleAlert,
-} from "lucide-react";
-
-import { CategoryBadge } from "@/components/shared/category-badge";
-import { FadeIn } from "@/components/shared/fade-in";
+import { ArrowRight, ChevronDown, TriangleAlert } from "lucide-react";
+import { T } from "@/components/providers/t";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SCAM_CATEGORIES } from "@/lib/scam-detector/categories";
-
 export const metadata: Metadata = {
   title: "Scam Library",
   description:
-    "A Philippine-focused catalog of scam formats: prize texts, GCash phishing, courier fees, loan offers, government impersonation, investing groups, romance cons, and more. Learn the warning signs and what to do.",
+    "Learn the warning signs in common Philippine scam messages and what to do next.",
 };
-
 export default function ScamsPage() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-      <FadeIn>
-        <SectionHeading
-          as="h1"
-          align="left"
-          eyebrow="Scam Library"
-          title="The Philippine scam catalog"
-          description="Every major scam format used against Filipinos, in plain language. Learn the warning signs now so you recognize them in the wild; brands named below are impersonation targets, never suspects."
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.05}>
+    <div className="site-container py-12 sm:py-20">
+      <SectionHeading
+        as="h1"
+        title={<T k="library.title" />}
+        description={<T k="library.body" />}
+      />
+      <div className="mt-12 grid items-start gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14">
         <nav
           aria-label="Scam categories"
-          className="mt-6 flex flex-wrap gap-2 border-y py-4"
+          className="flex flex-wrap gap-2 lg:sticky lg:top-28 lg:flex-col lg:gap-1"
         >
           {SCAM_CATEGORIES.map((category) => (
             <a
               key={category.id}
               href={`#${category.id}`}
-              className="inline-flex min-h-9 items-center rounded-full border bg-background px-3.5 py-1 text-xs font-medium text-muted-foreground transition-colors outline-none hover:border-foreground/30 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              className="inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
             >
               {category.label}
             </a>
           ))}
         </nav>
-      </FadeIn>
-
-      <div className="mt-8 grid gap-5 lg:grid-cols-2">
-        {SCAM_CATEGORIES.map((category, index) => (
-          <FadeIn key={category.id} delay={Math.min(index * 0.04, 0.24)}>
-            <Card
+        <div className="min-w-0 space-y-4">
+          {SCAM_CATEGORIES.map((category, index) => (
+            <details
+              key={category.id}
               id={category.id}
-              className="h-full scroll-mt-24 break-inside-avoid"
+              open={index === 0}
+              className="group scroll-mt-28 rounded-lg border bg-card"
             >
-              <CardHeader>
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <CategoryBadge category={category} />
-                  <span className="rounded-full border border-dashed px-2.5 py-0.5 font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
-                    via {category.exampleChannel}
-                  </span>
-                </div>
-                <p className="pt-1 text-sm leading-relaxed text-muted-foreground">
-                  {category.description}
-                </p>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-5 rounded-lg p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:p-7 [&::-webkit-details-marker]:hidden">
                 <div>
-                  <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold tracking-wide uppercase">
+                  <h2 className="text-xl font-semibold">{category.label}</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    {category.description}
+                  </p>
+                </div>
+                <ChevronDown
+                  aria-hidden="true"
+                  className="mt-1 size-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180"
+                />
+              </summary>
+              <div className="space-y-7 border-t p-5 sm:p-7">
+                <section>
+                  <h3 className="flex items-center gap-2 text-base font-semibold">
                     <TriangleAlert
                       aria-hidden="true"
-                      className="size-3.5 text-warning"
+                      className="size-4 text-danger"
                     />
-                    Common warning signs
+                    <T k="library.signs" />
                   </h3>
-                  <ul className="space-y-1.5">
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed">
                     {category.warningSigns.map((sign) => (
-                      <li
-                        key={sign}
-                        className="flex items-start gap-2 text-sm leading-relaxed"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-[7px] size-1.5 shrink-0 rounded-full bg-danger/60"
-                        />
-                        {sign}
-                      </li>
+                      <li key={sign}>{sign}</li>
                     ))}
                   </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold tracking-wide uppercase">
-                    <ShieldAlert
-                      aria-hidden="true"
-                      className="size-3.5 text-muted-foreground"
-                    />
-                    Realistic example (fictional)
+                </section>
+                <section>
+                  <h3 className="text-base font-semibold">
+                    <T k="library.sample" />
                   </h3>
-                  <blockquote className="rounded-md border border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
-                    <p className="font-mono text-[11px] leading-relaxed break-words text-foreground/80">
-                      “{category.exampleText}”
-                    </p>
+                  <blockquote className="mt-3 rounded-md border bg-secondary/50 p-4 text-sm leading-7 break-words">
+                    {category.exampleText}
                   </blockquote>
-                </div>
-
-                <div>
-                  <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold tracking-wide uppercase">
-                    <CheckCircle2
-                      aria-hidden="true"
-                      className="size-3.5 text-success"
-                    />
-                    What to do
+                </section>
+                <section>
+                  <h3 className="text-base font-semibold">
+                    <T k="report.whatToDo" />
                   </h3>
-                  <ol className="space-y-1.5">
-                    {category.whatToDo.map((step, stepIndex) => (
-                      <li
-                        key={step}
-                        className="flex items-start gap-2 text-sm leading-relaxed"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-success/10 font-mono text-[9px] font-semibold text-success"
-                        >
-                          {stepIndex + 1}
-                        </span>
-                        {step}
-                      </li>
+                  <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed">
+                    {category.whatToDo.map((step) => (
+                      <li key={step}>{step}</li>
                     ))}
                   </ol>
-                </div>
-              </CardContent>
-            </Card>
-          </FadeIn>
-        ))}
-      </div>
-
-      <FadeIn delay={0.1}>
-        <div className="mt-10 rounded-xl border bg-card px-6 py-8 text-center">
-          <h2 className="text-base font-semibold">
-            Think you just received one of these?
-          </h2>
-          <p className="mx-auto mt-1.5 max-w-lg text-sm leading-relaxed text-muted-foreground">
-            Paste it into the scanner for a full breakdown: risk score, red
-            flags with evidence, and recommended next steps.
-          </p>
-          <Button asChild className="mt-5">
-            <Link href="/scanner">Scan a Message Now</Link>
-          </Button>
-          <p className="mt-5 text-[11px] leading-relaxed text-muted-foreground/80">
-            Trademark notice: GCash, Maya, BDO, BPI, SSS, PhilHealth, Pag-IBIG,
-            BIR, PNP, NBI, LTO, Shopee, Lazada, LBC, J&amp;T Express, Grab, and
-            similar names belong to their respective owners and appear strictly
-            as examples of brands commonly impersonated by scammers.
-          </p>
+                </section>
+              </div>
+            </details>
+          ))}
         </div>
-      </FadeIn>
+      </div>
+      <div className="mt-14 flex flex-col items-start justify-between gap-5 border-t pt-8 sm:flex-row sm:items-center">
+        <p className="text-lg font-medium">
+          <T k="home.cta.title" />
+        </p>
+        <Button asChild>
+          <Link href="/scanner">
+            <T k="home.checkMessage" />
+            <ArrowRight aria-hidden="true" />
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }

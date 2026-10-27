@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, LoaderCircle, LogOut } from "lucide-react";
+import { useLang } from "@/components/providers/language-provider";
 
 export function ProfileForm({
   initialName,
@@ -148,7 +149,7 @@ export function PasswordForm() {
               setCurrentPassword(event.target.value);
               setDone(false);
             }}
-            className="h-10 w-full rounded-lg border bg-background px-3 text-sm outline-none transition-colors focus:border-ring"
+            className="h-12 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors focus:border-ring"
           />
         </div>
         <div>
@@ -170,7 +171,7 @@ export function PasswordForm() {
               setDone(false);
             }}
             placeholder="At least 8 characters"
-            className="h-10 w-full rounded-lg border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+            className="h-12 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
           />
         </div>
       </div>
@@ -208,6 +209,7 @@ export function SignOutButton({
   onSignedOut?: () => void;
 }) {
   const router = useRouter();
+  const { t } = useLang();
   const [busy, setBusy] = useState(false);
 
   async function signOut() {
@@ -230,12 +232,12 @@ export function SignOutButton({
       disabled={busy}
       className={
         full
-          ? "inline-flex h-10 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-muted disabled:opacity-60"
-          : "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+          ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-muted disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          : "flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       }
     >
       <LogOut aria-hidden="true" className={full ? "size-4" : "size-3.5"} />
-      {busy ? "Signing out…" : "Sign out"}
+      {busy ? t("nav.signingOut") : t("nav.signOut")}
     </button>
   );
 }

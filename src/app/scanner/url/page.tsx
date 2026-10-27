@@ -15,12 +15,11 @@ export const metadata: Metadata = {
 
 export default function UrlScannerPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
       <FadeIn>
         <SectionHeading
           as="h1"
           align="left"
-          eyebrow="Analysis"
           title={<T k="url.page.title" />}
           description={<T k="url.page.description" />}
         />
@@ -38,7 +37,7 @@ export default function UrlScannerPage() {
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           <div className="flex items-start gap-3 rounded-xl border px-4 py-3.5">
             <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success" />
-            <p className="text-xs leading-relaxed text-muted-foreground">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">
                 <T k="url.note.zeroClick.title" />
               </span>{" "}
@@ -47,7 +46,7 @@ export default function UrlScannerPage() {
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-dashed px-4 py-3.5">
             <Globe className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-            <p className="text-xs leading-relaxed text-muted-foreground">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">
                 <T k="url.note.reputation.title" />
               </span>{" "}
@@ -56,7 +55,7 @@ export default function UrlScannerPage() {
           </div>
           <div className="flex items-start gap-3 rounded-xl border border-dashed px-4 py-3.5 sm:col-span-2">
             <Info className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-            <p className="text-xs leading-relaxed text-muted-foreground">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               <span className="font-medium text-foreground">
                 <T k="url.note.fairScoring.title" />
               </span>{" "}

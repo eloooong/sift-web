@@ -42,13 +42,10 @@ export default async function HistoryPage() {
   const entries = await listUserHistory(user.id);
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
+    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20">
       <FadeIn className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
-            Private to you
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+          <h1 className="mt-2 page-title">
             Scan history
           </h1>
           <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">

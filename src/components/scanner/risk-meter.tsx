@@ -1,21 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
-
+import { useLang } from "@/components/providers/language-provider";
+import { RISK_LEVEL_RANGES } from "@/lib/scam-detector/scoring";
 import type { RiskLevel } from "@/lib/scam-detector";
 import { cn } from "@/lib/utils";
 
-const SEGMENTS: Array<{
-  level: RiskLevel;
-  label: string;
-  width: number;
-  color: string;
-}> = [
-  { level: "low", label: "Low", width: 30, color: "var(--success)" },
-  { level: "medium", label: "Moderate", width: 30, color: "var(--warning)" },
-  { level: "high", label: "High", width: 20, color: "var(--risk-meter)" },
-  { level: "critical", label: "Critical", width: 20, color: "var(--danger)" },
-];
+const LEVEL_STYLES = {
+  low: { label: "risk.meter.low", track: "bg-success/20", fill: "bg-success" },
+  medium: {
+    label: "risk.meter.medium",
+    track: "bg-warning/20",
+    fill: "bg-warning",
+  },
+  high: {
+    label: "risk.meter.high",
+    track: "bg-risk-meter/20",
+    fill: "bg-risk-meter",
+  },
+  critical: {
+    label: "risk.meter.critical",
+    track: "bg-danger/20",
+    fill: "bg-danger",
+  },
+} as const;
+
+const SEGMENTS = RISK_LEVEL_RANGES.map((range, index) => ({
+  ...range,
+  width: (RISK_LEVEL_RANGES[index + 1]?.min ?? 100) - range.min,
+}));
+const GRID_COLUMNS = SEGMENTS.map((segment) => `${segment.width}fr`).join(" ");
 
 export function RiskMeter({
   score,
@@ -24,63 +37,72 @@ export function RiskMeter({
   score: number;
   level: RiskLevel;
 }) {
+  const { t } = useLang();
+  const position = Math.max(0, Math.min(100, score));
+
   return (
     <div
       role="meter"
-      aria-label={`Risk score ${score} out of 100`}
+      aria-label={t("risk.meter.label")}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-valuenow={score}
+      aria-valuenow={position}
+      aria-valuetext={`${t(LEVEL_STYLES[level].label)}, ${position}/100`}
     >
-      <div className="relative h-3 overflow-hidden rounded-full bg-muted">
-        <div className="absolute inset-0 flex">
-          {SEGMENTS.map((segment) => (
-            <div
-              key={segment.level}
-              className="h-full opacity-25"
-              style={{
-                width: `${segment.width}%`,
-                backgroundColor: segment.color,
-              }}
-            />
-          ))}
+      <div className="relative" aria-hidden="true">
+        <div
+          className="grid h-3 overflow-hidden rounded-full"
+          style={{ gridTemplateColumns: GRID_COLUMNS }}
+        >
+          {SEGMENTS.map((segment) => {
+            const style = LEVEL_STYLES[segment.level];
+            const fraction = Math.max(
+              0,
+              Math.min(1, (position - segment.min) / segment.width),
+            );
+            return (
+              <div
+                key={segment.level}
+                className={cn(
+                  "relative h-full border-r border-card last:border-r-0",
+                  style.track,
+                )}
+              >
+                <span
+                  data-slot="risk-segment-fill"
+                  className={cn(
+                    "absolute inset-0 origin-left motion-safe:transition-transform motion-safe:duration-300",
+                    style.fill,
+                  )}
+                  style={{ transform: `scaleX(${fraction})` }}
+                />
+              </div>
+            );
+          })}
         </div>
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${score}%` }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-y-0 left-0 rounded-full"
-          style={{
-            background:
-              "linear-gradient(to right, var(--success) 0%, var(--success) 30%, var(--warning) 30%, var(--warning) 60%, var(--risk-meter) 60%, var(--risk-meter) 80%, var(--danger) 80%, var(--danger) 100%)",
-          }}
+        <span
+          data-slot="risk-position"
+          className="absolute -top-1 h-5 w-1 -translate-x-1/2 rounded-full bg-foreground ring-2 ring-card"
+          style={{ left: `clamp(2px, ${position}%, calc(100% - 2px))` }}
         />
-        {[30, 60, 80].map((tick) => (
-          <span
-            key={tick}
-            aria-hidden="true"
-            className="absolute inset-y-0 w-px bg-background/90"
-            style={{ left: `${tick}%` }}
-          />
-        ))}
       </div>
       <div
         aria-hidden="true"
-        className="mt-1.5 grid text-center text-[10px] font-medium uppercase tracking-wider"
-        style={{ gridTemplateColumns: "30% 30% 20% 20%" }}
+        className="mt-3 grid gap-1 text-center text-xs leading-tight"
+        style={{ gridTemplateColumns: GRID_COLUMNS }}
       >
-        {SEGMENTS.map((segment) => {
-          const active = segment.level === level;
-          return (
-            <span
-              key={segment.level}
-              className={cn(!active && "text-muted-foreground/70")}
-              style={active ? { color: segment.color } : undefined}
-            >
-              {segment.label}
-            </span>
-          );
-        })}
+        {SEGMENTS.map((segment) => (
+          <span
+            key={segment.level}
+            className={cn(
+              segment.level === level
+                ? "font-semibold text-foreground"
+                : "text-muted-foreground",
+            )}
+          >
+            {t(LEVEL_STYLES[segment.level].label)}
+          </span>
+        ))}
       </div>
     </div>
   );

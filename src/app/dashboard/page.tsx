@@ -34,22 +34,11 @@ export default async function DashboardPage() {
 
   return (
     <div className="relative">
-      {/* Dot-grid flourish behind the header */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle,var(--color-foreground)_1px,transparent_1px)] bg-[size:22px_22px] opacity-[0.05] [mask-image:linear-gradient(to_bottom,black,transparent)]"
-      />
-
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         <FadeIn>
           <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div className="max-w-xl">
-              <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
-                Intelligence
-              </p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-                PH Scam Intelligence
-              </h1>
+              <h1 className="mt-2 page-title">PH Scam Intelligence</h1>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
                 What real Philippine spam looks like: volume, threat mix,
                 regional distribution, and how the shield scores it — backed by
@@ -73,17 +62,17 @@ export default async function DashboardPage() {
               aria-hidden="true"
               className="mt-0.5 size-3.5 shrink-0 text-muted-foreground"
             />
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              <span className="font-mono font-semibold tracking-wide text-foreground uppercase">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              <span className="font-semibold text-foreground">
                 Research corpus.
               </span>{" "}
-              Sift doesn&apos;t persist scans yet, so every breakdown on
-              this page comes from two public datasets: the Kaggle
-              &ldquo;Philippine Spam SMS Messages&rdquo; corpus (1,021 texts)
-              and the ScamMessagesPhilippines project (5,545 scam reports
-              across 17 regions). The community threat-intel card is live data
-              from the open PH Scam DB project; recent-scan rows are
-              illustrative samples with verified scores.
+              These breakdowns describe public research datasets, rather than
+              your private scan history: the Kaggle &ldquo;Philippine Spam SMS
+              Messages&rdquo; corpus (1,021 texts) and the
+              ScamMessagesPhilippines project (5,545 scam reports across 17
+              regions). The community threat-intel card is live data from the
+              open PH Scam DB project; recent-scan rows are illustrative samples
+              with verified scores.
             </p>
           </aside>
         </FadeIn>
@@ -104,17 +93,19 @@ export default async function DashboardPage() {
           <RegionalIncidentsCard />
         </FadeIn>
 
-        <FadeIn delay={0.24} className="mt-6">
-          <CorpusInsightsCard />
-        </FadeIn>
+        <div className="mt-6 grid gap-6 xl:grid-cols-2">
+          <FadeIn delay={0.24}>
+            <CorpusInsightsCard />
+          </FadeIn>
 
-        <FadeIn delay={0.28} className="mt-6">
-          <NetworkBreakdownCard />
-        </FadeIn>
+          <FadeIn delay={0.28}>
+            <NetworkBreakdownCard />
+          </FadeIn>
 
-        <FadeIn delay={0.32} className="mt-6">
-          <CategoryDonut categories={data.categories} />
-        </FadeIn>
+          <FadeIn delay={0.32} className="xl:col-span-2">
+            <CategoryDonut categories={data.categories} />
+          </FadeIn>
+        </div>
 
         <FadeIn delay={0.36} className="mt-6">
           <RecentScansTable scans={data.recentScans} />

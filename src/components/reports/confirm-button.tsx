@@ -53,11 +53,11 @@ export function ConfirmButton({
         disabled={confirmed || busy}
         aria-pressed={confirmed}
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-lg border font-medium whitespace-nowrap transition-colors",
-          size === "sm" ? "px-2.5 py-1 text-xs" : "px-4 py-2 text-sm",
+          "inline-flex min-h-11 min-w-11 items-center gap-1.5 rounded-md border font-medium whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          size === "sm" ? "px-3 py-2 text-sm" : "px-4 py-2 text-sm",
           confirmed
-            ? "border-success/30 bg-success/10 text-success"
-            : "text-muted-foreground hover:border-foreground/25 hover:text-foreground"
+            ? "border-success/30 bg-success/10 text-success-foreground"
+            : "text-muted-foreground hover:border-foreground/25 hover:text-foreground",
         )}
       >
         {busy ? (
@@ -69,7 +69,7 @@ export function ConfirmButton({
         <span className="font-mono tabular-nums">{count}</span>
       </button>
       {error ? (
-        <span role="alert" className="text-[11px] text-danger">
+        <span role="alert" className="text-sm text-danger-foreground">
           Couldn&apos;t confirm. Try again.
         </span>
       ) : null}

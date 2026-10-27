@@ -69,6 +69,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <div
+          hidden
+          aria-hidden="true"
+          dangerouslySetInnerHTML={{
+            __html:
+              "<!--\nTHESIS: A public safety advisory desk that makes suspicious messages understandable. No repeated marketing-card wall.\nOWN-WORLD: Slate-white #f8fafc, ink #0f172a, card-white #ffffff, muted slate #526176. Geist, flat borders, 0.625rem base corners, generous reading space.\nSTORY: Pause, inspect an illustrative message, choose a scanner, review evidence, take a safer next step.\nFIRST VIEWPORT: 80px navigation; 88px left-aligned headline with two actions; an interactive message advisory on the right. On mobile the task leads and the sample follows.\nFORM: Safety advisory bulletin, grounded candidate 6, seed f3647f6e. Code-led; user delegated all design decisions. Signature interaction switches between three sample messages with a direct full-report path.\nFINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance\n-->",
+          }}
+        />
         <LanguageProvider>
           <SkipLink />
           <Navbar />

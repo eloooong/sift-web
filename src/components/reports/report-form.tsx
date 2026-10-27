@@ -70,7 +70,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
     const trimmed = description.trim();
     if (trimmed.length < MIN_DESCRIPTION_CHARS) {
       setClientError(
-        `Describe what happened in at least ${MIN_DESCRIPTION_CHARS} characters.`
+        `Describe what happened in at least ${MIN_DESCRIPTION_CHARS} characters.`,
       );
       return;
     }
@@ -189,7 +189,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
               value={categoryId}
               onChange={(event) =>
                 setCategoryId(
-                  event.target.value as typeof SCAM_CATEGORIES[number]["id"]
+                  event.target.value as (typeof SCAM_CATEGORIES)[number]["id"],
                 )
               }
             >
@@ -231,7 +231,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
           rows={6}
           maxLength={MAX_DESCRIPTION_CHARS + 200}
           placeholder="Describe the scam attempt: what they claimed, what they asked for, and anything that felt off."
-          className="w-full resize-y rounded-lg border bg-background p-3 text-sm leading-relaxed outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+          className="w-full resize-y rounded-lg border bg-background p-3 text-sm leading-relaxed outline-none transition-colors placeholder:text-muted-foreground focus:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         />
         <p
           className={`mt-1 text-right font-mono text-[11px] tabular-nums ${
@@ -256,7 +256,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
             onChange={(event) => setSender(event.target.value)}
             placeholder="+63 9·· ··· ··67"
             autoComplete="off"
-            className="h-10 w-full rounded-lg border bg-background px-3 font-mono text-xs outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+            className="h-12 w-full rounded-md border bg-background px-3 font-mono text-xs outline-none transition-colors placeholder:text-muted-foreground focus:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           />
         </Field>
 
@@ -268,12 +268,16 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
             value={encounteredAt}
             max={todayIso()}
             onChange={(event) => setEncounteredAt(event.target.value)}
-            className="h-10 w-full rounded-lg border bg-background px-3 text-sm outline-none transition-colors focus:border-ring"
+            className="h-12 w-full rounded-md border bg-background px-3 text-sm outline-none transition-colors focus:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           />
         </Field>
       </div>
 
-      <Field label="Screenshot" htmlFor="rf-file" hint="Optional · PNG/JPG/WebP · ≤ 2 MB">
+      <Field
+        label="Screenshot"
+        htmlFor="rf-file"
+        hint="Optional · PNG/JPG/WebP · ≤ 2 MB"
+      >
         {file ? (
           <div className="flex items-center gap-3 rounded-lg border border-dashed p-3">
             {previewUrl ? (
@@ -294,7 +298,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
               type="button"
               onClick={() => pickFile(null)}
               aria-label="Remove screenshot"
-              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="min-h-11 min-w-11 rounded-md p-2 text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring hover:bg-muted hover:text-foreground"
             >
               <X aria-hidden="true" className="size-4" />
             </button>
@@ -302,7 +306,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
         ) : (
           <label
             htmlFor="rf-file"
-            className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed px-3 py-6 text-sm text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground"
+            className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed px-3 py-6 text-sm text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground"
           >
             <ImagePlus aria-hidden="true" className="size-4" />
             Attach a screenshot
@@ -313,9 +317,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
           type="file"
           accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
           className="sr-only"
-          onChange={(event) =>
-            pickFile(event.target.files?.[0] ?? null)
-          }
+          onChange={(event) => pickFile(event.target.files?.[0] ?? null)}
         />
       </Field>
 
@@ -327,7 +329,7 @@ export function ReportForm({ onSubmitted }: { onSubmitted?: () => void }) {
 
       <div className="flex flex-col gap-2 sm:flex-row-reverse sm:items-center">
         <SubmitButton submitting={submitting} />
-        <p className="text-[11px] leading-snug text-muted-foreground sm:flex-1">
+        <p className="text-sm leading-relaxed text-muted-foreground sm:flex-1">
           No name, email, or account details; reports stay anonymous.
         </p>
       </div>
@@ -349,7 +351,7 @@ function validateScreenshot(file: File): string | null {
 function todayIso(): string {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(
-    now.getDate()
+    now.getDate(),
   ).padStart(2, "0")}`;
 }
 
@@ -369,12 +371,12 @@ function Field({
       <div className="mb-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-0">
         <label
           htmlFor={htmlFor}
-          className="font-mono text-[10px] font-medium tracking-widest text-muted-foreground uppercase"
+          className="text-sm font-medium text-foreground"
         >
           {label}
         </label>
         {hint ? (
-          <span className="text-[10px] leading-snug text-muted-foreground/70">
+          <span className="text-sm leading-relaxed text-muted-foreground">
             {hint}
           </span>
         ) : null}
@@ -386,7 +388,7 @@ function Field({
 
 function SelectShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="[&>select]:h-10 [&>select]:w-full [&>select]:appearance-none [&>select]:rounded-lg [&>select]:border [&>select]:bg-background [&>select]:px-3 [&>select]:pr-8 [&>select]:text-sm [&>select]:outline-none [&>select]:transition-colors [&>select]:focus:border-ring relative">
+    <div className="[&>select]:h-12 [&>select]:w-full [&>select]:appearance-none [&>select]:rounded-lg [&>select]:border [&>select]:bg-background [&>select]:px-3 [&>select]:pr-8 [&>select]:text-base [&>select]:outline-none [&>select]:transition-colors [&>select]:focus:border-ring [&>select]:focus-visible:outline-2 [&>select]:focus-visible:outline-offset-2 [&>select]:focus-visible:outline-ring relative">
       {children}
       <svg
         aria-hidden="true"
@@ -409,7 +411,7 @@ function SubmitButton({ submitting }: { submitting: boolean }) {
     <button
       type="submit"
       disabled={submitting}
-      className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
       {submitting ? (
         <>

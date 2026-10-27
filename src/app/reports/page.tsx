@@ -13,19 +13,9 @@ export const metadata: Metadata = {
 export default function ReportsPage() {
   return (
     <div className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,var(--color-foreground)_1px,transparent_0)] bg-[size:24px_24px] opacity-[0.04]"
-      />
-
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-20">
         <FadeIn className="max-w-2xl">
-          <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
-            Community watch
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Scam reports from real people
-          </h1>
+          <h1 className="mt-2 page-title">Scam reports from real people</h1>
           <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             Warn others about scam attempts you&apos;ve received and browse what
             the community has flagged. Reports stay anonymous and are reviewed

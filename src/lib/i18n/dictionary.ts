@@ -2,6 +2,106 @@ import type { Lang } from "./config";
 
 export const DICT = {
   en: {
+    "nav.signOut": "Sign out",
+    "nav.signingOut": "Signing out...",
+    "nav.communityReports": "Community reports",
+    "nav.myHistory": "My history",
+    "nav.scamInsights": "Scam insights",
+    "nav.mainNavigation": "Main navigation",
+    "nav.mobileNavigation": "Mobile navigation",
+    "nav.openMenu": "Open navigation menu",
+    "nav.guestHint": "Free scans. No sign-up required.",
+    "nav.saveHistoryHint": "Sign in to save and revisit your scans.",
+    "auth.createToSave": "Create an account to save your scan history.",
+
+    "risk.meter.label": "Risk score",
+    "risk.meter.low": "Low",
+    "risk.meter.medium": "Moderate",
+    "risk.meter.high": "High",
+    "risk.meter.critical": "Critical",
+    "home.walkthrough.steps": "Explore the three steps",
+    "home.walkthrough.label": "Example walkthrough",
+    "home.walkthrough.received": "First, look at the message.",
+    "home.walkthrough.evidence": "Three reasons to pause.",
+    "home.walkthrough.action": "You have a safer option.",
+    "home.walkthrough.fee": "A processing fee before receiving a prize.",
+    "home.walkthrough.identity":
+      "A request for your name, address, and birthday.",
+    "home.walkthrough.deadline":
+      "A 24-hour deadline to pressure you into acting.",
+    "home.walkthrough.advice":
+      "Don't pay the fee or send personal details. Verify the claim through the organization's official website or app, using an address you find independently.",
+    "home.walkthrough.next": "Next step",
+    "home.walkthrough.again": "Start again",
+
+    "library.title": "Recognize the pattern.",
+    "library.body":
+      "A practical guide to common Philippine scams. Choose a category to learn the warning signs, inspect an example, and find a safer next step.",
+    "library.signs": "What to watch for",
+    "library.sample": "An illustrative message",
+
+    "home.hero.title": "A second look. A safer next step.",
+    "home.hero.body":
+      "A strange text. An urgent request. A link that feels off. Check it with Sift before you click, pay, or reply.",
+    "home.checkMessage": "Check a message",
+    "home.checkScreenshot": "Check a screenshot",
+    "home.hero.note": "Free scans. No sign-up required.",
+    "home.sample.label": "A closer look",
+    "home.sample.example": "Illustrative sample",
+    "home.sample.choose": "Choose a sample message",
+    "home.sample.prize": "Prize offer",
+    "home.sample.wallet": "Wallet alert",
+    "home.sample.otp": "OTP request",
+    "home.sample.risk": "Risk score",
+    "home.sample.next":
+      "Pause before responding. Verify the message through the organization's official app or website.",
+    "home.sample.try": "See the full breakdown",
+    "home.tool.text": "Messages",
+    "home.tool.textBody": "SMS, email, Messenger, and other copied text.",
+    "home.tool.image": "Screenshots",
+    "home.tool.imageBody": "Upload an image. Sift reads the message for you.",
+    "home.tool.link": "Links",
+    "home.tool.linkBody": "Inspect a suspicious address without opening it.",
+    "home.how.title": "Know what feels wrong. And why.",
+    "home.how.body":
+      "A warning is more useful when you understand it. Sift looks for familiar Philippine scam patterns and explains the signals behind the result.",
+    "home.step.paste": "Bring the message",
+    "home.step.pasteBody":
+      "Paste the text, upload a screenshot, or check a link. You can start without signing up.",
+    "home.step.look": "Look at the evidence",
+    "home.step.lookBody":
+      "See the requests, links, and pressure tactics that contributed to the risk assessment.",
+    "home.step.act": "Choose a safer next step",
+    "home.step.actBody":
+      "Get practical guidance on what to avoid and how to verify through official channels.",
+    "home.examples.title": "Familiar messages. Recognizable patterns.",
+    "home.examples.body":
+      "Scams change their wording. The tactics tend to repeat. Learn a few you might find in your own inbox.",
+    "home.examples.all": "Explore the scam library",
+    "home.examples.inspect": "Inspect this example",
+    "home.examples.note":
+      "Samples are reconstructed for education. They are not real messages or endorsements of the brands mentioned.",
+    "home.privacy.title": "Your trust deserves a clear explanation.",
+    "home.privacy.body":
+      "Sift is an independent educational tool for Filipino internet users. It helps you assess a message; it cannot guarantee that a sender or offer is safe.",
+    "home.privacy.account": "Start without an account",
+    "home.privacy.accountBody":
+      "The scanner is open to everyone. Sign in if you want to keep your scans in your private history.",
+    "home.privacy.data": "Know what is saved",
+    "home.privacy.dataBody":
+      "Signed-in scans are saved to your account history. Avoid including passwords, OTPs, or full account numbers in what you submit.",
+    "home.privacy.explain": "Evidence you can review",
+    "home.privacy.explainBody":
+      "Read what was flagged and why. Always verify important requests through an official channel.",
+    "home.cta.title": "Something in your inbox feels off?",
+    "home.cta.body": "Take a moment to check it before you act.",
+    "nav.scanNow": "Check a message",
+    "footer.note": "Independent guidance for a safer next step.",
+    "auth.aside.title": "A little more clarity. Every time.",
+    "auth.aside.body":
+      "Keep your scan history in one place, revisit the evidence, and recognize the patterns next time.",
+    "auth.aside.note": "You can always use the scanner without an account.",
+
     "nav.home": "Home",
     "nav.scanner": "Scanner",
     "nav.scamLibrary": "Scam Library",
@@ -74,7 +174,8 @@ export const DICT = {
       "This assessment inspects the address itself: patterns, structure, and (if configured) reputation databases. The link is never visited by our servers, and page content can't be seen, so a clean result is not a guarantee of safety.",
 
     "screenshot.privacy.title": "Before you upload: privacy notes",
-    "screenshot.privacy.sensitive.title": "Screenshots can contain sensitive details",
+    "screenshot.privacy.sensitive.title":
+      "Screenshots can contain sensitive details",
     "screenshot.privacy.sensitive.body":
       "Names, phone numbers, chat photos, balances: anything visible in the capture is readable text to our analyzer. Crop out anything you don't need checked before uploading.",
     "screenshot.privacy.noStore.title": "Nothing is permanently stored",
@@ -103,6 +204,9 @@ export const DICT = {
     "input.clear": "Clear",
     "input.analyze": "Analyze Message",
     "input.exampleLead": "No message handy? Load a real-world example:",
+    "input.moreExamples": "More examples",
+    "input.fewerExamples": "Fewer examples",
+    "input.emptyHint": "Not sure what to scan? Try an example below.",
     "input.emptyTitle": "Nothing to analyze yet",
     "input.emptyBody":
       "Paste a suspicious SMS, email, chat message, or link above, or tap one of the example scams to see how Sift breaks down a threat.",
@@ -203,10 +307,115 @@ export const DICT = {
     "auth.signin.title": "Welcome back",
     "auth.signin.body": "Sign in to open your private scan history.",
     "auth.signup.title": "Create your account",
-    "auth.signup.body": "Free, no personal details beyond an email; scans made while signed in are saved to your private history.",
+    "auth.signup.body":
+      "Free, no personal details beyond an email; scans made while signed in are saved to your private history.",
   },
 
   fil: {
+    "nav.signOut": "Mag-sign out",
+    "nav.signingOut": "Nagsa-sign out...",
+    "nav.communityReports": "Mga ulat ng komunidad",
+    "nav.myHistory": "Aking history",
+    "nav.scamInsights": "Mga pag-aaral sa scam",
+    "nav.mainNavigation": "Pangunahing nabigasyon",
+    "nav.mobileNavigation": "Nabigasyon sa mobile",
+    "nav.openMenu": "Buksan ang menu",
+    "nav.guestHint": "Libreng pag-scan. Hindi kailangang mag-sign up.",
+    "nav.saveHistoryHint":
+      "Mag-sign in para i-save at balikan ang iyong mga scan.",
+    "auth.createToSave":
+      "Gumawa ng account para i-save ang iyong scan history.",
+
+    "risk.meter.label": "Antas ng panganib",
+    "risk.meter.low": "Mababa",
+    "risk.meter.medium": "Katamtaman",
+    "risk.meter.high": "Mataas",
+    "risk.meter.critical": "Kritikal",
+    "home.walkthrough.steps": "Tuklasin ang tatlong hakbang",
+    "home.walkthrough.label": "Halimbawa ng pagsusuri",
+    "home.walkthrough.received": "Una, basahin ang message.",
+    "home.walkthrough.evidence": "Tatlong dahilan para huminto muna.",
+    "home.walkthrough.action": "May mas ligtas na pagpipilian.",
+    "home.walkthrough.fee": "May processing fee bago makuha ang premyo.",
+    "home.walkthrough.identity":
+      "Hinihingi ang iyong pangalan, address, at kaarawan.",
+    "home.walkthrough.deadline": "May 24 na oras na deadline para madaliin ka.",
+    "home.walkthrough.advice":
+      "Huwag magbayad o magpadala ng personal na detalye. I-verify ang alok sa opisyal na website o app ng organisasyon gamit ang address na ikaw mismo ang naghanap.",
+    "home.walkthrough.next": "Susunod na hakbang",
+    "home.walkthrough.again": "Magsimula ulit",
+
+    "library.title": "Kilalanin ang modus.",
+    "library.body":
+      "Gabay sa mga karaniwang scam sa Pilipinas. Pumili ng kategorya upang matutunan ang mga babala, suriin ang halimbawa, at malaman ang mas ligtas na hakbang.",
+    "library.signs": "Mga dapat bantayan",
+    "library.sample": "Halimbawang message",
+
+    "home.hero.title": "Suriin muna. Mas ligtas ang susunod na hakbang.",
+    "home.hero.body":
+      "Kakaibang text. Apurahang pakiusap. Link na kahina-hinala. I-check sa Sift bago mag-click, magbayad, o sumagot.",
+    "home.checkMessage": "Suriin ang message",
+    "home.checkScreenshot": "Suriin ang screenshot",
+    "home.hero.note": "Libreng pag-scan. Hindi kailangang mag-sign up.",
+    "home.sample.label": "Masusing pagtingin",
+    "home.sample.example": "Halimbawang mensahe",
+    "home.sample.choose": "Pumili ng halimbawang message",
+    "home.sample.prize": "Alok na premyo",
+    "home.sample.wallet": "Abiso sa wallet",
+    "home.sample.otp": "Hiling na OTP",
+    "home.sample.risk": "Antas ng panganib",
+    "home.sample.next":
+      "Huwag munang sumagot. I-verify ang message sa opisyal na app o website ng organisasyon.",
+    "home.sample.try": "Tingnan ang buong pagsusuri",
+    "home.tool.text": "Mga message",
+    "home.tool.textBody": "SMS, email, Messenger, at iba pang kinopyang text.",
+    "home.tool.image": "Mga screenshot",
+    "home.tool.imageBody":
+      "Mag-upload ng larawan. Babasahin ng Sift ang message.",
+    "home.tool.link": "Mga link",
+    "home.tool.linkBody":
+      "Suriin ang kahina-hinalang address nang hindi binubuksan.",
+    "home.how.title": "Alamin kung ano ang kahina-hinala. At kung bakit.",
+    "home.how.body":
+      "Mas kapaki-pakinabang ang babala kapag nauunawaan mo ito. Sinusuri ng Sift ang mga karaniwang scam sa Pilipinas at ipinapaliwanag ang resulta.",
+    "home.step.paste": "Ilagay ang message",
+    "home.step.pasteBody":
+      "I-paste ang text, mag-upload ng screenshot, o magsuri ng link. Hindi kailangan ng account.",
+    "home.step.look": "Suriin ang ebidensya",
+    "home.step.lookBody":
+      "Tingnan ang mga pakiusap, link, at pamimilit na nakaapekto sa pagsusuri ng panganib.",
+    "home.step.act": "Pumili ng mas ligtas na hakbang",
+    "home.step.actBody":
+      "Alamin kung ano ang dapat iwasan at kung paano mag-verify sa mga opisyal na channel.",
+    "home.examples.title": "Pamilyar na message. Paulit-ulit na modus.",
+    "home.examples.body":
+      "Nagbabago ang salita, pero madalas pareho ang taktika. Kilalanin ang mga puwedeng dumating sa iyong inbox.",
+    "home.examples.all": "Tingnan ang scam library",
+    "home.examples.inspect": "Suriin ang halimbawang ito",
+    "home.examples.note":
+      "Ginawang muli ang mga halimbawa para sa edukasyon. Hindi ito tunay na message o pag-endorso sa mga nabanggit na brand.",
+    "home.privacy.title":
+      "Karapat-dapat sa malinaw na paliwanag ang tiwala mo.",
+    "home.privacy.body":
+      "Ang Sift ay malayang kasangkapang pang-edukasyon para sa mga Pilipino. Tumutulong ito sa pagsusuri; hindi nito ginagarantiyang ligtas ang sender o alok.",
+    "home.privacy.account": "Magsimula nang walang account",
+    "home.privacy.accountBody":
+      "Bukas sa lahat ang scanner. Mag-sign in kung gusto mong itago ang mga scan sa pribadong history mo.",
+    "home.privacy.data": "Alamin kung ano ang naka-save",
+    "home.privacy.dataBody":
+      "Naka-save sa account history ang mga scan kapag naka-sign in. Iwasang magsama ng password, OTP, o buong account number sa isusumite.",
+    "home.privacy.explain": "Ebidensyang masusuri mo",
+    "home.privacy.explainBody":
+      "Basahin kung ano ang na-flag at kung bakit. I-verify ang mahahalagang pakiusap sa opisyal na channel.",
+    "home.cta.title": "May kahina-hinala sa inbox mo?",
+    "home.cta.body": "Maglaan ng sandali upang suriin bago kumilos.",
+    "nav.scanNow": "Suriin ang message",
+    "footer.note": "Malayang gabay para sa mas ligtas na hakbang.",
+    "auth.aside.title": "Mas malinaw. Sa bawat pagsusuri.",
+    "auth.aside.body":
+      "Itago ang scan history sa isang lugar, balikan ang ebidensya, at kilalanin ang mga modus sa susunod.",
+    "auth.aside.note": "Laging magagamit ang scanner kahit walang account.",
+
     "nav.home": "Home",
     "nav.scanner": "Scanner",
     "nav.scamLibrary": "Scam Library",
@@ -234,7 +443,7 @@ export const DICT = {
 
     "scanner.page.title": "Scam Scanner",
     "scanner.page.description":
-      "I-paste ang kahina-hinalang message o link sa ibaba. Titingnan ito ng AI analyst kasama ang aming rule-based engine para sa mga scam na karaniwan sa Pilipinas: panlilinlang na kunwari company o ahensya ng gobyerno, panggigipit na \"kailangan ngayon\", bayad bago makuhang premyo, at peke o mapanlinlang na link.",
+      'I-paste ang kahina-hinalang message o link sa ibaba. Titingnan ito ng AI analyst kasama ang aming rule-based engine para sa mga scam na karaniwan sa Pilipinas: panlilinlang na kunwari company o ahensya ng gobyerno, panggigipit na "kailangan ngayon", bayad bago makuhang premyo, at peke o mapanlinlang na link.',
     "screenshot.page.title": "Screenshot Scanner",
     "screenshot.page.description":
       "Mag-upload ng screenshot ng kahina-hinalang SMS, chat, o email para hindi mo na kailangang i-type. Kukunin namin ang teksto gamit ang OCR at sasuriin gamit ang parehong scam analysis.",
@@ -279,7 +488,8 @@ export const DICT = {
       "Ang pagsusuring ito ay sa mismong address: pattern, istruktura, at (kung naka-set up) reputation databases. Hindi kailanman binibisita ng aming server ang link, at hindi namin nakikita ang laman ng page, kaya ang malinis na resulta ay hindi garantiya na ligtas.",
 
     "screenshot.privacy.title": "Bago mag-upload: mga paalala sa privacy",
-    "screenshot.privacy.sensitive.title": "Maaaring may sensitibong detalye ang screenshot",
+    "screenshot.privacy.sensitive.title":
+      "Maaaring may sensitibong detalye ang screenshot",
     "screenshot.privacy.sensitive.body":
       "Pangalan, numero ng telepono, chat photos, balance: lahat ng nakikita sa capture ay nababasang teksto para sa aming analyzer. I-crop muna ang mga hindi mo kailangang ipa-check bago mag-upload.",
     "screenshot.privacy.noStore.title": "Walang permanenteng naka-store",
@@ -308,7 +518,12 @@ export const DICT = {
       "Pindutin ang Control katabi ng Enter para simulan ang pagsusuri.",
     "input.clear": "Burahin",
     "input.analyze": "Suriin ang Message",
-    "input.exampleLead": "Walang maisamaing message? Subukan ang mga tunay na halimbawa:",
+    "input.exampleLead":
+      "Walang maisamaing message? Subukan ang mga tunay na halimbawa:",
+    "input.moreExamples": "Iba pang halimbawa",
+    "input.fewerExamples": "Mas kaunting halimbawa",
+    "input.emptyHint":
+      "Hindi sigurado kung ano ang susuriin? Subukan ang isang halimbawa sa ibaba.",
     "input.emptyTitle": "Wala pang sasuriin",
     "input.emptyBody":
       "I-paste ang kahina-hinalang SMS, email, chat message, o link sa itaas, o pindutin ang isa sa mga halimbawang scam para makita kung paano sinusuri ng Sift ang isang banta.",
@@ -337,7 +552,8 @@ export const DICT = {
     "report.characters": "characters",
     "report.ocrNote":
       "Nakuha ang tekstong ito gamit ang OCR, pero maaaring may maliit na pagkakamali sa pagbasa. Batay sa nilalaman na ito ang pagsusuri sa itaas.",
-    "report.highlightNote": "Ang mga naka-highlight na bahagi ang tumugma sa mga red flag sa itaas.",
+    "report.highlightNote":
+      "Ang mga naka-highlight na bahagi ang tumugma sa mga red flag sa itaas.",
     "report.engineConfidence": "Kumpiyansa ng engine",
     "report.flagsFound": "pulang bandila na nakita",
     "report.flag": "pulang bandila",
@@ -365,7 +581,8 @@ export const DICT = {
       "AI-assisted na risk assessment para matulungan ang mga Pilipino na tasahin ang kahina-hinalang messages, links, at online threats.",
     "hero.cta.scan": "Mag-scan ng Kahina-hinala",
     "hero.cta.how": "Paano Ito Gumagana",
-    "hero.check.builtForPh": "Ginawa para sa mga scam na karaniwan sa Pilipinas",
+    "hero.check.builtForPh":
+      "Ginawa para sa mga scam na karaniwan sa Pilipinas",
     "hero.check.plainLanguage": "Ipinapaliwanag ang mga red flag nang malinaw",
     "hero.check.free": "Libre, walang kailangang account",
     "hero.sample.reportLabel": "Ulat ng Pagsusuri",
@@ -405,11 +622,14 @@ export const DICT = {
     "auth.createLink": "Gumawa ng account",
     "auth.haveAccount": "May account na?",
     "auth.genericError": "May naganap na mali. Pakisubukan muli.",
-    "auth.networkError": "Error sa network. Tingnan ang koneksyon mo at subukan muli.",
+    "auth.networkError":
+      "Error sa network. Tingnan ang koneksyon mo at subukan muli.",
     "auth.signin.title": "Maligayang pagbabalik",
-    "auth.signin.body": "Mag-sign in para buksan ang pribado mong scan history.",
+    "auth.signin.body":
+      "Mag-sign in para buksan ang pribado mong scan history.",
     "auth.signup.title": "Gumawa ng account",
-    "auth.signup.body": "Libre, walang personal na detalye bukod sa email; ang mga scan mo habang naka-sign in ay nase-save sa pribado mong history.",
+    "auth.signup.body":
+      "Libre, walang personal na detalye bukod sa email; ang mga scan mo habang naka-sign in ay nase-save sa pribado mong history.",
   },
 } satisfies Record<Lang, Record<string, string>>;
 

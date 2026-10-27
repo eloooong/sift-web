@@ -70,10 +70,14 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
     <form
       onSubmit={submit}
       noValidate
-      className="flex flex-col gap-4 rounded-xl bg-card p-6 ring-1 ring-foreground/10 sm:p-7"
+      className="flex flex-col gap-6 rounded-lg border bg-card p-6 sm:p-8"
     >
       {mode === "signup" ? (
-        <Field label={t("auth.displayName")} htmlFor="af-name" hint={t("auth.nameHint")}>
+        <Field
+          label={t("auth.displayName")}
+          htmlFor="af-name"
+          hint={t("auth.nameHint")}
+        >
           <input
             id="af-name"
             type="text"
@@ -82,7 +86,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
             maxLength={40}
             autoComplete="nickname"
             placeholder="Juan D."
-            className="h-10 w-full rounded-lg border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+            className="h-12 w-full rounded-md border bg-background px-3 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
           />
         </Field>
       ) : null}
@@ -96,16 +100,14 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
           onChange={(event) => setEmail(event.target.value)}
           autoComplete="email"
           placeholder="you@example.com"
-          className="h-10 w-full rounded-lg border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+          className="h-12 w-full rounded-md border bg-background px-3 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
         />
       </Field>
 
       <Field
         label={t("auth.password")}
         htmlFor="af-password"
-        hint={
-          mode === "signup" ? t("auth.passwordHint") : undefined
-        }
+        hint={mode === "signup" ? t("auth.passwordHint") : undefined}
       >
         <input
           id="af-password"
@@ -116,7 +118,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
           minLength={mode === "signup" ? 8 : undefined}
           autoComplete={mode === "signup" ? "new-password" : "current-password"}
           placeholder="••••••••"
-          className="h-10 w-full rounded-lg border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+          className="h-12 w-full rounded-md border bg-background px-3 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
         />
       </Field>
 
@@ -129,7 +131,7 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
       <button
         type="submit"
         disabled={submitting}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? (
           <>
@@ -143,15 +145,14 @@ export function AuthForm({ mode, nextPath }: { mode: Mode; nextPath: string }) {
         )}
       </button>
 
-      <p className="text-center text-xs leading-relaxed text-muted-foreground">
+      <p className="text-center text-sm leading-relaxed text-muted-foreground">
         {mode === "signin" ? (
           <>
-            {t("auth.newHere")}{" "}
             <Link
               href={`/signup${nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""}`}
               className="font-medium underline hover:text-foreground"
             >
-              {t("auth.createLink")}
+              {t("auth.createToSave")}
             </Link>
           </>
         ) : (
@@ -186,12 +187,12 @@ function Field({
       <div className="mb-1 flex items-baseline justify-between gap-2">
         <label
           htmlFor={htmlFor}
-          className="font-mono text-[10px] font-medium tracking-widest text-muted-foreground uppercase"
+          className="text-sm font-medium text-foreground"
         >
           {label}
         </label>
         {hint ? (
-          <span className="text-[10px] text-muted-foreground/70">{hint}</span>
+          <span className="text-xs text-muted-foreground">{hint}</span>
         ) : null}
       </div>
       {children}

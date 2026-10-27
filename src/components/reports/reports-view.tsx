@@ -17,10 +17,13 @@ export function ReportsView() {
     <div className="mt-8 grid items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-8">
       <section aria-labelledby="submit-heading" className="flex flex-col gap-4">
         <div className="flex items-baseline justify-between gap-2">
-          <h2 id="submit-heading" className="text-lg font-semibold tracking-tight">
+          <h2
+            id="submit-heading"
+            className="text-lg font-semibold tracking-tight"
+          >
             Submit a report
           </h2>
-          <span className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
+          <span className="text-xs font-medium text-muted-foreground">
             anonymous
           </span>
         </div>
@@ -29,19 +32,21 @@ export function ReportsView() {
           <ReportForm onSubmitted={() => setRefreshKey((value) => value + 1)} />
         </FadeIn>
 
-        <p className="rounded-lg border border-dashed p-3 text-xs leading-relaxed text-muted-foreground">
-          Demo note: reports are stored in this server&apos;s memory for the
-          demo, and restarting resets them. Never include real passwords, OTPs,
-          or full account numbers in any report.
+        <p className="rounded-lg border border-dashed p-3 text-sm leading-relaxed text-muted-foreground">
+          Never include real passwords, OTPs, or full account numbers in any
+          report.
         </p>
       </section>
 
       <section aria-labelledby="feed-heading" className="flex flex-col gap-4">
         <div className="flex items-baseline justify-between gap-2">
-          <h2 id="feed-heading" className="text-lg font-semibold tracking-tight">
+          <h2
+            id="feed-heading"
+            className="text-lg font-semibold tracking-tight"
+          >
             Latest reports
           </h2>
-          <span className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
+          <span className="text-xs font-medium text-muted-foreground">
             approved only
           </span>
         </div>

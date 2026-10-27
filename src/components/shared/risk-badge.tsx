@@ -11,17 +11,17 @@ const RISK_BADGE_STYLES: Record<
 > = {
   low: {
     label: "Low Risk",
-    badgeClassName: "border-success/30 bg-success/10 text-success",
+    badgeClassName: "border-success/30 bg-success/10 text-success-foreground",
     dotClassName: "bg-success",
   },
   medium: {
     label: "Moderate Risk",
-    badgeClassName: "border-warning/30 bg-warning/10 text-warning",
+    badgeClassName: "border-warning/30 bg-warning/10 text-warning-foreground",
     dotClassName: "bg-warning",
   },
   high: {
     label: "High Risk",
-    badgeClassName: "border-danger/30 bg-danger/10 text-danger",
+    badgeClassName: "border-danger/30 bg-danger/10 text-danger-foreground",
     dotClassName: "bg-danger",
   },
   critical: {
@@ -53,7 +53,7 @@ export function RiskBadge({
       className={cn(
         "inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium whitespace-nowrap",
         style.badgeClassName,
-        className
+        className,
       )}
     >
       <span

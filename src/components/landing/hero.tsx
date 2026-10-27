@@ -1,163 +1,161 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
-
-import { CountUp } from "@/components/shared/count-up";
-import { T } from "@/components/providers/t";
+import { ArrowRight, Check, MessageSquareText, ScanLine } from "lucide-react";
+import { useLang } from "@/components/providers/language-provider";
 import { RiskBadge } from "@/components/shared/risk-badge";
-import { RiskMeter } from "@/components/scanner/risk-meter";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-
-const HERO_CHECKS = [
-  { key: "hero.check.builtForPh" },
-  { key: "hero.check.plainLanguage" },
-  { key: "hero.check.free" },
-] as const;
-
-const SAMPLE_EVIDENCE = [
-  "Pay-to-claim fee",
-  "24-hour deadline",
-  "Fake DTI permit",
-] as const;
+import { EXAMPLE_SCAMS } from "@/lib/examples";
+import { cn } from "@/lib/utils";
 
 export function Hero() {
+  const { t, lang } = useLang();
+  const [sampleIndex, setSampleIndex] = useState(0);
+  const sample = EXAMPLE_SCAMS[sampleIndex];
   return (
-    <section className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,var(--color-muted),transparent)]"
-      />
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:px-8 lg:py-24">
-        <div>
-          <Badge
-            variant="outline"
-            className="mb-5 h-auto gap-1.5 rounded-full border-border px-3 py-1.5 text-muted-foreground"
-          >
-            <Sparkles className="text-muted-foreground" />
-            <T k="hero.badge" />
-          </Badge>
-
-          <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]">
-            <T k="hero.title.pre" />{" "}
-            <span className="underline decoration-[3px] decoration-warning underline-offset-[10px]">
-              <T k="hero.title.highlight" />
-            </span>
+    <section className="home-hero border-b bg-card">
+      <div className="site-container grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-24">
+        <div className="home-hero-copy">
+          <h1 className="max-w-2xl text-5xl font-semibold leading-[1.02] tracking-[-0.035em] text-balance sm:text-6xl lg:text-[5.5rem]">
+            {t("home.hero.title")}
           </h1>
-
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
-            <T k="hero.subhead" />
+          <p className="mt-7 max-w-lg text-lg leading-relaxed text-muted-foreground">
+            {t("home.hero.body")}
           </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="h-11 px-6 text-sm">
+          <div className="home-hero-actions mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
               <Link href="/scanner">
-                <T k="hero.cta.scan" />
-                <ArrowRight
-                  data-icon="inline-end"
-                  className="transition-transform group-hover/button:translate-x-0.5"
-                />
+                {t("home.checkMessage")}
+                <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="h-11 px-6 text-sm"
-            >
-              <Link href="/#how-it-works"><T k="hero.cta.how" /></Link>
+            <Button asChild variant="outline" size="lg">
+              <Link href="/scanner/screenshot">
+                <ScanLine aria-hidden="true" />
+                {t("home.checkScreenshot")}
+              </Link>
             </Button>
           </div>
-
-          <ul className="mt-8 flex max-w-xl flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-5">
-            {HERO_CHECKS.map((check) => (
-              <li
-                key={check.key}
-                className="flex items-center gap-2 text-xs text-muted-foreground"
-              >
-                <Check className="size-3.5 shrink-0 text-success" />
-                <T k={check.key} />
-              </li>
-            ))}
-          </ul>
+          <p className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
+            <Check aria-hidden="true" className="size-4" />
+            {t("home.hero.note")}
+          </p>
         </div>
-
-        <div className="relative">
-          <div
-            aria-hidden="true"
-            className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-tr from-slate-200/80 via-slate-100 to-transparent blur-2xl"
-          />
-
-          <Card className="border-border">
-            <CardContent>
-              <div className="flex items-center justify-between gap-3">
-                <p className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
-                  <T k="hero.sample.reportLabel" />
-                </p>
-                <Badge variant="secondary" className="font-mono text-[10px]">
-                  SAMPLE
-                </Badge>
-              </div>
-
-              <div className="mt-4 flex items-end justify-between gap-4">
-                <RiskBadge level="critical" />
-                <p className="leading-none">
-                  <span className="text-3xl font-semibold tracking-tight tabular-nums">
-                    <CountUp value={95} />
-                  </span>
-                  <span className="text-sm text-muted-foreground">/100</span>
-                </p>
-              </div>
-
-              <div className="mt-3">
-                <RiskMeter score={95} level="critical" />
-              </div>
-
-              <dl className="mt-5 space-y-2.5 text-sm">
-                <div className="flex items-start justify-between gap-4">
-                  <dt className="shrink-0 text-muted-foreground">Category</dt>
-                  <dd className="text-right font-medium">
-                    Fake Prize / Lottery (SMS)
-                  </dd>
-                </div>
-                <Separator />
-                <div className="flex items-start justify-between gap-4">
-                  <dt className="shrink-0 text-muted-foreground">Evidence</dt>
-                  <dd className="flex flex-wrap justify-end gap-1.5">
-                    {SAMPLE_EVIDENCE.map((flag, index) => (
-                      <span
-                        key={flag}
-                        style={{ animationDelay: `${0.7 + index * 0.12}s` }}
-                        className="hero-badge-pop rounded-full border border-danger/30 bg-danger/10 px-2 py-0.5 text-[11px] font-medium text-danger"
-                      >
-                        {flag}
+        <article
+          className="home-analysis-card overflow-hidden rounded-lg border bg-background"
+          aria-label={t("home.sample.label")}
+        >
+          <div className="flex items-center justify-between gap-3 border-b px-5 py-4 sm:px-6">
+            <span className="flex items-center gap-2 text-sm font-medium">
+              <MessageSquareText aria-hidden="true" className="size-4" />
+              {t("home.sample.label")}
+            </span>
+            <span className="text-xs text-muted-foreground">
+              {t("home.sample.example")}
+            </span>
+          </div>
+          <div className="p-5 sm:p-6">
+            <div
+              className="mb-5 flex flex-wrap gap-2"
+              role="group"
+              aria-label={t("home.sample.choose")}
+            >
+              {EXAMPLE_SCAMS.slice(0, 3).map((item, index) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-pressed={index === sampleIndex}
+                  onClick={() => setSampleIndex(index)}
+                  className={cn(
+                    "min-h-11 rounded-md border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                    index === sampleIndex
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-card hover:bg-secondary",
+                  )}
+                >
+                  {t(
+                    index === 0
+                      ? "home.sample.prize"
+                      : index === 1
+                        ? "home.sample.wallet"
+                        : "home.sample.otp",
+                  )}
+                </button>
+              ))}
+            </div>
+            <div
+              aria-live="polite"
+              aria-atomic="true"
+              className="home-sample-stage"
+            >
+              {EXAMPLE_SCAMS.slice(0, 3).map((item, index) => {
+                const cue = [
+                  "PHP1,500 processing fee",
+                  "PERMANENTLY DEACTIVATED",
+                  "i-reply ang",
+                ][index];
+                const [before, after] = item.sampleText.split(cue);
+                return (
+                  <div
+                    key={item.id}
+                    aria-hidden={index !== sampleIndex}
+                    className={cn(
+                      "home-sample-content",
+                      index === sampleIndex ? "is-active" : "invisible",
+                    )}
+                  >
+                    <blockquote className="relative overflow-hidden rounded-md border bg-card p-4 text-sm leading-7 break-words sm:text-base">
+                      <span aria-hidden="true" className="home-scan-line" />
+                      &ldquo;{before}
+                      <mark className="home-evidence-mark rounded-sm bg-danger/10 px-0.5 font-medium text-danger-foreground underline decoration-danger/40 underline-offset-4">
+                        {cue}
+                      </mark>
+                      {after}&rdquo;
+                    </blockquote>
+                    <div className="mt-6 flex items-center justify-between gap-3">
+                      <RiskBadge level={item.riskLevel} />
+                      <span className="text-sm text-muted-foreground">
+                        {t("home.sample.risk")}{" "}
+                        <strong className="font-semibold text-foreground">
+                          {item.riskScore}/100
+                        </strong>
                       </span>
-                    ))}
-                  </dd>
-                </div>
-              </dl>
-
-              <div className="mt-5 rounded-lg border bg-muted/60 p-3">
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  <span className="font-medium text-foreground">
-                    Recommended:
-                  </span>{" "}
-                  Do not reply and do not pay any fee. Block the number, then
-                  report the message to your telco and the NTC.
-                </p>
-              </div>
-
-              <p className="mt-4 text-[11px] leading-relaxed text-muted-foreground/80">
-                <T k="hero.sample.note" />{" "}
-                <Link href="/scanner" className="underline underline-offset-2 hover:text-foreground">
-                  <T k="hero.sample.noteLink" />
-                </Link>
-                .
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+                    </div>
+                    <div
+                      aria-hidden="true"
+                      className="mt-3 h-1.5 overflow-hidden rounded-full bg-border/60"
+                    >
+                      <div
+                        className={cn(
+                          "home-risk-fill h-full rounded-full",
+                          item.riskLevel === "medium"
+                            ? "bg-warning"
+                            : "bg-danger",
+                        )}
+                        style={{ width: `${item.riskScore}%` }}
+                      />
+                    </div>
+                    <p className="mt-4 text-base font-medium">
+                      {lang === "fil"
+                        ? (item.summaryFil ?? item.summary)
+                        : item.summary}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {t("home.sample.next")}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <Link
+            href={`/scanner?example=${sample.id}`}
+            className="home-arrow-link flex min-h-14 items-center justify-between gap-3 border-t bg-secondary/60 px-5 py-3 text-sm font-semibold transition-colors hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-ring sm:px-6"
+          >
+            {t("home.sample.try")}
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </Link>
+        </article>
       </div>
     </section>
   );

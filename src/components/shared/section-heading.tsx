@@ -3,11 +3,10 @@ import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function SectionHeading({
-  eyebrow,
   title,
   description,
   as,
-  align = "center",
+  align = "left",
   className,
 }: {
   eyebrow?: ReactNode;
@@ -22,21 +21,16 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "max-w-2xl",
+        "max-w-3xl",
         align === "center" ? "mx-auto text-center" : "text-left",
-        className
+        className,
       )}
     >
-      {eyebrow ? (
-        <p className="mb-3 font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
-          {eyebrow}
-        </p>
-      ) : null}
-      <Heading className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+      <Heading className={as === "h1" ? "page-title" : "section-title"}>
         {title}
       </Heading>
       {description ? (
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground text-pretty sm:text-base">
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground text-pretty">
           {description}
         </p>
       ) : null}

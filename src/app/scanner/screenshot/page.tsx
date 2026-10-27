@@ -33,12 +33,11 @@ const PRIVACY_POINTS = [
 
 export default function ScreenshotScannerPage() {
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
       <FadeIn>
         <SectionHeading
           as="h1"
           align="left"
-          eyebrow="Analysis"
           title={<T k="screenshot.page.title" />}
           description={<T k="screenshot.page.description" />}
         />
@@ -75,14 +74,14 @@ export default function ScreenshotScannerPage() {
                   <p className="text-xs font-medium">
                     <T k={point.titleKey} />
                   </p>
-                  <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     <T k={point.bodyKey} />
                   </p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="mt-4 border-t pt-3 text-[11px] leading-relaxed text-muted-foreground">
+          <p className="mt-4 border-t pt-3 text-sm leading-relaxed text-muted-foreground">
             <T k="screenshot.privacy.rules" />
           </p>
         </section>

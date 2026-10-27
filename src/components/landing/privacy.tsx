@@ -1,72 +1,52 @@
-import { Eye, HeartHandshake, Lock, UserX } from "lucide-react";
-
-import { FadeIn } from "@/components/shared/fade-in";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { Card, CardContent } from "@/components/ui/card";
-
-const PRIVACY_POINTS = [
+import { Eye, LockKeyhole, UserRound } from "lucide-react";
+import { T } from "@/components/providers/t";
+const POINTS = [
   {
-    icon: Lock,
-    title: "Private by design",
-    description:
-      "Scanned messages are processed in real time through our secured server to build your report, never stored by Sift, never sold, never used for advertising.",
+    icon: UserRound,
+    title: "home.privacy.account",
+    body: "home.privacy.accountBody",
   },
   {
-    icon: UserX,
-    title: "No account required",
-    description:
-      "Use the scanner freely and anonymously. Accounts arrive later and are purely optional, for saved history.",
+    icon: LockKeyhole,
+    title: "home.privacy.data",
+    body: "home.privacy.dataBody",
   },
   {
     icon: Eye,
-    title: "Transparent results",
-    description:
-      "Every finding comes with its evidence explained. You always see why something was flagged.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Independent & educational",
-    description:
-      "An independent project for scam awareness in the Philippines, not affiliated with any brand named in examples.",
+    title: "home.privacy.explain",
+    body: "home.privacy.explainBody",
   },
 ] as const;
-
 export function Privacy() {
   return (
     <section id="privacy" className="scroll-mt-24">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-14 lg:px-8">
+      <div className="site-container grid gap-10 py-16 sm:py-24 lg:grid-cols-[1fr_1.1fr] lg:gap-24">
         <div>
-          <SectionHeading
-            align="left"
-            eyebrow="Safety & Privacy"
-            title="Your safety includes your data"
-            description="Sift is built on a simple principle: a tool that protects you from scams should never become a risk to your privacy. No sign-ups, no data selling, no mystery verdicts, just clear analysis you can verify yourself."
-          />
-          <p className="mt-6 rounded-xl border border-dashed p-4 text-xs leading-relaxed text-muted-foreground">
-            Trademark notice: GCash, Maya, Shopee, Lazada, LBC, J&amp;T
-            Express, Grab, and bank names referenced anywhere in Sift
-            belong to their respective owners. They appear strictly as
-            examples of brands commonly impersonated by scammers.
+          <h2 className="section-title">
+            <T k="home.privacy.title" />
+          </h2>
+          <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
+            <T k="home.privacy.body" />
           </p>
         </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {PRIVACY_POINTS.map((point, index) => (
-            <FadeIn key={point.title} delay={Math.min(index * 0.05, 0.2)}>
-            <Card className="h-full">
-              <CardContent className="flex h-full flex-col gap-3 pt-1">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/60">
-                  <point.icon className="size-[18px]" />
-                </span>
-                <h3 className="text-base font-medium">{point.title}</h3>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  {point.description}
+        <ul className="space-y-7">
+          {POINTS.map((point) => (
+            <li key={point.title} className="flex gap-5">
+              <point.icon
+                aria-hidden="true"
+                className="mt-1 size-5 shrink-0 text-muted-foreground"
+              />
+              <div>
+                <h3 className="text-base font-semibold">
+                  <T k={point.title} />
+                </h3>
+                <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                  <T k={point.body} />
                 </p>
-              </CardContent>
-            </Card>
-            </FadeIn>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

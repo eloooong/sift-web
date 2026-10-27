@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import {
-  ChevronDown,
-  MessageSquareWarning,
-  Search,
-  X,
-} from "lucide-react";
+import { ChevronDown, MessageSquareWarning, Search, X } from "lucide-react";
 
 import { ReportCard } from "@/components/reports/report-card";
 import { SCAM_CATEGORIES } from "@/lib/scam-detector/categories";
@@ -77,10 +72,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
     const needle = query.trim().toLowerCase();
 
     return feed.reports.filter((report) => {
-      if (
-        categoryFilter !== "all" &&
-        report.categoryId !== categoryFilter
-      ) {
+      if (categoryFilter !== "all" && report.categoryId !== categoryFilter) {
         return false;
       }
       if (platformFilter !== "all" && report.platform !== platformFilter) {
@@ -109,10 +101,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
   const hasActiveFilters =
     query.trim() !== "" || categoryFilter !== "all" || platformFilter !== "all";
 
-  const confirmedSet = useMemo(
-    () => new Set(feed?.confirmedIds ?? []),
-    [feed]
-  );
+  const confirmedSet = useMemo(() => new Set(feed?.confirmedIds ?? []), [feed]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -148,7 +137,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
               setVisible(PAGE_SIZE);
             }}
             placeholder="Search descriptions, handles, platforms…"
-            className="h-10 w-full rounded-lg border bg-background pr-3 pl-9 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring"
+            className="h-12 w-full rounded-md border bg-background pr-3 pl-9 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           />
         </label>
 
@@ -195,7 +184,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-1 font-medium text-foreground hover:underline"
+            className="inline-flex min-h-11 items-center gap-1 px-2 text-sm font-medium text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <X aria-hidden="true" className="size-3.5" />
             Clear filters
@@ -227,7 +216,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
           <button
             type="button"
             onClick={handleRetry}
-            className="mt-3 rounded-lg border px-3 py-1.5 text-sm font-medium hover:bg-muted"
+            className="mt-3 min-h-11 rounded-md border px-3 py-2 text-sm font-medium hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Try again
           </button>
@@ -260,7 +249,7 @@ export function ReportsBoard({ refreshKey }: { refreshKey: number }) {
             <button
               type="button"
               onClick={() => setVisible((value) => value + PAGE_SIZE)}
-              className="mx-auto rounded-lg border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
+              className="mx-auto min-h-11 rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               Load more ({filtered.length - visible} remaining)
             </button>
@@ -277,9 +266,7 @@ function StatBlock({ label, value }: { label: string; value: string }) {
       <p className="text-lg leading-none font-semibold tracking-tight tabular-nums">
         {value}
       </p>
-      <p className="mt-1 font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
-        {label}
-      </p>
+      <p className="mt-1 text-xs font-medium text-muted-foreground">{label}</p>
     </div>
   );
 }
@@ -301,7 +288,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-10 w-full appearance-none rounded-lg border bg-background pr-8 pl-3 text-sm outline-none transition-colors focus:border-ring"
+        className="min-h-12 w-full appearance-none rounded-lg border bg-background pr-8 pl-3 text-sm outline-none transition-colors focus:border-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

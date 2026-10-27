@@ -1,85 +1,50 @@
 import Link from "next/link";
-
 import { Logo } from "@/components/layout/logo";
 import { T } from "@/components/providers/t";
 import { SITE_NAME } from "@/lib/site";
-
-const PRODUCT_LINKS = [
+const LINKS = [
   { href: "/scanner", key: "footer.link.scanner" },
-  { href: "/scanner/screenshot", key: "footer.link.screenshot" },
   { href: "/scams", key: "footer.link.library" },
-  { href: "/#scan-types", key: "footer.link.scanTypes" },
-  { href: "/#how-it-works", key: "footer.link.howItWorks" },
-] as const;
-
-const RESOURCES_LINKS = [
+  { href: "/reports", key: "nav.communityReports" },
+  { href: "/dashboard", key: "nav.scamInsights" },
   { href: "/about", key: "footer.link.about" },
-  { href: "/#examples", key: "footer.link.examples" },
   { href: "/#privacy", key: "footer.link.privacy" },
 ] as const;
-
 export function Footer() {
   return (
-    <footer className="border-t bg-background">
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div className="max-w-sm">
+    <footer className="border-t bg-secondary/60">
+      <div className="site-container py-10 sm:py-14">
+        <div className="flex flex-col justify-between gap-8 lg:flex-row">
+          <div>
             <Logo />
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              <T k="footer.tagline" />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              <T k="footer.note" />
             </p>
           </div>
-
-          <nav aria-label="Product links">
-            <p className="text-xs font-semibold tracking-widest uppercase">
-              <T k="footer.product" />
-            </p>
-            <ul className="mt-4 space-y-2.5">
-              {PRODUCT_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <T k={link.key} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label="Resource links">
-            <p className="text-xs font-semibold tracking-widest uppercase">
-              <T k="footer.resources" />
-            </p>
-            <ul className="mt-4 space-y-2.5">
-              {RESOURCES_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <T k={link.key} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <nav
+            aria-label="Footer navigation"
+            className="flex flex-wrap items-start gap-x-7 gap-y-2"
+          >
+            {LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground hover:text-foreground hover:underline hover:underline-offset-4"
+              >
+                <T k={link.key} />
+              </Link>
+            ))}
           </nav>
         </div>
-
-        <div className="mt-10 rounded-xl border border-dashed p-4">
-          <p className="text-xs leading-relaxed text-muted-foreground">
-            <T k="footer.disclaimer" />
+        <p className="mt-8 max-w-4xl border-t pt-7 text-sm leading-relaxed text-muted-foreground">
+          <T k="footer.disclaimer" />
+        </p>
+        <div className="mt-7 flex flex-wrap justify-between gap-3 text-sm text-muted-foreground">
+          <p>
+            &copy; {new Date().getFullYear()} {SITE_NAME}.{" "}
+            <T k="footer.copyright" />
           </p>
-        </div>
-
-        <div className="mt-8 flex flex-col items-start justify-between gap-2 border-t pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {SITE_NAME}. <T k="footer.copyright" />
-          </p>
-          <p className="font-mono text-xs text-muted-foreground/80">
-            v0.4, hybrid engine · AI analysis + rule-based pre-scan
-          </p>
+          <p>English / Filipino</p>
         </div>
       </div>
     </footer>

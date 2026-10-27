@@ -11,8 +11,8 @@ export function Logo({ className }: { className?: string }) {
       aria-label={`${SITE_NAME} home`}
       className={cn("group flex w-fit items-center gap-2.5", className)}
     >
-      <BrandMark />
-      <span className="text-[15px] font-semibold tracking-tight">
+      <BrandMark className="size-9" />
+      <span className="text-xl font-semibold tracking-tight">
         {SITE_NAME}
       </span>
     </Link>

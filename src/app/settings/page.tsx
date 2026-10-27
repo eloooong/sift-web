@@ -18,12 +18,9 @@ export default async function SettingsPage() {
   const user = await requireUser("/settings");
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
+    <div className="mx-auto w-full max-w-2xl px-4 py-12 sm:px-6 sm:py-20">
       <FadeIn>
-        <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
-          Account
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">Settings</h1>
+        <h1 className="mt-2 page-title">Settings</h1>
         <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted-foreground sm:text-base">
           Manage how your name appears in the app and keep your account secure.
         </p>

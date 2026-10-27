@@ -7,8 +7,8 @@ import { useSearchParams } from "next/navigation";
 import { useLang } from "@/components/providers/language-provider";
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  ChevronDown,
   Eraser,
-  MessageSquareWarning,
   RefreshCw,
   ShieldAlert,
   TriangleAlert,
@@ -16,10 +16,7 @@ import {
 
 import { ReportView } from "@/components/scanner/report-view";
 import { ScannerProgress } from "@/components/scanner/scanner-progress";
-import {
-  EXAMPLE_SCAMS,
-  MAX_INPUT_CHARS,
-} from "@/lib/examples";
+import { EXAMPLE_SCAMS, MAX_INPUT_CHARS } from "@/lib/examples";
 import type { ScanReport } from "@/lib/scan-report";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,7 +25,7 @@ import { cn } from "@/lib/utils";
 
 type ScannerStatus = "idle" | "scanning" | "done" | "error";
 
-const EMPTY_STATE_CHANNELS = ["SMS", "Email", "Messenger", "URLs"] as const;
+const INITIAL_EXAMPLE_COUNT = 3;
 
 const VIEW_TRANSITION = {
   initial: { opacity: 0, y: 10 },
@@ -64,7 +61,11 @@ export function ScannerInput() {
   const [value, setValue] = useState(initialExample?.sampleText ?? "");
   const [status, setStatus] = useState<ScannerStatus>("idle");
   const [selectedExampleId, setSelectedExampleId] = useState<string | null>(
-    initialExample?.id ?? null
+    initialExample?.id ?? null,
+  );
+  const [showAllExamples, setShowAllExamples] = useState(
+    EXAMPLE_SCAMS.findIndex((example) => example.id === initialExample?.id) >=
+      INITIAL_EXAMPLE_COUNT,
   );
   const [report, setReport] = useState<ScanReport | null>(null);
   const [analyzedText, setAnalyzedText] = useState("");
@@ -145,7 +146,7 @@ export function ScannerInput() {
       setErrorMessage(
         error instanceof Error && error.message
           ? error.message
-          : GENERIC_ERROR_MESSAGE
+          : GENERIC_ERROR_MESSAGE,
       );
       setStatus("error");
     } finally {
@@ -170,6 +171,9 @@ export function ScannerInput() {
   }
 
   const canAnalyze = value.trim().length > 0;
+  const visibleExamples = showAllExamples
+    ? EXAMPLE_SCAMS
+    : EXAMPLE_SCAMS.slice(0, INITIAL_EXAMPLE_COUNT);
 
   return (
     <AnimatePresence mode="wait" initial={false}>
@@ -185,7 +189,7 @@ export function ScannerInput() {
                   aria-live="polite"
                   className={cn(
                     "font-mono text-xs tabular-nums",
-                    counterClassName
+                    counterClassName,
                   )}
                 >
                   {value.length.toLocaleString()} /{" "}
@@ -208,41 +212,44 @@ export function ScannerInput() {
                 }}
                 placeholder={t("input.placeholder")}
                 maxLength={MAX_INPUT_CHARS}
-                rows={8}
-                className="resize-none font-mono text-sm leading-relaxed"
+                rows={6}
+                className="min-h-40 resize-y text-base leading-relaxed"
                 aria-describedby="scanner-input-hint"
               />
-              <p id="scanner-input-hint" className="sr-only">
-                {t("input.keyboardHint")}
+              <p
+                id="scanner-input-hint"
+                className="text-sm leading-relaxed text-muted-foreground"
+              >
+                {canAnalyze ? t("input.keyboardHint") : t("input.emptyHint")}
               </p>
 
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <Button
+                  onClick={() => void handleAnalyze()}
+                  disabled={!canAnalyze}
+                  className="min-h-11 w-full sm:w-auto sm:min-w-[10.5rem]"
+                >
+                  <ShieldAlert data-icon="inline-start" />
+                  {t("input.analyze")}
+                </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleClear}
                   disabled={!value}
+                  className="min-h-11 self-end"
                 >
                   <Eraser data-icon="inline-start" />
                   {t("input.clear")}
                 </Button>
-
-                <Button
-                  onClick={() => void handleAnalyze()}
-                  disabled={!canAnalyze}
-                  className="min-w-[10.5rem]"
-                >
-                  <ShieldAlert data-icon="inline-start" />
-                  {t("input.analyze")}
-                </Button>
               </div>
 
               <div className="border-t pt-4">
-                <p className="mb-2 text-xs font-medium text-muted-foreground">
+                <p className="mb-3 text-sm font-medium text-muted-foreground">
                   {t("input.exampleLead")}
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {EXAMPLE_SCAMS.map((example) => (
+                <div id="scanner-examples" className="flex flex-wrap gap-2">
+                  {visibleExamples.map((example) => (
                     <Button
                       key={example.id}
                       variant="outline"
@@ -250,9 +257,9 @@ export function ScannerInput() {
                       onClick={() => handleSelectExample(example.id)}
                       aria-pressed={selectedExampleId === example.id}
                       className={cn(
-                        "rounded-full",
+                        "min-h-11 h-auto max-w-full rounded-md py-2 text-left whitespace-normal",
                         selectedExampleId === example.id &&
-                          "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
+                          "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
                       )}
                     >
                       {lang === "fil"
@@ -261,31 +268,27 @@ export function ScannerInput() {
                     </Button>
                   ))}
                 </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  aria-expanded={showAllExamples}
+                  aria-controls="scanner-examples"
+                  onClick={() => setShowAllExamples((shown) => !shown)}
+                  className="mt-2 min-h-11"
+                >
+                  {showAllExamples
+                    ? t("input.fewerExamples")
+                    : t("input.moreExamples")}
+                  <ChevronDown
+                    aria-hidden="true"
+                    className={cn(
+                      "size-4 transition-transform",
+                      showAllExamples && "rotate-180",
+                    )}
+                  />
+                </Button>
               </div>
-
-              {!canAnalyze ? (
-                <div className="rounded-xl border border-dashed bg-muted/40 px-6 py-10 text-center">
-                  <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border bg-background shadow-sm">
-                    <MessageSquareWarning className="size-5 text-muted-foreground" />
-                  </span>
-                  <h2 className="mt-4 text-sm font-medium">
-                    {t("input.emptyTitle")}
-                  </h2>
-                  <p className="mx-auto mt-1.5 max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                    {t("input.emptyBody")}
-                  </p>
-                  <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                    {EMPTY_STATE_CHANNELS.map((channel) => (
-                      <span
-                        key={channel}
-                        className="rounded-full border bg-background px-2.5 py-0.5 font-mono text-[11px] text-muted-foreground"
-                      >
-                        {channel}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
             </CardContent>
           </Card>
         </motion.div>
@@ -305,7 +308,9 @@ export function ScannerInput() {
                 <TriangleAlert className="size-5 text-danger" />
               </span>
               <h2 className="mt-4 text-base font-semibold">
-                {lang === "fil" ? "Hindi natapos ang scan" : "Scan didn’t finish"}
+                {lang === "fil"
+                  ? "Hindi natapos ang scan"
+                  : "Scan didn’t finish"}
               </h2>
               <p
                 role="alert"
@@ -346,9 +351,11 @@ export function ScannerInput() {
 export function ScannerFooterNote() {
   return (
     <p className="mt-6 text-center text-xs leading-relaxed text-muted-foreground">
-      Scans are processed securely through our server and are never stored.
-      See{" "}
-      <Link href="/#examples" className="font-medium underline underline-offset-2">
+      Scans are processed securely through our server and are never stored. See{" "}
+      <Link
+        href="/#examples"
+        className="font-medium underline underline-offset-2"
+      >
         common scam patterns
       </Link>{" "}
       while deciding what to check next.
