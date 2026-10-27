@@ -56,6 +56,7 @@
 }
 
 :root {
+  color-scheme: light;
   --background: #f8fafc;
   --foreground: #0f172a;
   --card: #ffffff;
@@ -98,6 +99,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --danger-foreground: #fca5a5;
   --warning-foreground: #fcd34d;
   --success-foreground: #86efac;

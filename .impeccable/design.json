@@ -591,7 +591,7 @@
       "name": "Navigation",
       "kind": "nav",
       "refersTo": "",
-      "description": "Task-first navigation; optional sign-in, direct signed-in history, and one scan action.",
+      "description": "Task-first navigation with optional sign-in, direct signed-in history, one scan action, and a persistent night-mode switch.",
       "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Scam Library</a><a href=\"#\">Community reports</a><a href=\"#\">My history</a></nav>",
       "css": ".ds-nav{display:flex;gap:4px;font:500 14px var(--font-sans,Geist,sans-serif)}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--radius-md,8px);color:var(--muted-foreground,#526176);text-decoration:none}.ds-nav a:hover,.ds-nav [aria-current]{background:var(--muted,#f1f5f9);color:var(--foreground,#0f172a)}.ds-nav a:focus-visible{outline:2px solid var(--ring,#475569);outline-offset:2px;}"
     },

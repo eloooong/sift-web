@@ -2,6 +2,11 @@ import type { Lang } from "./config";
 
 export const DICT = {
   en: {
+    "theme.nightMode": "Night mode",
+    "theme.switchLight": "Switch to day mode",
+    "theme.switchDark": "Switch to night mode",
+    "theme.on": "On",
+    "theme.off": "Off",
     "nav.signOut": "Sign out",
     "nav.signingOut": "Signing out...",
     "nav.communityReports": "Community reports",
@@ -312,6 +317,11 @@ export const DICT = {
   },
 
   fil: {
+    "theme.nightMode": "Mode sa gabi",
+    "theme.switchLight": "Lumipat sa mode sa araw",
+    "theme.switchDark": "Lumipat sa mode sa gabi",
+    "theme.on": "Bukas",
+    "theme.off": "Patay",
     "nav.signOut": "Mag-sign out",
     "nav.signingOut": "Nagsa-sign out...",
     "nav.communityReports": "Mga ulat ng komunidad",

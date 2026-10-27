@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { T } from "@/components/providers/t";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { THEME_INITIALIZER } from "@/lib/theme";
 
 import "./globals.css";
 
@@ -66,8 +67,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          id="sift-theme-init"
+          dangerouslySetInnerHTML={{ __html: THEME_INITIALIZER }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">
         <div
           hidden

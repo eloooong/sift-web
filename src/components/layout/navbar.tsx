@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ArrowRight, ChevronDown, Menu } from "lucide-react";
 
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Logo } from "@/components/layout/logo";
 import { useLang } from "@/components/providers/language-provider";
 import { SignOutButton } from "@/components/account/account-forms";
@@ -123,6 +124,7 @@ export function Navbar() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
           <LanguageSwitcher className="hidden xl:inline-flex" />
           <div className="hidden min-w-20 items-center justify-end xl:flex">
             {!loaded ? (
@@ -244,6 +246,7 @@ export function Navbar() {
               </nav>
               <div className="mt-auto flex flex-col items-stretch gap-4 border-t p-4">
                 <LanguageSwitcher className="self-start" />
+                <ThemeToggle showLabel />
                 {user ? (
                   <>
                     <div>

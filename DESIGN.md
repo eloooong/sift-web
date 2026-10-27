@@ -268,6 +268,8 @@ The sticky 80px header keeps one scanning action visible. Primary destinations a
 
 Full navigation starts at 1280px so translated labels and account controls fit. Smaller screens show the logo, scan action, and a menu button. The wordmark gives way to the owl below 360px. The mobile sheet contains the same destinations, language selection, and optional sign-in. Following a link closes the sheet. On scanner routes the header scan action uses an outline style, leaving Analyze Message as the primary task action. Controls meet a 44px minimum; current destinations and keyboard focus stay explicit.
 
+Night mode is available through a 44px switch in the desktop header and a labeled switch in the mobile sheet. It follows the device color scheme until the visitor chooses light or dark, then persists that choice in browser storage. A small head script sets the theme before page content paints; the store synchronizes changes between open tabs and falls back to session state when storage is unavailable. CSS color-scheme keeps native controls consistent. Both switch labels and states are localized.
+
 ### Risk Badges and Evidence
 
 Each risk badge combines a written risk label and colored dot. Low, medium, and high use their color tint and readable semantic foreground; critical uses solid danger with white text. Evidence highlights add a tint and underline so the distinction survives more than color alone. Reports place recommended actions immediately after the verdict.
