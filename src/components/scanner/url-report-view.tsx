@@ -32,7 +32,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -137,7 +136,7 @@ export function UrlReportView({
     <div className="space-y-4">
       <Card>
         <CardHeader className="gap-4">
-          <p className="flex items-center gap-2 font-mono text-[10px] font-medium tracking-widest text-success uppercase">
+          <p className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <CheckCircle2 className="size-3.5" aria-hidden="true" />
             Scan complete · {formatScanTime(report.createdAt)}
           </p>
@@ -177,7 +176,7 @@ export function UrlReportView({
 
           <RiskMeter score={report.riskScore} level={report.riskLevel} />
 
-          <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground">
+          <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-muted-foreground">
             {report.signals.length}{" "}
             {report.signals.length === 1 ? t("url.signalFound") : t("url.signalsFound")}
             <span aria-hidden="true" className="text-border">|</span>
@@ -189,8 +188,32 @@ export function UrlReportView({
 
         <CardContent>
           <Separator className="mb-4" />
-          <h2 className="mb-1.5 text-sm font-semibold">{t("report.whatThisMeans")}</h2>
-          <p className="text-sm leading-relaxed">{report.summary}</p>
+          <h2 className="mb-1.5 text-base font-semibold">{t("report.whatThisMeans")}</h2>
+          <p className="text-base leading-relaxed">{report.summary}</p>
+        </CardContent>
+      </Card>
+
+      <Card size="sm">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle2 className="text-success" />
+            {t("report.whatToDo")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ol className="space-y-2.5">
+            {report.recommendedActions.map((action, index) => (
+              <li key={action} className="flex items-start gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-xs font-semibold text-foreground"
+                >
+                  {index + 1}
+                </span>
+                <p className="text-base leading-relaxed">{action}</p>
+              </li>
+            ))}
+          </ol>
         </CardContent>
       </Card>
 
@@ -238,13 +261,13 @@ export function UrlReportView({
               type="button"
               onClick={() => setShowParams((value) => !value)}
               aria-expanded={showParams}
-              className="mt-1 w-full cursor-pointer rounded-lg border bg-muted/40 px-3 py-2 text-left text-[11px] font-medium text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              className="mt-1 w-full cursor-pointer rounded-lg border bg-muted/40 px-3 py-2 text-left text-sm min-h-11 font-medium text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
               {showParams ? t("url.hideParams") : t("url.showParams")}
             </button>
           ) : null}
           {showParams ? (
-            <ul className="space-y-1 rounded-lg border bg-muted/30 p-3 font-mono text-[11px] break-all">
+            <ul className="space-y-1 rounded-lg border bg-muted/30 p-3 font-mono text-sm break-all">
               {report.queryParams.map((param) => (
                 <li key={`${param.name}-${param.value}`}>
                   <span className="font-semibold">{param.name}</span>
@@ -269,7 +292,7 @@ export function UrlReportView({
         </CardHeader>
         <CardContent>
           {report.signals.length === 0 ? (
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="text-base leading-relaxed text-muted-foreground">
               {t("url.noSignalsBody")}
             </p>
           ) : (
@@ -309,13 +332,13 @@ export function UrlReportView({
 
                     {signal.evidence ? (
                       <blockquote className="mt-2.5 rounded-md border border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
-                        <p className="font-mono text-[11px] leading-relaxed break-all text-foreground/80">
+                        <p className="font-mono text-sm leading-relaxed break-all text-foreground/80">
                           {signal.evidence}
                         </p>
                       </blockquote>
                     ) : null}
 
-                    <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
+                    <p className="mt-2.5 text-base leading-relaxed text-foreground">
                       {signal.explanation}
                     </p>
                   </li>
@@ -335,14 +358,14 @@ export function UrlReportView({
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <p className="text-sm leading-relaxed">
+            <p className="text-base leading-relaxed">
               {t("url.imitates")}{" "}
               <span className="font-semibold">{report.impersonation.brandLabel}</span>.
               {" "}{report.impersonation.reason}
             </p>
-            <p className="flex flex-wrap items-center gap-2 pt-1 text-xs text-muted-foreground">
+            <p className="flex flex-wrap items-center gap-2 pt-1 text-sm text-muted-foreground">
               {t("url.officialDomain")}
-              <span className="rounded-md border bg-muted/50 px-2 py-0.5 font-mono text-[11px] font-semibold text-foreground">
+              <span className="rounded-md border bg-muted/50 px-2 py-0.5 font-mono text-sm font-semibold text-foreground">
                 {report.impersonation.officialDomain}
               </span>
             </p>
@@ -350,50 +373,27 @@ export function UrlReportView({
         </Card>
       ) : null}
 
-      <Card size="sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle2 className="text-success" />
-            {t("report.whatToDo")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ol className="space-y-2.5">
-            {report.recommendedActions.map((action, index) => (
-              <li key={action} className="flex items-start gap-2.5">
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-success/10 font-mono text-[10px] font-semibold text-success"
-                >
-                  {index + 1}
-                </span>
-                <p className="text-sm leading-relaxed">{action}</p>
-              </li>
-            ))}
-          </ol>
-        </CardContent>
-        <CardFooter className="justify-between gap-3">
-          <Button onClick={onReset}>
-            <RotateCcw data-icon="inline-start" />
-            {t("url.checkAnother")}
-          </Button>
-          <Button variant="ghost" size="sm" onClick={handleCopy}>
-            {copied ? (
-              <>
-                <Check data-icon="inline-start" />
-                {t("report.copied")}
-              </>
-            ) : (
-              <>
-                <Copy data-icon="inline-start" />
-                {t("report.copyReport")}
-              </>
-            )}
-          </Button>
-        </CardFooter>
-      </Card>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Button onClick={onReset} className="min-h-11">
+          <RotateCcw data-icon="inline-start" />
+          {t("url.checkAnother")}
+        </Button>
+        <Button variant="ghost" size="sm" onClick={handleCopy} className="min-h-11">
+          {copied ? (
+            <>
+              <Check data-icon="inline-start" />
+              {t("report.copied")}
+            </>
+          ) : (
+            <>
+              <Copy data-icon="inline-start" />
+              {t("report.copyReport")}
+            </>
+          )}
+        </Button>
+      </div>
 
-      <p className="px-1 text-xs leading-relaxed text-muted-foreground">
+      <p className="px-1 text-sm leading-relaxed text-muted-foreground">
         {t("url.disclaimer")}
       </p>
     </div>

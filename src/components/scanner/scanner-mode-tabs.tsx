@@ -10,22 +10,22 @@ const MODES = [
   {
     key: "text",
     href: "/scanner",
-    label: "Paste Text",
-    labelFil: "I-paste ang Text",
+    labelKey: "scanner.mode.text",
+    shortLabelKey: "scanner.mode.textShort",
     icon: Keyboard,
   },
   {
     key: "screenshot",
     href: "/scanner/screenshot",
-    label: "Upload Screenshot",
-    labelFil: "Mag-upload ng Screenshot",
+    labelKey: "scanner.mode.screenshot",
+    shortLabelKey: "scanner.mode.screenshotShort",
     icon: ImageUp,
   },
   {
     key: "url",
     href: "/scanner/url",
-    label: "Check URL",
-    labelFil: "I-check ang Link",
+    labelKey: "scanner.mode.url",
+    shortLabelKey: "scanner.mode.urlShort",
     icon: Globe,
   },
 ] as const;
@@ -33,12 +33,11 @@ const MODES = [
 export type ScannerMode = (typeof MODES)[number]["key"];
 
 export function ScannerModeTabs({ active }: { active: ScannerMode }) {
-  const { lang, t } = useLang();
+  const { t } = useLang();
   return (
-    <div
-      role="tablist"
+    <nav
       aria-label={t("scanner.aria.modeTabs")}
-      className="inline-flex w-full rounded-xl border bg-muted/50 p-1 sm:w-auto"
+      className="grid w-full grid-cols-3 rounded-lg border bg-muted/50 p-1 sm:inline-flex sm:w-auto"
     >
       {MODES.map((mode) => {
         const isActive = mode.key === active;
@@ -47,21 +46,21 @@ export function ScannerModeTabs({ active }: { active: ScannerMode }) {
           <Link
             key={mode.key}
             href={mode.href}
-            role="tab"
-            aria-selected={isActive}
+            aria-label={t(mode.labelKey)}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors sm:flex-none",
+              "flex min-h-11 min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-md px-1 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex-none sm:flex-row sm:gap-2 sm:px-4",
               isActive
                 ? "bg-background text-foreground"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            <Icon aria-hidden="true" className="size-4" />
-            {lang === "fil" ? mode.labelFil : mode.label}
+            <Icon aria-hidden="true" className="size-4 shrink-0" />
+            <span aria-hidden="true" className="sm:hidden">{t(mode.shortLabelKey)}</span>
+            <span aria-hidden="true" className="hidden sm:inline">{t(mode.labelKey)}</span>
           </Link>
         );
       })}
-    </div>
+    </nav>
   );
 }

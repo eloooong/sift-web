@@ -40,7 +40,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -205,7 +204,7 @@ export function ReportView({
           className="flex items-start gap-2.5 rounded-xl border border-warning/40 bg-warning/10 px-4 py-3"
         >
           <Info className="mt-0.5 size-4 shrink-0 text-warning" />
-          <p className="text-xs leading-relaxed text-foreground/80">
+          <p className="text-base leading-relaxed text-foreground">
             {report.warning}
           </p>
         </div>
@@ -213,7 +212,7 @@ export function ReportView({
 
       <Card>
         <CardHeader className="gap-4">
-          <p className="flex items-center gap-2 font-mono text-[10px] font-medium tracking-widest text-success uppercase">
+          <p className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <CheckCircle2 className="size-3.5" aria-hidden="true" />
             Scan complete · {formatScanTime(report.createdAt)}
           </p>
@@ -264,7 +263,7 @@ export function ReportView({
 
           <RiskMeter score={report.riskScore} level={report.riskLevel} />
 
-          <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground">
+          <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-muted-foreground">
             {t("report.engineConfidence")}{" "}
             <span className="font-semibold tabular-nums text-foreground">
               {report.confidence}%
@@ -283,8 +282,32 @@ export function ReportView({
 
         <CardContent>
           <Separator className="mb-4" />
-          <h2 className="mb-1.5 text-sm font-semibold">{t("report.whatThisMeans")}</h2>
-          <p className="text-sm leading-relaxed">{report.summary}</p>
+          <h2 className="mb-1.5 text-base font-semibold">{t("report.whatThisMeans")}</h2>
+          <p className="text-base leading-relaxed">{report.summary}</p>
+        </CardContent>
+      </Card>
+
+      <Card size="sm">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle2 className="text-success" />
+            {t("report.whatToDo")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ol className="space-y-2.5">
+            {report.recommendedActions.map((action, index) => (
+              <li key={action} className="flex items-start gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-xs font-semibold text-foreground"
+                >
+                  {index + 1}
+                </span>
+                <p className="text-base leading-relaxed">{action}</p>
+              </li>
+            ))}
+          </ol>
         </CardContent>
       </Card>
 
@@ -300,7 +323,7 @@ export function ReportView({
         </CardHeader>
         <CardContent>
           {report.flags.length === 0 ? (
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="text-base leading-relaxed text-muted-foreground">
               {t("report.redFlagsEmpty")}
             </p>
           ) : (
@@ -334,16 +357,16 @@ export function ReportView({
 
                     {flag.evidence ? (
                       <blockquote className="mt-2.5 rounded-md border border-danger/50 bg-danger/5 py-2 pr-3 pl-3">
-                        <p className="font-mono text-[11px] leading-relaxed break-words text-foreground/80">
+                        <p className="font-mono text-sm leading-relaxed break-words text-foreground/80">
                           “{flag.evidence}”
                         </p>
-                        <p className="mt-1 text-[10px] tracking-wide text-danger/80 uppercase">
+                        <p className="mt-1 text-sm text-muted-foreground">
                           {t("report.foundInMessage")}
                         </p>
                       </blockquote>
                     ) : null}
 
-                    <p className="mt-2.5 text-xs leading-relaxed text-muted-foreground">
+                    <p className="mt-2.5 text-base leading-relaxed text-foreground">
                       {flag.explanation}
                     </p>
                   </li>
@@ -389,55 +412,10 @@ export function ReportView({
               <span className="font-normal text-muted-foreground">/100</span>
             </span>
           </div>
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             {isAiMode ? t("report.pointsNote.ai") : t("report.pointsNote.rules")}
           </p>
         </CardContent>
-      </Card>
-
-      <Card size="sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle2 className="text-success" />
-            {t("report.whatToDo")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ol className="space-y-2.5">
-            {report.recommendedActions.map((action, index) => (
-              <li key={action} className="flex items-start gap-2.5">
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-success/10 font-mono text-[10px] font-semibold text-success"
-                >
-                  {index + 1}
-                </span>
-                <p className="text-sm leading-relaxed">{action}</p>
-              </li>
-            ))}
-          </ol>
-        </CardContent>
-        <CardFooter className="justify-between gap-3">
-          <Button onClick={onReset}>
-            <RotateCcw data-icon="inline-start" />
-            {isScreenshot
-              ? t("report.analyzeAnotherScreenshot")
-              : t("report.analyzeAnother")}
-          </Button>
-          <Button variant="ghost" size="sm" onClick={handleCopy}>
-            {copied ? (
-              <>
-                <Check data-icon="inline-start" />
-                {t("report.copied")}
-              </>
-            ) : (
-              <>
-                <Copy data-icon="inline-start" />
-                {t("report.copyReport")}
-              </>
-            )}
-          </Button>
-        </CardFooter>
       </Card>
 
       <Card size="sm">
@@ -446,7 +424,7 @@ export function ReportView({
             type="button"
             onClick={() => setShowOriginal((value) => !value)}
             aria-expanded={showOriginal}
-            className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-md text-left outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-md text-left outline-none min-h-11 focus-visible:ring-2 focus-visible:ring-ring"
           >
             <CardTitle className="flex items-center gap-2">
               <Quote />
@@ -479,7 +457,7 @@ export function ReportView({
             >
               <CardContent>
                 <div className="rounded-lg border bg-muted/40 p-3.5">
-                  <p className="text-[13px] leading-relaxed break-words whitespace-pre-wrap">
+                  <p className="text-base leading-relaxed break-words whitespace-pre-wrap">
                     {highlightedParts.map((part, index) =>
                       part.flagged ? (
                         <mark
@@ -494,11 +472,11 @@ export function ReportView({
                     )}
                   </p>
                   {isScreenshot ? (
-                    <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                       {t("report.ocrNote")}
                     </p>
                   ) : highlightCount > 0 ? (
-                    <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                    <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
                       <span
                         aria-hidden="true"
                         className="inline-block h-2.5 w-2.5 rounded-sm bg-danger/15 ring-1 ring-danger/40"
@@ -513,7 +491,29 @@ export function ReportView({
         </AnimatePresence>
       </Card>
 
-      <p className="px-1 text-xs leading-relaxed text-muted-foreground">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Button onClick={onReset} className="min-h-11">
+          <RotateCcw data-icon="inline-start" />
+          {isScreenshot
+            ? t("report.analyzeAnotherScreenshot")
+            : t("report.analyzeAnother")}
+        </Button>
+        <Button variant="ghost" size="sm" onClick={handleCopy} className="min-h-11">
+          {copied ? (
+            <>
+              <Check data-icon="inline-start" />
+              {t("report.copied")}
+            </>
+          ) : (
+            <>
+              <Copy data-icon="inline-start" />
+              {t("report.copyReport")}
+            </>
+          )}
+        </Button>
+      </div>
+
+      <p className="px-1 text-sm leading-relaxed text-muted-foreground">
         {isAiMode ? t("report.disclaimer.ai") : t("report.disclaimer.rules")}
       </p>
     </div>

@@ -20,6 +20,12 @@ export const DICT = {
     "scanner.tab.screenshot": "Check Screenshot",
     "scanner.tab.url": "Check URL",
     "scanner.aria.modeTabs": "Scanner input mode",
+    "scanner.mode.text": "Paste Text",
+    "scanner.mode.textShort": "Text",
+    "scanner.mode.screenshot": "Upload Screenshot",
+    "scanner.mode.screenshotShort": "Screenshot",
+    "scanner.mode.url": "Check URL",
+    "scanner.mode.urlShort": "Link",
 
     "scanner.page.title": "Scam Scanner",
     "scanner.page.description":
@@ -218,6 +224,12 @@ export const DICT = {
     "scanner.tab.message": "I-scan ang Message",
     "scanner.tab.screenshot": "Tingnan ang Screenshot",
     "scanner.tab.url": "I-check ang Link",
+    "scanner.mode.text": "I-paste ang Text",
+    "scanner.mode.textShort": "Text",
+    "scanner.mode.screenshot": "Mag-upload ng Screenshot",
+    "scanner.mode.screenshotShort": "Screenshot",
+    "scanner.mode.url": "I-check ang Link",
+    "scanner.mode.urlShort": "Link",
     "scanner.aria.modeTabs": "Paraan ng pag-scan",
 
     "scanner.page.title": "Scam Scanner",
