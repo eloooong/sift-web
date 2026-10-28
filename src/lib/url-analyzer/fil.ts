@@ -2,93 +2,94 @@ type UrlSignalCopy = { label: string; explanation: string };
 
 export const URL_SIGNAL_FIL: Record<string, UrlSignalCopy> = {
   "insecure-transport": {
-    label: "Hindi secure na http:// link",
+    label: "HTTP ang gamit ng link",
     explanation:
-      "Walang encryption ang connection, kaya hindi ligtas maglagay ng anumang personal na detalye dito.",
+      "Walang encryption ang koneksyon. Huwag maglagay ng password o personal na detalye rito.",
   },
   "ip-literal-host": {
-    label: "IP address ang host",
+    label: "IP address ang gamit",
     explanation:
-      "Bihirang lehitimo ang website na gumagamit ng IP address sa halip na pangalan ng site.",
+      "Numero ang ginagamit sa halip na pangalan ng website. Alamin muna kung inaasahan mo ang address na ito.",
   },
   "punycode-host": {
-    label: "Naka-encode na pangalan ng domain (punycode)",
+    label: "May espesyal na pagkakasulat ang domain",
     explanation:
-      "Maaaring ginamit ito para kamukha ang isang kilalang brand gamit ang magkakahawig na titik.",
+      "Puwedeng gumamit ng magkakahawig na letra para gayahin ang pangalan ng isang brand.",
   },
   "excessive-subdomains": {
-    label: "Sobrang daming subdomain",
+    label: "Maraming dagdag sa pangalan ng site",
     explanation:
-      "Ginagamit ang mahabang subdomain para itago ang tunay at kahina-hinalang domain.",
+      "Baka itinatago ng mahabang address kung anong website talaga ang bubuksan.",
   },
   "embedded-credentials": {
-    label: "May username/password sa link mismo",
+    label: "May login details sa mismong link",
     explanation:
-      "May nakaipit na login details ang link, karaniwang paraan ito para linlangin ang mga tao.",
+      "Puwedeng gamitin ang bahaging ito para magmukhang iba ang website na pupuntahan mo.",
   },
   "unusual-port": {
-    label: "Di-karaniwang port number",
+    label: "Hindi karaniwan ang port number",
     explanation:
-      "Ang di-standard na port ay senyales ng hindi ordinaryong server.",
+      "May kakaibang setting ng koneksyon ang address. Isama ito sa iba pang babalang nakita.",
   },
   "hyphen-heavy-host": {
-    label: "Sobrang daming hyphen sa domain",
+    label: "Maraming gitling sa address",
     explanation:
-      "Madalas gamitin ang maraming gitling para kamukha ang pangalan ng tunay na site.",
+      "Puwedeng idagdag ang mga gitling para magmukhang pangalan ng totoong brand ang site.",
   },
   "shortened-url": {
-    label: "Shortened link (bit.ly at iba pa)",
+    label: "Pinaikling link",
     explanation:
-      "Itinatago ng shortener ang tunay na destinasyon, paboritong gamit ng scammers.",
+      "Hindi agad makikita kung saang website papunta ang link.",
   },
   "brand-lookalike": {
-    label: "Kamukha ng opisyal na brand",
+    label: "Ginagaya ang address ng isang brand",
     explanation:
-      "Malapit sa spelling ng kilalang company ang domain pero hindi ito ang opisyal na site nito.",
+      "May kahawig itong kilalang pangalan, pero hindi ito ang opisyal na address.",
   },
   "known-official-domain": {
-    label: "Kilala at opisyal na domain",
-    explanation: "Ang address na ito ay tugma sa opisyal na domain ng serbisyo.",
+    label: "Tugma sa opisyal na address",
+    explanation:
+      "Tugma ang domain sa kilalang opisyal na address ng serbisyo.",
   },
   "suspicious-keywords": {
-    label: "Kahina-hinalang mga salita sa link",
+    label: "May mga salitang dapat bantayan",
     explanation:
-      "May mga salita tulad ng \"login\", \"verify\", o \"free\" sa URL, na madalas gamitin sa phishing page.",
+      "May salitang gaya ng login, verify, o free sa link. Puwedeng gamitin ang mga ito sa pekeng page.",
   },
   "suspicious-tld": {
-    label: "Kahina-hinalang domain ending (.xyz, .top, atbp.)",
+    label: "Kahina-hinalang dulo ng domain",
     explanation:
-      "Madalas gamitin ang murang domain endings sa mabilisang gawaing scam site.",
+      "May ganitong dulo ng address sa ilang scam site. Hindi ito sapat na patunay nang mag-isa.",
   },
   "encoded-content": {
-    label: "May naka-encode na bahagi ang link",
+    label: "May bahaging mahirap basahin",
     explanation:
-      "Ginagamit ang encoding para itago ang tunay na nilalaman o destinasyon ng link.",
+      "May naka-encode na text na puwedeng magtago ng laman o pupuntahan ng link.",
   },
   "risky-query-params": {
-    label: "May kahina-hinalang parameters ang link",
+    label: "May kahina-hinalang dagdag sa link",
     explanation:
-      "Maaaring nagtatago ang link ng redirect o tracking parameter papunta sa ibang site.",
+      "Baka may utos sa link na dalhin ka sa ibang website o subaybayan ang pagbisita mo.",
   },
   "very-long-url": {
-    label: "Sobrang habang link",
+    label: "Napakahaba ng link",
     explanation:
-      "Ang sobrang habang URL ay madalas paraan para itago ang tunay na destinasyon.",
+      "Mas mahirap makita ang tunay na pupuntahan kapag maraming dagdag sa address.",
   },
   "dangerous-scheme": {
-    label: "Hindi web address ang input",
+    label: "Hindi ito karaniwang web link",
     explanation:
-      "Tanging http:// at https:// lang ang pwedeng suriin. Tinatanggihan ang javascript:, data:, file:, at iba pa para sa kaligtasan mo.",
+      "Mga link na nagsisimula sa http:// o https:// lang ang puwedeng i-check dito.",
   },
   "reputation-unsafe": {
-    label: "Na-flag sa reputation database",
+    label: "May naunang babala sa link",
     explanation:
-      "Nakarehistro ang address na ito bilang mapanganib sa Google Safe Browsing.",
+      "May babala ang Google Safe Browsing na mapanganib ang address na ito.",
   },
   "reputation-clean": {
-    label: "Wala sa listahan ng banta",
+    label: "Walang naitalang babala sa link",
     explanation:
-      "Walang naitalang banta sa address na ito sa Google Safe Browsing. Hindi pa rin ito garantiya, dahil maaari pa ring bagong gawa ang scam site.",
+      "Walang babala ang Google Safe Browsing para rito. Hindi ito garantiya na ligtas, lalo na kung bago pa ang site.",
   },
 };
 
@@ -97,13 +98,13 @@ export const VERDICT_SUMMARY_FIL: Record<
   (domain: string) => string
 > = {
   dangerous: () =>
-    "Maraming malalakas na palatandaan ng phishing o scam page ang address na ito. Huwag itong buksan, at huwag kailan maglagay ng login, OTP, o detalye ng bayad dito.",
+    "Maraming malalakas na babala sa link na ito. Huwag itong buksan o lagyan ng password, OTP, o detalye ng bayad.",
   suspicious: (domain) =>
-    `Maraming babala ang “${domain}” na karaniwan sa mga scam link. Ituring itong hindi pinagkakatiwalaan hangga't hindi mo na-verify ang destinasyon sa opisyal na app o website.`,
+    `May ilang palatandaan ng scam sa “${domain}”. Huwag munang buksan. Gamitin ang opisyal na app o website para makasiguro.`,
   caution: (domain) =>
-    `May maliliit na bahala sa “${domain}” pero walang paniniyak. Buksan lang kung inaasahan mo ito, at i-double-check ang spelling ng domain bago maglagay ng anumang impormasyon.`,
+    `May kaunting dapat bantayan sa “${domain}”, pero hindi pa sapat para masabing scam. Alamin muna kung sino ang nagpadala at kung inaasahan mo ang link.`,
   "no-signals": (domain) =>
-    `Walang natukoy na istruktural na red flag sa “${domain}”. Sinusuri lang nito ang address mismo, hindi nito nakikita ang laman ng page, kaya manatiling alerto pagkatapos buksan ang link.`,
+    `Walang nakitang kahina-hinala sa address na “${domain}”. Address lang ang nasuri, hindi ang laman ng website. Mag-ingat pa rin bago magbigay ng anumang detalye.`,
   blocked: () =>
-    "Hindi ito web address na kayang suriin. Tanging http/https link lang ang sinusuportahan.",
+    "Hindi ito web link na puwedeng i-check dito. Gumamit ng link na nagsisimula sa http:// o https://.",
 };

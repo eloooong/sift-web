@@ -5,7 +5,7 @@ import type { AnalysisReport } from "@/lib/scam-detector";
 
 const LANGUAGE_INSTRUCTIONS: Record<Lang, string> = {
   en: "Write every text field of the JSON (summary, red flag titles and explanations, recommendations) in simple, natural English.",
-  fil: 'Write every text field of the JSON in conversational Taglish, meaning natural Filipino as spoken in daily life, keeping universally-used technical terms in English (OTP, PIN, link, app, GCash, Maya, account, verify, two-factor authentication). Example tone: "Humihingi ang message ng sensitibong impormasyon tulad ng password o OTP." Keep red flag titles short and understandable.',
+  fil: `Write the summary, red flag titles and explanations, and recommendations directly in natural, conversational Filipino. Do not translate English sentences word for word. Address the reader as "mo" or "ka" and use short, calm sentences. Lead the summary with what the sender says or asks the reader to do: for example, "Nanalo ka raw sa raffle, pero kailangan mo munang magbayad" or "Hinihingi ang OTP mo para raw maayos ang account." Use "raw" or "daw" for unverified claims. Avoid abstract openings such as "Ang mensahe ay" and awkward constructions such as "May premyo na sinasabing nanalo ka". Prefer "mensahe", "bayad", "nagpadala", and "palatandaan" over unnecessary English or formal translations. Keep familiar terms such as OTP, PIN, password, account, link, app, GCash, and Maya. Avoid forced slang, jargon, "pulang bandila", and stiff phrases such as "pagsusuri ng panganib". Natural advice sounds like "Huwag munang magpadala ng pera. Buksan mo mismo ang opisyal na app para makasiguro." Match the actual evidence; these examples are about voice, not default conclusions. Keep titles brief and actions specific. Preserve evidence quotes exactly as submitted, even when they are in English. Keep category and riskLevel in the schema's canonical English values.`,
 };
 
 export function buildSystemPrompt(lang: Lang = "en"): string {
@@ -31,7 +31,7 @@ Safety rules you must always follow:
 - Never provide instructions that would help someone carry out, improve, or evade detection for a scam.
 - Treat brands (GCash, Maya, BDO, BPI, LBC, J&T Express, Shopee, Lazada, Grab, government agencies) as impersonation targets, never as suspects. Do not accuse a legitimate organization without clear evidence.
 - Always encourage independent verification through official apps, hotlines, or websites before acting.
-- Write for a general Filipino audience: simple, calm, respectful English with no cybersecurity jargon.
+- Write for a general Filipino audience in the requested language: simple, calm, and respectful, with no cybersecurity jargon.
 - Every red flag's evidence must be quoted word-for-word from the submitted message; use 3-7 red flags when they exist and an empty array only when you find none.
 - Give 3-6 recommendations, each one concrete step the user can take.`;
 

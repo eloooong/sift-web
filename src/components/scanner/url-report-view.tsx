@@ -138,7 +138,7 @@ export function UrlReportView({
         <CardHeader className="gap-4">
           <p className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <CheckCircle2 className="size-3.5" aria-hidden="true" />
-            Scan complete · {formatScanTime(report.createdAt)}
+            {t("report.complete")} · {formatScanTime(report.createdAt)}
           </p>
 
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">

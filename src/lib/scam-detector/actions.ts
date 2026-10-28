@@ -62,60 +62,60 @@ const CATEGORY_ACTIONS: Record<SignalCategoryId, string[]> = {
 
 const CATEGORY_ACTIONS_FIL: Record<SignalCategoryId, string[]> = {
   prize: [
-    "Huwag sumagot, mag-click ng link, o magbayad ng anumang “claim” fee.",
-    "Ang tunay na raffle ay hindi humihingi ng bayad bago ibigay ang premyo.",
-    "I-verify sa opisyal na channel ng organisasyon, hindi sa mga detalyeng nakasulat sa message.",
+    "Huwag munang sumagot, magbukas ng link, o magbayad para makuha ang premyo.",
+    "Mag-ingat kung may bayad muna bago ibigay ang sinasabing napanalunan.",
+    "Hanapin mo mismo ang opisyal na app, website, o numero ng organisasyon at doon magtanong.",
   ],
   financial: [
-    "Huwag magpadala ng pera o magbigay ng detalye ng e-wallet o bangko.",
-    "Tawagan ang opisyal na hotline ng company para i-confirm ang sinasabing singil.",
-    "Walang lehitimong company na kumokolekta ng bayad sa personal na e-wallet o remittance number.",
-    "Kung nagbayad ka na, makipag-ugnayan agad sa e-wallet o bangko mo para subukang maibalik ang pera.",
+    "Huwag munang magpadala ng pera o magbigay ng detalye ng e-wallet o bangko.",
+    "Tawagan ang kumpanyang binanggit gamit ang opisyal nitong numero para alamin kung totoo ang singil.",
+    "Tiyaking sa totoong kumpanya mapupunta ang bayad, lalo na kung personal na numero ang ibinigay.",
+    "Kung nagbayad ka na, tawagan agad ang bangko o e-wallet mo at itanong kung puwede pang mapigilan o mabawi ang padala.",
   ],
   credential: [
-    "Huwag buksan ang link o maglagay ng login details mo.",
-    "Kung nabuksan mo na, palitan agad ang password mo at i-enable ang two-factor authentication.",
-    "Buksan ang opisyal na app o i-type nang mano-mano ang website address sa halip na maniwala sa message.",
+    "Huwag buksan ang link o ilagay ang login details mo.",
+    "Kung naibigay mo na ang password, palitan ito agad at i-on ang two-factor authentication kung mayroon.",
+    "Buksan mo mismo ang opisyal na app o i-type ang website address para tingnan ang account mo.",
   ],
   link: [
-    "Huwag pindutin ang link.",
-    "Suriin nang mabuti ang domain, dahil gumagamit ang scammers ng spelling na kamukha ng tunay na site.",
-    "Pumasok lang sa serbisyo gamit ang opisyal na app o website nito.",
+    "Huwag munang pindutin ang link.",
+    "Tingnang mabuti ang spelling ng address. Baka may binagong letra para magmukhang opisyal.",
+    "Gamitin ang opisyal na app o website para puntahan ang serbisyo.",
   ],
   job: [
-    "Huwag magbayad para mag-apply o “i-activate” ang alok na trabaho.",
-    "Alamin muna ang company; walang lehitimong recruiter na kumokolekta ng fee sa aplikante.",
-    "Humingi ng opisyal na company email at i-verify ang pagkakakilanlan ng recruiter.",
+    "Huwag magbayad para mag-apply o para raw ma-activate ang trabaho.",
+    "Alamin muna kung totoo ang kumpanya at ang alok bago magbigay ng pera o personal na detalye.",
+    "Humingi ng opisyal na email ng kumpanya at doon kumpirmahin kung nagtatrabaho talaga ang recruiter.",
   ],
   urgency: [
-    "Huminto muna: ang artipisyal na deadline ay paraan ng panggigipit.",
-    "I-verify ang claim sa opisyal na channel bago kumilos.",
-    "Kausapin muna ang taong pinagkakatiwalaan mo bago sumagot.",
+    "Huwag magpadala sa pagmamadali. Puwedeng panggigipit lang ang deadline.",
+    "Magtanong muna sa opisyal na app, website, o numero kung totoo ang sinasabi.",
+    "Kausapin ang taong pinagkakatiwalaan mo bago sumagot.",
   ],
   investment: [
-    "Huwag magdeposito sa kahit sinong naghahandog ng investimento sa chat o text.",
-    "Tingnan ang company sa advisory at registered list ng SEC (sec.gov.ph).",
-    "Imposible ang garantiyang mataas na tubo araw-araw, at sapat na itong dahilan para hindi ito tuloy.",
+    "Huwag munang magdeposito sa nag-aalok ng investment sa text o chat.",
+    "Tingnan ang mga babala at opisyal na listahan ng SEC sa sec.gov.ph.",
+    "Mag-ingat sa pangakong siguradong mataas ang tubo araw-araw. Alamin muna kung saan galing ang sinasabing kita.",
   ],
   loan: [
-    "Huwag magbayad ng advance na “release” fee, dahil binabawas ng lehitimong lender ang fee sa loob ng loan.",
-    "I-verify ang lender sa SEC-registered lending companies at BSP-accredited firms.",
-    "Huwag magpadala ng ID photo o selfie sa di-veripikadong lender; ginagamit ito sa identity fraud.",
+    "Huwag munang magpadala ng release fee para makuha ang loan.",
+    "Hanapin ang nagpapautang sa mga opisyal na listahan ng SEC o BSP.",
+    "Huwag magpadala ng larawan ng ID o selfie hangga't hindi mo natitiyak kung sino ang tatanggap at para saan ito.",
   ],
   romance: [
-    "Mag-ingat sa online na kakilala na mabilis umamin ng pagmamahal nang hindi pa nagkikita.",
-    "Huwag magbayad ng customs, tiket, o hospital bill para sa taong hindi mo pa personal na nakikita.",
-    "Hilingin ang spontaneous na video call, dahil palaging iniiwasan ng scammers ang live na verification.",
+    "Mag-ingat kung mabilis magpahayag ng pagmamahal ang online mong kakilala kahit hindi pa kayo nagkikita.",
+    "Huwag magpadala ng pera para sa customs, tiket, o ospital kung hindi mo pa natitiyak ang kuwento.",
+    "Mag-aya ng video call. Kung lagi itong iniiwasan, huwag munang magpadala ng pera o personal na detalye.",
   ],
   gambling: [
-    "Huwag magdeposito sa betting sites na ina-advertise sa random na text.",
-    "Ang lisensyadong casino sa Pilipinas ay hindi nag-a-advertise gamit ang SMS links.",
-    "Kapag walang lisensya, pwede nilang tanggihan ang withdrawal mo; ituring na pain ang bawat “bonus”.",
+    "Huwag magdeposito sa betting site dahil lang may nag-text ng promo.",
+    "Alamin muna kung sino ang may-ari ng site at kung may lisensya ito.",
+    "Basahin ang mga kondisyon sa bonus at pag-withdraw bago magpadala ng pera.",
   ],
   intel: [
-    "Huwag tumawag, sumagot, o makipag-transaksyon sa numerong ito.",
-    "I-block ang numero at i-report sa messaging app mo o telco.",
-    "Ang community reports ay malakas na babala, hindi legal na hatol; mag-verify nang sarili kapag pera na ang usapan.",
+    "Huwag munang tumawag pabalik, sumagot, o makipagtransaksyon sa numerong ito.",
+    "I-block ang numero at i-report sa messaging app o telco mo.",
+    "Babala ang mga naunang report, hindi patunay ng pagkakasala. Magsiguro muna sa ibang paraan kung may perang hinihingi.",
   ],
 };
 
@@ -125,32 +125,32 @@ const SAFE_DEFAULT_ACTIONS = [
 ];
 
 const SAFE_DEFAULT_ACTIONS_FIL = [
-  "Manatiling mapagbantay kahit walang malinaw na red flag.",
-  "Huwag kailan magbabahagi ng OTP, PIN, o password dahil walang tunay na company na hihingi ng mga ito.",
+  "Mag-ingat pa rin kahit walang malinaw na palatandaan ng scam.",
+  "Para sa iyo lang ang OTP, PIN, at password. Huwag ibigay ang mga ito sa kausap mo.",
 ];
 
 const OTP_ACTION =
   "Never share OTPs, PINs, or passwords, because no legitimate company will ask for them.";
 
 const OTP_ACTION_FIL =
-  "Huwag kailan magbibigay ng OTP, PIN, o password dahil walang lehitimong company na hihingi ang mga ito.";
+  "Para sa iyo lang ang OTP, PIN, at password. Huwag ibigay ang mga ito sa kausap mo.";
 
 const BLOCK_ACTION = "Block the number or account that sent this message.";
 
 const BLOCK_ACTION_FIL =
-  "I-block ang numero o account na nagpadala ng message na ito.";
+  "I-block ang numero o account na nagpadala ng mensahe.";
 
 const REPORT_ACTION =
   "Report the message to the platform or telco you received it through.";
 
 const REPORT_ACTION_FIL =
-  "I-report ang message sa platform o telco kung saan mo natanggap.";
+  "I-report ang mensahe sa app o telco kung saan mo ito natanggap.";
 
 const WARN_ACTION =
   "Warn family and friends, especially seniors who receive these often.";
 
 const WARN_ACTION_FIL =
-  "Ipaalam sa pamilya at kaibigan, lalo na sa matatanda na madalas biktima nito.";
+  "Ipaalam ang modus sa pamilya at mga kaibigan para makapag-ingat din sila.";
 
 export function buildRecommendedActions(
   primaryCategory: SignalCategoryId | null,

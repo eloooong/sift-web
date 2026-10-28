@@ -19,6 +19,7 @@ Tests run without external service credentials. Do not use real passwords, OTPs,
 - Use parameterized SQL.
 - Keep service credentials in server modules.
 - Add new interface copy to both languages in `src/lib/i18n/dictionary.ts`.
+- Follow the [Filipino copy guide](docs/filipino-copy.md) for natural wording and consistent terms.
 - Use existing visual tokens and shared controls; consult `DESIGN.md` for interface changes.
 - Avoid timed progress claims unless actual backend events support them.
 

@@ -10,6 +10,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 
+import { useLang } from "@/components/providers/language-provider";
 import { UrlReportView } from "@/components/scanner/url-report-view";
 import { ScannerProgress } from "@/components/scanner/scanner-progress";
 import type { UrlReport } from "@/lib/url-analyzer";
@@ -46,6 +47,7 @@ async function readErrorMessage(response: Response): Promise<string> {
 }
 
 export function UrlScanner() {
+  const { lang, t } = useLang();
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<UrlScannerStatus>("idle");
   const [selectedExampleId, setSelectedExampleId] = useState<string | null>(null);
@@ -84,7 +86,7 @@ export function UrlScanner() {
       const response = await fetch("/api/analyze/url", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url, lang }),
         signal: controller.signal,
       });
 
@@ -138,11 +140,11 @@ export function UrlScanner() {
             <CardContent className="space-y-4">
               <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <label htmlFor="url-scanner-input" className="text-sm font-medium">
-                  Link you want checked
+                  {t("url.input.label")}
                 </label>
                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <ShieldCheckIcon />
-                  The link is never opened
+                  <Link2 aria-hidden="true" className="size-3.5" />
+                  {t("url.neverVisited")}
                 </p>
               </div>
 
@@ -172,7 +174,7 @@ export function UrlScanner() {
                 />
               </div>
               <p id="url-scanner-hint" className="sr-only">
-                Press Enter to run the analysis.
+                {t("url.input.enter")}
               </p>
 
               <div className="flex flex-wrap items-center justify-end gap-3">
@@ -182,13 +184,13 @@ export function UrlScanner() {
                   className="min-w-[11rem]"
                 >
                   <ShieldAlert data-icon="inline-start" />
-                  Analyze URL
+                  {t("url.input.analyze")}
                 </Button>
               </div>
 
               <div className="border-t pt-4">
                 <p className="mb-2 text-xs font-medium text-muted-foreground">
-                  No link handy? Load a typical scam-link example:
+                  {t("url.input.examples")}
                 </p>
                 <div className="grid gap-2 sm:grid-cols-3">
                   {URL_EXAMPLES.map((example) => (
@@ -205,10 +207,10 @@ export function UrlScanner() {
                       )}
                     >
                       <span className="block text-xs font-semibold">
-                        {example.label}
+                        {lang === "fil" ? example.labelFil : example.label}
                       </span>
                       <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">
-                        {example.note}
+                        {lang === "fil" ? example.noteFil : example.note}
                       </span>
                     </button>
                   ))}
@@ -232,20 +234,20 @@ export function UrlScanner() {
               <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-danger/30 bg-danger/10">
                 <TriangleAlert className="size-5 text-danger" />
               </span>
-              <h2 className="mt-4 text-base font-semibold">Scan didn’t finish</h2>
+              <h2 className="mt-4 text-base font-semibold">{t("scan.error.title")}</h2>
               <p
                 role="alert"
                 className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-muted-foreground"
               >
-                {errorMessage ?? GENERIC_ERROR_MESSAGE}
+                {errorMessage ?? t("scan.error.body")}
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <Button onClick={() => void handleAnalyze()}>
                   <RefreshCw data-icon="inline-start" />
-                  Try Again
+                  {t("scan.retry")}
                 </Button>
                 <Button variant="outline" onClick={handleReset}>
-                  Start Over
+                  {t("scan.reset")}
                 </Button>
               </div>
             </CardContent>
@@ -259,14 +261,5 @@ export function UrlScanner() {
         </motion.div>
       ) : null}
     </AnimatePresence>
-  );
-}
-
-function ShieldCheckIcon() {
-  return (
-    <>
-      <Link2 aria-hidden="true" className="size-3.5" />
-      Analyzed structurally, never visited
-    </>
   );
 }

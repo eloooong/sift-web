@@ -2,254 +2,254 @@ type SignalCopy = { label: string; explanation: string };
 
 export const SIGNAL_FIL: Record<string, SignalCopy> = {
   "urgency.act-now": {
-    label: "\"Kumilos na ngayon\" na utos",
+    label: "Pinapakilos ka agad",
     explanation:
-      "Pinipilit kang kumilos agad para hindi ka makapag-isip o makapag-verify.",
+      "Minamadali kang kumilos bago mo pa matingnan kung totoo ang sinasabi.",
   },
   "urgency.immediate": {
-    label: "Panggigipit na \"immediately\"",
+    label: "Kailangan daw gawin agad",
     explanation:
-      "Ang mabilisang deadline ay panlilinlang para hindi ka makapag-isip nang maayos.",
+      "Wala ka raw oras maghintay. Puwedeng paraan ito para hindi ka na makapagtanong.",
   },
   "urgency.urgent": {
-    label: "Salitang \"URGENT\"",
+    label: "May babalang “urgent”",
     explanation:
-      "Karaniwang ginagamit ang mataas na tensyon para ikaw ay magmadali at hindi magduda.",
+      "Ginagawang apurahan ang mensahe para kumilos ka agad nang hindi nagsisiguro.",
   },
   "urgency.deadline": {
-    label: "Takdang oras (deadline)",
+    label: "May maikling deadline",
     explanation:
-      "Binibigyan ka ng maikling oras para hindi ka makapag-confirm sa tunay na company o ahensya.",
+      "Kaunti lang daw ang oras mo. Baka hindi ka na makapagtanong sa totoong kumpanya o ahensya.",
   },
   "urgency.last-chance": {
-    label: "\"Last chance\" / huling abiso",
+    label: "Huling pagkakataon na raw",
     explanation:
-      "Ang banta ng \"huling pagkakataon\" ay pampressure lang, hindi ito proseso ng lehitimong serbisyo.",
+      "Ang “last chance” o “huling abiso” ay puwedeng panggigipit para mapapayag ka agad.",
   },
   "urgency.taglish": {
-    label: "Taglish na panggigipit (\"kailangan ngayon\")",
+    label: "Kailangan daw ngayon na",
     explanation:
-      "Ginagamit ang pamilyar na Taglish na pananakot ng oras para mukhang tunay at mapamadali ka.",
+      "Pamilyar ang pananalita, pero minamadali ka pa ring sumagot o sumunod.",
   },
   "urgency.hurry": {
-    label: "Pagmamadali (\"hurry\", \"dali\")",
+    label: "Minamadali kang magdesisyon",
     explanation:
-      "Sinusulsulan kang magmadali para hindi mo na maisip na i-double-check ang sender.",
+      "Kapag pinagmamadali ka, mas mahirap mapansin ang mali sa alok o nagpadala.",
   },
   "urgency.scarcity": {
-    label: "Artipisyal na kakulangan (\"only X slots left\")",
+    label: "Kaunti na lang daw ang slots",
     explanation:
-      "Ang pekeng \"konti na lang ang slots\" ay para ikaw ay magdesisyon agad nang hindi nag-iisip.",
+      "Baka ginagamit ang limitadong slots para magdesisyon ka bago makapagsiguro.",
   },
   "prize.congratulations": {
-    label: "Nagsisimula sa \"Congratulations\"",
+    label: "Bigla kang binabati",
     explanation:
-      "Ang di-inaasahang congratulations ay pambungad ng scam: masasaya ka bago ka pa makapag-isip.",
+      "Ang biglaang pagbati ay puwedeng pang-akit, lalo na kung may kasunod na paghingi ng pera o detalye.",
   },
   "prize.winner": {
-    label: "Balitang \"nanalo ka\"",
+    label: "Nanalo ka raw",
     explanation:
-      "Ang tunay na premyo ay hindi dumarating sa text mula sa numerong hindi mo kilala.",
+      "Kung hindi ka naman sumali, alamin muna kung saan galing ang sinasabing premyo.",
   },
   "prize.claim": {
-    label: "Instruksyon kunin ang premyo",
+    label: "Pinakukuha ang premyo",
     explanation:
-      "Ang mga hakbang sa pag-claim ay madalas humantong sa \"processing fee\" o pagbibigay ng personal na impormasyon.",
+      "Tingnan kung may bayad o personal na detalyeng hinihingi bago ibigay ang sinasabing premyo.",
   },
   "prize.big-money": {
-    label: "Napakalaking halaga ng pera",
+    label: "Malaking premyo ang pang-akit",
     explanation:
-      "Ang napakalaking premyo ay pain, luma na pero epektibo pa ring panlilinlang.",
+      "Puwedeng gamitin ang laki ng premyo para mapapayag kang magbayad o magbigay ng detalye.",
   },
   "prize.raffle": {
-    label: "Raffle / lottery na kuwento",
+    label: "May binabanggit na raffle",
     explanation:
-      "Madalas gamitin ang pangalan ng raffle o ahensya kahit hindi ka naman sumali.",
+      "Baka ginagamit ang pangalan ng raffle o ahensya para magmukhang totoo ang alok.",
   },
   "prize.reward": {
-    label: "Reward o puntos na di-inaasahan",
+    label: "May biglaang reward o points",
     explanation:
-      "Ang di-mo-hininging reward ay madalas pain para kunin ang detalye ng account mo.",
+      "Mag-ingat kung may reward na hindi mo inaasahan at kailangan mo munang ibigay ang detalye ng account.",
   },
   "financial.send-money": {
-    label: "Utos na magpadala ng pera",
+    label: "Pinagpapadala ka ng pera",
     explanation:
-      "Walang lehitimong serbisyo na hihingi ng padala ng pera sa personal na numero.",
+      "Alamin muna kung sino ang tatanggap at para saan ang bayad bago magpadala.",
   },
   "financial.fees": {
-    label: "Hinihingi ang bayad / fee",
+    label: "May bayad muna",
     explanation:
-      "Humihingi ang message ng bayad bago pa man makatanggap ng ano man. Red flag ito.",
+      "May hinihinging bayad bago ibigay ang ipinangakong pera, serbisyo, o premyo.",
   },
   "financial.ewallet": {
-    label: "Bayad sa e-wallet (GCash/Maya)",
+    label: "Sa e-wallet ipinapabayad",
     explanation:
-      "Ang personal na GCash o Maya number bilang bayaran ay karaniwang gamit ng scammers.",
+      "Mag-ingat kung personal na GCash o Maya number ang pinagpapadalhan at hindi mo kilala ang kausap.",
   },
   "financial.bank": {
-    label: "Detalye ng bangko ang hiniling",
+    label: "Hinihingi ang detalye ng bangko",
     explanation:
-      "Humingi ang message ng sensitibong impormasyon tulad ng account o card details ng bangko.",
+      "May hinihinging impormasyon tungkol sa account o card mo. Tiyaking totoong serbisyo ang kausap.",
   },
   "financial.otp": {
-    label: "Hinihingi ang OTP o PIN",
+    label: "May hinihinging OTP o PIN",
     explanation:
-      "Humingi ang message ng sensitibong impormasyon tulad ng password o OTP. Walang tunay na company na hihingi nito.",
+      "Para sa iyo lang ang OTP at PIN. Puwedeng magamit ang mga ito para mapasok o magalaw ang account mo.",
   },
   "financial.load": {
-    label: "Hinihingi ang load",
+    label: "May hinihinging load",
     explanation:
-      "Ang paghingi ng cellphone load ay maliit na halaga pero pareho rin lamang na panloloko.",
+      "Kahit maliit ang halaga, alamin muna kung sino ang humihingi at bakit.",
   },
   "financial.phone-number": {
-    label: "Personal na mobile number bilang bayaran",
+    label: "Sa personal na numero ipinapabayad",
     explanation:
-      "Ang pagbayad sa isang personal na cellphone number ay hindi kailanman opisyal na paraan ng bayad.",
+      "Tingnan kung ang numerong tatanggap ng bayad ay talagang sa kumpanya o taong kausap mo.",
   },
   "credential.verify-account": {
-    label: "\"I-verify ang account\" na link",
+    label: "Pinapa-verify ang account",
     explanation:
-      "Ang peking verification page ay nangongolekta ng login at MPIN mo.",
+      "Baka sa pekeng verification page ka dalhin para makuha ang login o MPIN mo.",
   },
   "credential.impersonation": {
-    label: "Nagpapanggap na company o ahensya",
+    label: "Gumagamit ng pangalan ng kumpanya o ahensya",
     explanation:
-      "Kinikilala ang pangalan ng brand o ahensya para lang maging kapani-paniwala ang message.",
+      "Hindi sapat ang pangalan o logo para mapatunayang opisyal ang nagpadala.",
   },
   "credential.suspension": {
-    label: "Banta ng pagsasara ng account",
+    label: "Isasara raw ang account mo",
     explanation:
-      "Ang pananakot na mawawala ang account mo ay para ikaw ay magmadali at hindi mag-verify.",
+      "Puwedeng panakot ito para buksan mo agad ang link at ibigay ang detalye mo.",
   },
   "credential.password": {
     label: "Hinihingi ang password",
     explanation:
-      "Walang tunay na website o app ang hihingin ang password mo sa mensahe.",
+      "Huwag ipadala ang password sa mensahe. Puwedeng magamit ito para mapasok ang account mo.",
   },
   "credential.personal-info": {
-    label: "Personal na impormasyon ang hiniling",
+    label: "Hinihingi ang personal na detalye",
     explanation:
-      "Humingi ang message ng buong pangalan, address, o birthday na pwedeng gamitin sa identity fraud.",
+      "Ang pangalan, address, at kaarawan mo ay puwedeng gamitin para magpanggap bilang ikaw.",
   },
   "link.click-taglish": {
-    label: "Taglish na utos i-click ang link (\"i-click mo ang link\")",
+    label: "Pinapabuksan ang link",
     explanation:
-      "Ang utos na buksan ang link ang daan papunta sa pekeng page na nangongolekta ng login mo.",
+      "Tingnan muna ang address. Puwedeng sa pekeng login page ka dalhin.",
   },
   "link.any-url": {
-    label: "May nakapaloob na link",
+    label: "May kasamang link",
     explanation:
-      "Magsuri muna: tingnang mabuti ang domain bago i-click ang anumang link mula sa di-kilalang sender.",
+      "Tingnan muna kung saan papunta ang link, lalo na kung hindi mo kilala ang nagpadala.",
   },
   "link.shortener": {
-    label: "Shortened link (bit.ly at iba pa)",
+    label: "Pinaikling link",
     explanation:
-      "Itinatago ng shortener ang tunay na destinasyon, paboritong gamit ng scammers.",
+      "Hindi agad makikita sa maikling link kung anong website ang bubuksan nito.",
   },
   "link.high-risk-tld": {
-    label: "Kahina-hinalang domain ending (.xyz, .top, atbp.)",
+    label: "Kahina-hinalang dulo ng domain",
     explanation:
-      "Madalas gamitin ang murang domain endings sa mabilisang gawaing scam site.",
+      "May ganitong dulo ng address sa ilang scam site. Isama ito sa iba pang palatandaang nakita.",
   },
   "link.brand-mimic": {
-    label: "Domain na kamukha ng opisyal na brand",
+    label: "Ginagaya ang address ng isang brand",
     explanation:
-      "May maliit na palitan sa spelling ng domain para kamukha ng tunay na website.",
+      "May kaunting pagbabago sa spelling para magmukhang opisyal ang website.",
   },
   "link.ip-address": {
-    label: "Link patungo sa IP address",
+    label: "IP address ang nasa link",
     explanation:
-      "Bihirang lehitimo ang link na gumagamit ng IP address sa halip na pangalang website.",
+      "Numero ang ginagamit sa halip na pangalan ng website. Tingnan muna kung inaasahan mo ang address na ito.",
   },
   "link.insecure-http": {
-    label: "Hindi secure na http:// link",
+    label: "HTTP ang gamit ng link",
     explanation:
-      "Walang encryption ang connection, kaya hindi ligtas maglagay ng anumang personal na detalye.",
+      "Walang encryption ang koneksyon. Huwag maglagay ng password o personal na detalye rito.",
   },
   "job.work-from-home": {
-    label: "Work-from-home na alok",
+    label: "May alok na work from home",
     explanation:
-      "Ang di-hiniling na work-from-home offer na madaling pera ay karaniwang modus.",
+      "Mag-ingat sa biglaang alok, lalo na kung madaling pera ang pangako at may bayad bago magsimula.",
   },
   "job.unrealistic-earnings": {
-    label: "Di-mapaniwalaang kita araw-araw",
+    label: "Sobrang laki ng ipinapangakong kita",
     explanation:
-      "Malaking sahod para sa simpleng trabaho ay halos laging scam.",
+      "Kung napakasimple ng trabaho pero napakalaki ng sahod, alamin muna kung paano raw ito kikitain.",
   },
   "job.easy-hook": {
-    label: "\"No experience needed\" na pain",
+    label: "Madali raw at walang kailangang karanasan",
     explanation:
-      "Ginagawang madali ang alok para lang mag-sign up at magbayad ka ng fee.",
+      "Baka pang-akit ang napakadaling trabaho para mag-sign up o magbayad ka agad.",
   },
   "job.task-offer": {
-    label: "Simpleng task na may bayad (rating/likes)",
+    label: "May bayad daw sa pag-like o pag-rate",
     explanation:
-      "Ang pag-rate o pag-like bilang trabaho ay sikat na cover ng investment at job scam.",
+      "May mga task scam na nagsisimula sa simpleng gawain, saka humihingi ng deposito.",
   },
   "investment.double-money": {
-    label: "Pangako ng dobleng pera",
+    label: "Doble raw agad ang pera",
     explanation:
-      "Walang lehitimong investimento ang garantiyang dadami ang pera mo agad.",
+      "Mag-ingat sa alok na mabilis dodoble ang pera nang walang malinaw na paliwanag sa panganib.",
   },
   "investment.guaranteed-return": {
-    label: "\"Guaranteed\" na tubo",
+    label: "Sigurado raw ang tubo",
     explanation:
-      "Sa totoong mundo, walang garantiya sa investment, dahil ang pangako ng sigurado ay scam.",
+      "Ang pangakong siguradong mataas ang kita ay dapat pagdudahan at suriing mabuti.",
   },
   "investment.trading-group": {
-    label: "Imbitasyon sa trading/crypto group",
+    label: "Iniimbitahan ka sa trading o crypto group",
     explanation:
-      "Ang mga grupong ito ay madalas pinaplano para kunin ang deposito mo.",
+      "Alamin kung sino ang namamahala at kung saan mapupunta ang pera bago magdeposito.",
   },
   "investment.recruit": {
-    label: "Recruitment para mag-invest",
+    label: "Kailangan pang mag-recruit",
     explanation:
-      "Ang paghikayat sa iba para mag-invest ay tanda ng pyramid-style na panloloko.",
+      "Kung sa pagpasok ng bagong miyembro nanggagaling ang kita, puwedeng may panlilinlang sa alok.",
   },
   "loan.instant-offer": {
-    label: "Instant na loan approval",
+    label: "Aprubado agad ang loan",
     explanation:
-      "Ang agarang apruba kahit hindi ka nag-apply ay karaniwang loan scam.",
+      "Kung hindi ka naman nag-apply, alamin muna kung sino ang nag-aalok at bakit kailangan ang detalye mo.",
   },
   "loan.release-fee": {
-    label: "Advance na \"release fee\"",
+    label: "May bayad bago ilabas ang loan",
     explanation:
-      "Ang tunay na lender ay binabawas ang fee sa loan, hindi nagbabayad muna bago ilabas ang pera.",
+      "Mag-ingat kung kailangan mo munang magpadala ng pera bago matanggap ang uutangin.",
   },
   "romance.affection": {
-    label: "Mabilisang pagpapahayag ng pagmamahal",
+    label: "Mabilis magpahayag ng pagmamahal",
     explanation:
-      "Ang sobrang agang \"mahal kita\" mula sa online-only na kakilala ay klasikong romance scam.",
+      "Mag-ingat kung mabilis lumalim ang usapan kahit hindi pa kayo nagkikita, lalo na kung may hinihinging tulong na pera.",
   },
   "romance.overseas-package": {
-    label: "Package o papeles mula abroad",
+    label: "May padala raw mula sa ibang bansa",
     explanation:
-      "Ang kwentong package o papeles mula ibang bansa ay sinusundan ng hingi ng bayad sa customs.",
+      "Puwedeng mauwi ang kuwentong padala sa paghingi ng bayad sa customs o iba pang singil.",
   },
   "prize.telco-rewards": {
-    label: "Peke na telco reward-points expiry",
+    label: "Mawawala na raw ang reward points",
     explanation:
-      "Ang \"reward points expire today\" na text ay nagpapanggap na Smart/Globe promo para dalhin ka sa pekeng redemption page.",
+      "Baka nagpapanggap na telco ang mensahe para dalhin ka sa pekeng page ng rewards.",
   },
   "gambling.casino-games": {
-    label: "Promo ng casino / slots",
+    label: "May promo ng online casino",
     explanation:
-      "Ang mga text na nag-a-advertise ng online casino at slots ay humahantong sa di-lisensyadong betting sites.",
+      "Hindi sapat ang promo sa text para makasigurong mapagkakatiwalaan ang betting site.",
   },
   "gambling.deposit-bonus": {
-    label: "Betting deposit-bonus promo",
+    label: "May bonus kapag nagdeposito",
     explanation:
-      "Ang \"welcome/deposit bonus\" na promos sa text ay pang-akit ng ilegal na betting sites para magdeposito ka.",
+      "Puwedeng pang-akit ang bonus para magpadala ka ng pera bago mo masuri ang site.",
   },
   "gambling.bet-invite": {
-    label: "Imbitasyong tumaya sa unknown site",
+    label: "Pinapasali ka sa betting site",
     explanation:
-      "Ang pag-register para tumaya sa site mula sa random na text ay pagpapadala ng pera sa hindi regulated na operator.",
+      "Hindi matitiyak sa biglaang text kung sino ang may-ari ng site o paano mo mababawi ang deposito.",
   },
   "intel.community-number": {
-    label: "Numero na nasa community scam database",
+    label: "May naunang report tungkol sa numero",
     explanation:
-      "Nai-report ang contact number na ito sa PH Scam DB, isang pampublikong database ng mga numerong naulat ng komunidad bilang scam.",
+      "Naiulat na ang numerong ito sa PH Scam DB. Babala ito mula sa komunidad, hindi awtomatikong patunay ng panloloko.",
   },
 };
 
@@ -260,9 +260,9 @@ export const BREAKDOWN_LABEL_FIL: Record<string, string> = {
   credential: "Account at password",
   link: "Kahina-hinalang link",
   job: "Alok na trabaho",
-  investment: "Pangako ng investimento",
-  loan: "Loan na may fee",
-  romance: "Romance manipulation",
+  investment: "Pangakong kita sa investment",
+  loan: "Bayad bago makautang",
+  romance: "Panlilinlang sa pakikipagrelasyon",
   gambling: "Taya at bonus promo",
-  intel: "Intel mula sa komunidad",
+  intel: "Mga naunang report",
 };

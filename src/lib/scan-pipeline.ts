@@ -31,15 +31,15 @@ const FALLBACK_WARNINGS: Record<Lang, FallbackWarning> = {
   },
   fil: {
     not_configured:
-      "Walang naka-set up na AI analysis sa deployment na ito, kaya galing lang ang report mo sa built-in rule engine.",
+      "Hindi naka-on ang AI sa bersyong ito ng Sift. Mga kilalang palatandaan ng scam ang ginamit sa pag-check.",
     timeout:
-      "Masyadong natagal ang sagot ng AI analyst, kaya natapos ang report mo gamit ang built-in rule engine.",
+      "Natagalan ang sagot ng AI. Itinuloy ang pag-check gamit ang mga kilalang palatandaan ng scam.",
     rate_limit:
-      "Marami pang ibang scan ang hina-handle ng AI analyst kaya galing sa built-in rule engine ang report mo. Subukan ulit pagkatapos ng ilang minuto.",
+      "Maraming gumagamit ng AI ngayon. Mga kilalang palatandaan ng scam muna ang ginamit. Puwede mong subukan ulit makalipas ang ilang minuto.",
     unavailable:
-      "Pansamantalang hindi available ang AI analysis, kaya built-in rule engine ang ginamit sa report na ito. Puwede mong subukan ulit mamaya.",
+      "Hindi magamit ang AI ngayon. Mga kilalang palatandaan ng scam muna ang ginamit. Puwede mong subukan ulit mamaya.",
     invalid_response:
-      "May sagot ang AI analyst na hindi namin ma-verify, kaya galing sa built-in rule engine ang report mo.",
+      "Hindi magamit ang sagot ng AI. Itinuloy ang pag-check gamit ang mga kilalang palatandaan ng scam.",
   },
 };
 

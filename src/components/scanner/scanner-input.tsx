@@ -308,7 +308,7 @@ export function ScannerInput() {
               </span>
               <h2 className="mt-4 text-base font-semibold">
                 {lang === "fil"
-                  ? "Hindi natapos ang scan"
+                  ? "Hindi natuloy ang pag-check"
                   : "Scan didn’t finish"}
               </h2>
               <p
@@ -317,7 +317,7 @@ export function ScannerInput() {
               >
                 {errorMessage ??
                   (lang === "fil"
-                    ? "Hindi namin natapos ang scan mo. Pakisuri ang koneksyon at subukan ulit."
+                    ? "Hindi natuloy ang pag-check. Tingnan ang internet mo at subukan ulit."
                     : GENERIC_ERROR_MESSAGE)}
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

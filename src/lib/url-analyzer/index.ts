@@ -81,32 +81,32 @@ function buildActionsFil(verdict: UrlVerdict, isShortener: boolean): string[] {
 
   if (verdict === "blocked") {
     return [
-      "I-paste ang buong web link na nagsisimula sa http:// o https://.",
-      "Kung ito ay galing sa QR code o chat app, alamin muna kung sino ang nagpadala bago magpatuloy.",
+      "I-paste ang buong link na nagsisimula sa http:// o https://.",
+      "Kung galing ito sa QR code o chat, alamin muna kung sino ang nagpadala bago magpatuloy.",
     ];
   }
 
   if (isShortener) {
     actions.push(
-      "Palawakin muna ang short link: kadalasang ipinapakita ng mga shortener ang tunay na destinasyon kapag dinagdag mo ang “+” sa dulo ng URL."
+      "Alamin muna kung saan papunta ang pinaikling link. May mga serbisyong nagpapakita ng address kapag nilagyan ng “+” sa dulo."
     );
   }
   if (verdict === "dangerous" || verdict === "suspicious") {
     actions.push(
-      "Huwag i-click ang link; i-type mo mismo ang opisyal na address ng serbisyo."
+      "Huwag buksan ang link. I-type mo mismo ang opisyal na website address."
     );
     actions.push(
-      "Mag-log in lang sa opisyal na app o sa pag-type ng kilalang domain, hindi sa mga link na dumating sa SMS o chat."
+      "Buksan mo mismo ang opisyal na app o website bago mag-log in. Iwasan ang login page mula sa text o chat."
     );
     actions.push(
-      "I-report ang link sa platform kung saan ito dumating at sa opisyal na support channel ng inimpersonate na company."
+      "I-report ang link sa app kung saan mo ito natanggap at sa kumpanyang ginagaya nito."
     );
   } else {
     actions.push(
-      "Tiyaking tama ang spelling ng domain sa address bar ng browser mo pagkatapos buksan."
+      "Tingnang mabuti ang spelling ng website address bago maglagay ng anumang detalye."
     );
     actions.push(
-      "Maglagay lang ng password, OTP, o card details sa mga page na sinadya mong puntahan."
+      "Maglagay lang ng password, OTP, o detalye ng card sa site na ikaw mismo ang pinuntahan at pinagkakatiwalaan."
     );
   }
 
@@ -145,7 +145,7 @@ function blockedReport(
       {
         id: "dangerous-scheme",
         label: fil
-          ? `Hindi suriing web address (${scheme || "di-kilalang scheme"})`
+          ? `Hindi suportadong link (${scheme || "hindi kilalang uri"})`
           : `Not a checkable web address (${scheme || "unknown scheme"})`,
         severity: "critical",
         weight: 0,

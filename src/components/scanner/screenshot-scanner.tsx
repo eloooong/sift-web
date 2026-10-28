@@ -11,13 +11,13 @@ import {
   TriangleAlert,
 } from "lucide-react";
 
+import { useLang } from "@/components/providers/language-provider";
 import { ReportView } from "@/components/scanner/report-view";
 import { ScannerProgress } from "@/components/scanner/scanner-progress";
 import type { ScanReport } from "@/lib/scan-report";
 import {
   ACCEPTED_DROPZONE_ACCEPT,
   MAX_SCREENSHOT_BYTES,
-  describeValidationError,
   validateClientFile,
   type ScreenshotValidationCode,
 } from "@/lib/screenshots";
@@ -59,6 +59,7 @@ async function readErrorMessage(response: Response): Promise<string> {
 }
 
 export function ScreenshotScanner() {
+  const { lang, t } = useLang();
   const [status, setStatus] = useState<ScreenshotStatus>("idle");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -150,6 +151,7 @@ export function ScreenshotScanner() {
     try {
       const formData = new FormData();
       formData.append("screenshot", selectedFile, selectedFile.name);
+      formData.append("lang", lang);
 
       const response = await fetch("/api/analyze/screenshot", {
         method: "POST",
@@ -221,7 +223,7 @@ export function ScreenshotScanner() {
                   }}
                   role="button"
                   tabIndex={0}
-                  aria-label="Upload a screenshot by clicking or dropping a file"
+                  aria-label={t("image.upload")}
                   className={cn(
                     "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-12 text-center transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     isDragging
@@ -244,13 +246,12 @@ export function ScreenshotScanner() {
                   </span>
                   <p className="mt-4 text-sm font-medium">
                     {isDragging
-                      ? "Drop your screenshot here"
-                      : "Drag & drop a screenshot here"}
+                      ? t("image.drop")
+                      : t("image.drag")}
                   </p>
                   <p className="mt-1.5 max-w-sm text-xs leading-relaxed text-muted-foreground">
-                    or{" "}
                     <span className="font-medium text-foreground underline underline-offset-2">
-                      click to browse your files
+                      {t("image.browse")}
                     </span>
                   </p>
                   <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -273,14 +274,14 @@ export function ScreenshotScanner() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={previewUrl ?? ""}
-                      alt="Screenshot preview of the message you want analyzed"
+                      alt={t("image.preview")}
                       className="mx-auto max-h-96 w-auto max-w-full object-contain"
                     />
                     <Button
                       variant="outline"
                       size="icon"
                       onClick={handleRemove}
-                      aria-label="Remove image"
+                      aria-label={t("image.remove")}
                       className="absolute top-3 right-3 size-10 bg-background/90 backdrop-blur sm:size-9"
                     >
                       <Trash2 />
@@ -303,14 +304,14 @@ export function ScreenshotScanner() {
                         size="sm"
                         onClick={() => inputRef.current?.click()}
                       >
-                        Replace
+                        {t("image.replace")}
                       </Button>
                       <Button
                         onClick={() => void handleAnalyze()}
                         className="min-w-[10.5rem]"
                       >
                         <ShieldAlert data-icon="inline-start" />
-                        Analyze Screenshot
+                        {t("image.analyze")}
                       </Button>
                     </div>
                   </div>
@@ -323,7 +324,7 @@ export function ScreenshotScanner() {
                 accept={ACCEPTED_DROPZONE_ACCEPT}
                 onChange={handleInputChange}
                 className="sr-only"
-                aria-label="Choose a screenshot file"
+                aria-label={t("image.choose")}
               />
 
               {validationError ? (
@@ -333,17 +334,15 @@ export function ScreenshotScanner() {
                 >
                   <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
                   {validationError === "generic"
-                    ? GENERIC_ERROR_MESSAGE
-                    : describeValidationError(validationError)}
+                    ? t("scan.error.body")
+                    : t(`image.error.${validationError}`)}
                 </p>
               ) : null}
 
               <div className="rounded-xl border border-dashed bg-muted/40 px-6 py-8 text-center">
-                <h2 className="text-sm font-medium">How it works</h2>
+                <h2 className="text-sm font-medium">{t("image.how")}</h2>
                 <p className="mx-auto mt-1.5 max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                  Take a screenshot of the suspicious message, drop it above,
-                  and we extract the text with OCR before running the full
-                  scam analysis: same engine, same explainable report.
+                  {t("image.howBody")}
                 </p>
               </div>
             </CardContent>
@@ -365,21 +364,21 @@ export function ScreenshotScanner() {
                 <TriangleAlert className="size-5 text-danger" />
               </span>
               <h2 className="mt-4 text-base font-semibold">
-                Scan didn’t finish
+                {t("scan.error.title")}
               </h2>
               <p
                 role="alert"
                 className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-muted-foreground"
               >
-                {errorMessage ?? GENERIC_ERROR_MESSAGE}
+                {errorMessage ?? t("scan.error.body")}
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <Button onClick={() => void handleAnalyze()}>
                   <RefreshCw data-icon="inline-start" />
-                  Try Again
+                  {t("scan.retry")}
                 </Button>
                 <Button variant="outline" onClick={handleReset}>
-                  Choose a Different Image
+                  {t("image.different")}
                 </Button>
               </div>
             </CardContent>

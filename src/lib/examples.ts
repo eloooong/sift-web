@@ -20,13 +20,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "prize-scam",
     label: "Prize Scam",
-    labelFil: "Premyong Nanalo Ka Daw",
+    labelFil: "Pekeng premyo",
     category: "Prize Scam",
     channel: "SMS",
     summary:
       "A text claiming you won a raffle you never joined, demanding a fee before you can claim your winnings.",
-    summaryFil:
-      "Text na nagsasabing nanalo ka daw sa raffle na hindi mo naman sinabihan, pero may bayad muna bago makuhang premyo.",
+    summaryFil: "Nanalo ka raw sa raffle na hindi mo sinalihan. May bayad muna bago makuha ang premyo.",
     redFlags: [
       "Raffle you never joined",
       "Pay-to-claim fee via GCash",
@@ -39,12 +38,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "gcash-scam",
     label: "GCash Scam",
+    labelFil: "Pekeng abiso ng GCash",
     category: "E-wallet Scam",
     channel: "SMS",
     summary:
       "A fake GCash security alert pushing you to a lookalike verification link to steal your login and MPIN.",
-    summaryFil:
-      "Peking GCash alert na naghahatid sa kopyang verification page para nakawin ang login at MPIN mo.",
+    summaryFil: "Isasara raw ang GCash mo kung hindi ka mag-verify. Sa pekeng link ka dinadala para makuha ang login at MPIN mo.",
     redFlags: [
       "Impersonates GCash support",
       "Threatens permanent account closure",
@@ -57,13 +56,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "otp-scam",
     label: "OTP Scam",
-    labelFil: "Panloloko sa OTP",
+    labelFil: "Hinihinging OTP",
     category: "Phishing",
     channel: "SMS",
     summary:
       "A message forwarding you a real one-time PIN, then tricking you into \"confirming\" or sending it back so the scammer can take over your wallet.",
-    summaryFil:
-      "Ipinapadala sa iyo ang tunay na OTP code tapos pinipilit kang \"i-confirm\" o ipadala pabalik para magamit ng scammer ang account mo.",
+    summaryFil: "May kasamang OTP ang mensahe at pinapasagot ka raw para makansela ang request. Puwedeng gamitin ang sagot mo para makuha ang account.",
     redFlags: [
       "One-time PIN included in the text",
       "Urgent request to reply or confirm",
@@ -76,13 +74,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "shopee-points-scam",
     label: "Shopee Reward Scam",
-    labelFil: "Shopee Points Scam",
+    labelFil: "Pekeng Shopee rewards",
     category: "Phishing",
     channel: "SMS",
     summary:
       "A shopping-app impersonation claiming free reward points that must be \"claimed\" through a lookalike page asking for your login.",
-    summaryFil:
-      "Kunwari customer service ng shopping app, nagbibigay daw ng libreng points, pero ang \"claim page\" ay nangongolekta ng login mo.",
+    summaryFil: "May libreng coins ka raw, pero sa pekeng login page ka pinapapunta para makuha ang account mo.",
     redFlags: [
       "Reward points you never earned",
       "Lookalike domain (shopee-ph.club)",
@@ -95,13 +92,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "lazada-delivery-scam",
     label: "Lazada Order Scam",
-    labelFil: "Pekeng Problema sa Order (Lazada)",
+    labelFil: "Pekeng abiso ng Lazada",
     category: "Delivery Scam",
     channel: "SMS",
     summary:
       "A courier-themed text inventing a small re-delivery fee for an order you never placed, paid straight to a personal e-wallet.",
-    summaryFil:
-      "Text na may \"problema sa delivery\" ng order na hindi mo naman inorder, kasama ang maliliit na bayaran na dapat ipadala sa personal na e-wallet number.",
+    summaryFil: "May problema raw sa delivery at kailangan mong magbayad ng maliit na halaga sa personal na e-wallet.",
     redFlags: [
       "Order you never placed",
       "Tiny fee to make it look harmless",
@@ -114,13 +110,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "sss-advisory-scam",
     label: "Fake Government Text",
-    labelFil: "Pekeng Abiso Mula sa Gobyerno",
+    labelFil: "Nagpapanggap na ahensya",
     category: "Government Impersonation",
     channel: "SMS",
     summary:
       "An agency-themed advisory threatening suspension of benefits unless you \"update\" records on a fake government site.",
-    summaryFil:
-      "Abisong kunwari galing sa ahensya ng gobyerno na nagsasabing isuspinde ang benepisyo mo kung hindi ka mag-\"update\" sa pekeng website nito.",
+    summaryFil: "Mawawala raw ang benepisyo mo kung hindi ka mag-update ng detalye. Pekeng website ang ibinigay na link.",
     redFlags: [
       "Threatens suspension of benefits",
       "Fake .xyz domain mimicking gov.ph",
@@ -133,12 +128,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "delivery-scam",
     label: "Delivery Scam",
+    labelFil: "Pekeng singil sa delivery",
     category: "Delivery Scam",
     channel: "SMS",
     summary:
       "A courier-themed text inventing an unpaid shipping fee, paid straight to a personal e-wallet number.",
-    summaryFil:
-      "Text na kunwari courier, may \"hindi nabayarang shipping fee\" daw na ipinapadala sa personal na e-wallet number.",
+    summaryFil: "Naka-hold daw ang parcel mo. May singil sa delivery at kailangan mong magbayad agad sa personal na numero.",
     redFlags: [
       "Unexpected package you did not order",
       "Unpaid fee paid to personal number",
@@ -151,13 +146,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "fake-job-scam",
     label: "Fake Job Scam",
-    labelFil: "Pekeng Job Offer",
+    labelFil: "Pekeng alok na trabaho",
     category: "Online Job Scam",
     channel: "Messenger",
     summary:
       "An unsolicited work-from-home offer with unrealistic pay that starts with a registration fee.",
-    summaryFil:
-      "Di-hiniling na work-from-home offer na sobrang laki ng sahod, pero may membership fee muna bago magsimula.",
+    summaryFil: "Malaki raw ang kikitain sa simpleng trabaho sa bahay. Pero kailangan mo munang magbayad ng membership fee.",
     redFlags: [
       "Job offer you never applied for",
       "High daily pay for simple tasks",
@@ -170,13 +164,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "maya-wallet-scam",
     label: "Maya Wallet Scam",
-    labelFil: "Maya Verification Scam",
+    labelFil: "Pekeng abiso ng Maya",
     category: "Account Verification Scam",
     channel: "SMS",
     summary:
       "A wallet impersonation claiming your identity verification expired, routing you to a fake KYC page.",
-    summaryFil:
-      "Nagpapanggap na Maya: expired daw ang verification mo at kailangan mong mag-update sa pekeng KYC page.",
+    summaryFil: "Expired na raw ang verification ng Maya mo. Sa pekeng page ka pinapapunta para kunin ang detalye mo.",
     redFlags: [
       "Expired-KYC scare tactic",
       "High-risk .top domain",
@@ -189,13 +182,12 @@ const EXAMPLE_SEEDS = [
   {
     id: "facebook-buyer-scam",
     label: "Facebook Buyer Scam",
-    labelFil: "Scam sa FB Marketplace",
+    labelFil: "Pekeng buyer sa Marketplace",
     category: "Phishing",
     channel: "Facebook",
     summary:
       "A too-eager Marketplace \"buyer\" who insists on paying through a link that actually steals your e-wallet login.",
-    summaryFil:
-      "\"Buyer\" sa Marketplace na sobrang eager magbayad pero sa link daw, kunwari payout page, peke pala at nangongolekta ng e-wallet login mo.",
+    summaryFil: "May buyer na gustong magbayad agad, pero kailangan mo raw mag-log in sa ibinigay na link para makuha ang pera. Pekeng e-wallet page pala ito.",
     redFlags: [
       "Buyer refuses to meet or use in-app checkout",
       "\"Claim your payment\" link before any sale",
