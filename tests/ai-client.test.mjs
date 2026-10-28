@@ -58,12 +58,64 @@ test("AI transport sends the configured model and accepts a valid JSON response"
   mock.method(globalThis, "fetch", async (url, options) => {
     assert.equal(url, config.baseUrl + "/chat/completions");
     assert.equal(JSON.parse(options.body).model, config.model);
+    assert.deepEqual(JSON.parse(options.body).response_format, {
+      type: "json_object",
+    });
     assert.equal(options.headers.Authorization, "Bearer test-key");
     return Response.json({
       choices: [{ message: { content: JSON.stringify(validAnalysis) } }],
     });
   });
   assert.deepEqual(await requestChatJson(config, "system", "user"), validAnalysis);
+});
+
+test("the configured Groq reasoning model uses a strict schema with room for the full report", async () => {
+  mock.method(globalThis, "fetch", async (_url, options) => {
+    const body = JSON.parse(options.body);
+    assert.equal(body.response_format.type, "json_schema");
+    assert.equal(body.response_format.json_schema.strict, true);
+    const schema = body.response_format.json_schema.schema;
+    assert.equal(schema.additionalProperties, false);
+    assert.deepEqual(
+      Object.keys(schema.properties).sort(), [...schema.required].sort(),
+    );
+    assert.equal(schema.properties.redFlags.items.additionalProperties, false);
+    assert.equal(body.max_tokens, 2400);
+    return Response.json({
+      choices: [{
+        finish_reason: "stop",
+        message: { content: JSON.stringify(validAnalysis) },
+      }],
+    });
+  });
+  await requestChatJson({
+    ...config,
+    baseUrl: "https://api.groq.com/openai/v1",
+    model: "openai/gpt-oss-120b",
+  }, "system", "user");
+});
+
+test("Groq JSON validation failures are classified as invalid output", async () => {
+  mock.method(globalThis, "fetch", async () =>
+    Response.json({ error: { code: "json_validate_failed" } }, { status: 400 }),
+  );
+  await assert.rejects(
+    requestChatJson(config, "system", "user"),
+    (error) => error instanceof AiError && error.kind === "invalid_response",
+  );
+});
+
+test("truncated completions are rejected even when the remaining JSON parses", async () => {
+  mock.method(globalThis, "fetch", async () => Response.json({
+    choices: [{
+      finish_reason: "length",
+      message: { content: JSON.stringify(validAnalysis) },
+    }],
+  }));
+  await assert.rejects(
+    requestChatJson(config, "system", "user"),
+    (error) => error instanceof AiError && error.kind === "invalid_response",
+  );
 });
 
 for (const [status, reason] of [

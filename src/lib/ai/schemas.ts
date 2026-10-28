@@ -61,6 +61,36 @@ const KNOWN_CATEGORIES = [
   "Other",
 ] as const;
 
+export const AI_RESPONSE_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: [
+    "riskScore", "riskLevel", "category", "confidence", "summary",
+    "redFlags", "recommendations",
+  ],
+  properties: {
+    riskScore: { type: "integer" },
+    riskLevel: { type: "string", enum: ["LOW", "MODERATE", "HIGH", "CRITICAL"] },
+    category: { type: "string", enum: KNOWN_CATEGORIES },
+    confidence: { type: "number" },
+    summary: { type: "string" },
+    redFlags: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["title", "evidence", "explanation"],
+        properties: {
+          title: { type: "string" },
+          evidence: { type: "string" },
+          explanation: { type: "string" },
+        },
+      },
+    },
+    recommendations: { type: "array", items: { type: "string" } },
+  },
+} as const;
+
 const CATEGORY_SLUGS = new Map<string, string>(
   KNOWN_CATEGORIES.map((category) => [
     category.toLowerCase().replace(/[^a-z]+/g, ""),

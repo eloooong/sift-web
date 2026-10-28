@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { AiConfig } from "./config";
-import { extractJsonObject } from "./schemas";
+import { AI_RESPONSE_SCHEMA, extractJsonObject } from "./schemas";
 
 export type AiErrorKind =
   | "timeout"
@@ -20,7 +20,7 @@ export class AiError extends Error {
 }
 
 type ChatCompletionPayload = {
-  choices?: Array<{ message?: { content?: unknown } }>;
+  choices?: Array<{ finish_reason?: string; message?: { content?: unknown } }>;
 };
 
 export async function requestChatJson(
@@ -32,6 +32,11 @@ export async function requestChatJson(
   const timeout = setTimeout(() => controller.abort(), config.timeoutMs);
 
   try {
+    // Groq's GPT-OSS models support strict schemas. Other compatible services
+    // retain JSON mode so providers without schema support continue to work.
+    const strictSchema =
+      new URL(config.baseUrl).hostname === "api.groq.com" &&
+      ["openai/gpt-oss-120b", "openai/gpt-oss-20b"].includes(config.model);
     const response = await fetch(`${config.baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
@@ -41,8 +46,17 @@ export async function requestChatJson(
       body: JSON.stringify({
         model: config.model,
         temperature: 0.2,
-        max_tokens: 900,
-        response_format: { type: "json_object" },
+        max_tokens: 2400,
+        response_format: strictSchema
+          ? {
+              type: "json_schema",
+              json_schema: {
+                name: "scam_analysis",
+                strict: true,
+                schema: AI_RESPONSE_SCHEMA,
+              },
+            }
+          : { type: "json_object" },
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
@@ -54,6 +68,16 @@ export async function requestChatJson(
 
     if (response.status === 429) {
       throw new AiError("rate_limit");
+    }
+    if (response.status === 400) {
+      let code: unknown;
+      try {
+        const errorPayload = await response.json();
+        code = errorPayload?.error?.code;
+      } catch {
+        if (controller.signal.aborted) throw new AiError("timeout");
+      }
+      if (code === "json_validate_failed") throw new AiError("invalid_response");
     }
     if (!response.ok) {
       throw new AiError("unavailable");
@@ -68,7 +92,9 @@ export async function requestChatJson(
       );
     }
 
-    const content = payload?.choices?.[0]?.message?.content;
+    const choice = payload?.choices?.[0];
+    if (choice?.finish_reason === "length") throw new AiError("invalid_response");
+    const content = choice?.message?.content;
     if (typeof content !== "string" || !content.trim()) {
       throw new AiError("invalid_response");
     }
