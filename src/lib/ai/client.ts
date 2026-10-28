@@ -31,9 +31,8 @@ export async function requestChatJson(
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), config.timeoutMs);
 
-  let response: Response;
   try {
-    response = await fetch(`${config.baseUrl}/chat/completions`, {
+    const response = await fetch(`${config.baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,37 +51,38 @@ export async function requestChatJson(
       signal: controller.signal,
       cache: "no-store",
     });
-  } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") {
-      throw new AiError("timeout");
+
+    if (response.status === 429) {
+      throw new AiError("rate_limit");
     }
+    if (!response.ok) {
+      throw new AiError("unavailable");
+    }
+
+    let payload: ChatCompletionPayload | null;
+    try {
+      payload = (await response.json()) as ChatCompletionPayload | null;
+    } catch {
+      throw new AiError(
+        controller.signal.aborted ? "timeout" : "invalid_response"
+      );
+    }
+
+    const content = payload?.choices?.[0]?.message?.content;
+    if (typeof content !== "string" || !content.trim()) {
+      throw new AiError("invalid_response");
+    }
+
+    try {
+      return extractJsonObject(content);
+    } catch {
+      throw new AiError("invalid_response");
+    }
+  } catch (error) {
+    if (error instanceof AiError) throw error;
+    if (controller.signal.aborted) throw new AiError("timeout");
     throw new AiError("unavailable");
   } finally {
     clearTimeout(timeout);
-  }
-
-  if (response.status === 429) {
-    throw new AiError("rate_limit");
-  }
-  if (!response.ok) {
-    throw new AiError("unavailable");
-  }
-
-  let payload: ChatCompletionPayload;
-  try {
-    payload = (await response.json()) as ChatCompletionPayload;
-  } catch {
-    throw new AiError("invalid_response");
-  }
-
-  const content = payload.choices?.[0]?.message?.content;
-  if (typeof content !== "string" || !content.trim()) {
-    throw new AiError("invalid_response");
-  }
-
-  try {
-    return extractJsonObject(content);
-  } catch {
-    throw new AiError("invalid_response");
   }
 }

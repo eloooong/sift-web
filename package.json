@@ -10,7 +10,7 @@
     "lint:design": "impeccable detect src/",
     "db:migrate": "node scripts/migrate.mjs",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "tsx scripts/detector-check.ts && tsx scripts/url-analyzer-check.ts && tsx scripts/screenshot-validation-check.ts && tsx scripts/ai-validation-check.ts && tsx --test tests/security.test.ts",
+    "test": "tsx scripts/detector-check.ts && tsx scripts/url-analyzer-check.ts && tsx scripts/screenshot-validation-check.ts && tsx scripts/ai-validation-check.ts && tsx --test tests/security.test.ts tests/ai-client.test.mjs",
     "check": "npm run lint && npm run typecheck && npm test && npm run lint:design"
   },
   "engines": {

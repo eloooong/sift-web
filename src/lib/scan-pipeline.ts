@@ -14,7 +14,7 @@ import { ruleReportToScan, type ScanReport, type ScanSource } from "@/lib/scan-r
 const AI_SCORE_WEIGHT = 0.65;
 const RULES_SCORE_WEIGHT = 0.35;
 
-type FallbackWarning = Record<AiErrorKind | "not_configured", string | null>;
+type FallbackWarning = Record<AiErrorKind | "not_configured", string>;
 
 const FALLBACK_WARNINGS: Record<Lang, FallbackWarning> = {
   en: {
@@ -24,7 +24,8 @@ const FALLBACK_WARNINGS: Record<Lang, FallbackWarning> = {
       "The AI analyst took too long to respond, so your report was completed with the built-in rule engine.",
     rate_limit:
       "The AI analyst is handling heavy traffic right now, so your report comes from the built-in rule engine. Please try again in a few minutes.",
-    unavailable: null,
+    unavailable:
+      "AI analysis is temporarily unavailable, so this report uses the built-in rule engine. You can try scanning again later.",
     invalid_response:
       "The AI analyst returned an answer we couldn't verify, so your report comes from the built-in rule engine.",
   },
@@ -35,7 +36,8 @@ const FALLBACK_WARNINGS: Record<Lang, FallbackWarning> = {
       "Masyadong natagal ang sagot ng AI analyst, kaya natapos ang report mo gamit ang built-in rule engine.",
     rate_limit:
       "Marami pang ibang scan ang hina-handle ng AI analyst kaya galing sa built-in rule engine ang report mo. Subukan ulit pagkatapos ng ilang minuto.",
-    unavailable: null,
+    unavailable:
+      "Pansamantalang hindi available ang AI analysis, kaya built-in rule engine ang ginamit sa report na ito. Puwede mong subukan ulit mamaya.",
     invalid_response:
       "May sagot ang AI analyst na hindi namin ma-verify, kaya galing sa built-in rule engine ang report mo.",
   },

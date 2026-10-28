@@ -5,7 +5,7 @@ import type { AnalysisReport } from "@/lib/scam-detector";
 import { AiError, requestChatJson, type AiErrorKind } from "./client";
 import { getAiConfig } from "./config";
 import { buildSystemPrompt, buildUserPrompt } from "./prompt";
-import { parseAiAnalysis, type AiAnalysis } from "./schemas";
+import { parseAiAnalysis, ValidationError, type AiAnalysis } from "./schemas";
 
 export type AiRunOutcome =
   | { ok: true; analysis: AiAnalysis; model: string }
@@ -31,6 +31,9 @@ export async function runAiAnalysis(
   } catch (error) {
     if (error instanceof AiError) {
       return { ok: false, reason: error.kind };
+    }
+    if (error instanceof ValidationError) {
+      return { ok: false, reason: "invalid_response" };
     }
     return { ok: false, reason: "unavailable" };
   }
