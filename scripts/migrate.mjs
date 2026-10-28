@@ -11,6 +11,7 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
+import { postgresTlsOptions } from "../src/lib/db/connection.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const migrationsDir = join(here, "..", "db", "migrations");
@@ -34,17 +35,14 @@ const connectionString = process.env.DATABASE_URL?.trim();
 if (!connectionString) {
   console.error(
     "DATABASE_URL is not set. Copy .env.example to .env.local, point it at\n" +
-      "your Postgres (Supabase/Neon/local), and try again."
+      "your Postgres (Supabase/Neon/local), and try again.",
   );
   process.exit(1);
 }
 
-const needsSsl =
-  !/localhost|127\.0\.0\.1|::1/.test(connectionString) &&
-  !/sslmode=disable/.test(connectionString);
 const pool = new pg.Pool({
   connectionString,
-  ...(needsSsl ? { ssl: { rejectUnauthorized: false } } : {}),
+  ...postgresTlsOptions(connectionString),
 });
 
 async function main() {

@@ -1,13 +1,13 @@
 import { createHash } from "node:crypto";
 
-import { scamCategoryById, type ScamCategoryId } from "@/lib/scam-detector/categories";
-
-import { isDatabaseConfigured, query } from "@/lib/db";
 import {
-  deriveShortDescription,
-  descriptionFingerprint,
-} from "./sanitize";
-import { REPORT_SEEDS, type SeedInput } from "./seed-data";
+  scamCategoryById,
+  type ScamCategoryId,
+} from "@/lib/scam-detector/categories";
+
+import { levelFromScore } from "@/lib/scam-detector/scoring";
+import { isDatabaseConfigured, query } from "@/lib/db";
+import { deriveShortDescription, descriptionFingerprint } from "./sanitize";
 import {
   PLATFORM_LABELS,
   type CommunityReport,
@@ -21,45 +21,9 @@ import {
  * Community reports store.
  *
  * With DATABASE_URL set, reports live in Postgres; otherwise in server
- * memory (globalThis) so the demo works with zero configuration. Seeded
- * entries are demo content. Nothing here is ever published without passing
- * moderation.
+ * memory (globalThis) for local development. New stores start empty;
+ * submissions appear publicly only after approval.
  */
-
-function levelFromScore(score: number): CommunityReport["riskLevel"] {
-  if (score >= 80) return "critical";
-  if (score >= 60) return "high";
-  if (score >= 30) return "medium";
-  return "low";
-}
-
-function makeSeedReport(seed: SeedInput, index: number): CommunityReport {
-  const createdMs =
-    Date.now() - seed.daysAgo * 86_400_000 - index * 3_600_000;
-  const status = seed.status ?? "approved";
-
-  return {
-    id: `CSR-${(1_000 + index * 7_717).toString(36).toUpperCase().slice(-5)}${index}`,
-    categoryId: seed.categoryId,
-    platform: seed.platform,
-    description: seed.description,
-    shortDescription: deriveShortDescription(seed.description),
-    sender: seed.sender,
-    screenshot: null,
-    encounteredAt: new Date(createdMs).toISOString().slice(0, 10),
-    riskScore: seed.riskScore,
-    riskLevel: levelFromScore(seed.riskScore),
-    status,
-    confirmations: seed.confirmations ?? 0,
-    confirmedTokens: new Set(),
-    createdAt: new Date(createdMs).toISOString(),
-    moderatedAt:
-      status === "pending"
-        ? null
-        : new Date(createdMs + 7_200_000).toISOString(),
-    rejectionReason: seed.rejectionReason ?? null,
-  };
-}
 
 export type NewReportInput = {
   categoryId: ScamCategoryId;
@@ -95,7 +59,10 @@ function hashConfirmationToken(token: string): string {
   return createHash("sha256").update(`ss-confirm:${token}`).digest("hex");
 }
 
-function rowToReport(row: ReportRow, confirmedTokens?: Set<string>): CommunityReport {
+function rowToReport(
+  row: ReportRow,
+  confirmedTokens?: Set<string>,
+): CommunityReport {
   return {
     id: String(row.id),
     categoryId: row.category_id as ScamCategoryId,
@@ -128,56 +95,9 @@ const REPORT_COLUMNS = `
 async function loadConfirmedTokenIds(reportId: string): Promise<Set<string>> {
   const rows = await query(
     "SELECT token_hash FROM report_confirmations WHERE report_id = $1",
-    [reportId]
+    [reportId],
   );
   return new Set(rows.map((row) => String(row.token_hash)));
-}
-
-let seedPromise: Promise<void> | null = null;
-
-/** Insert demo seeds exactly once per empty database. */
-function ensureSeeded(): Promise<void> {
-  seedPromise ??= (async () => {
-    const rows = await query<{ count: string }>(
-      "SELECT COUNT(*)::text AS count FROM community_reports"
-    );
-    if (Number(rows[0].count) > 0) return;
-
-    for (let index = 0; index < REPORT_SEEDS.length; index += 1) {
-      const report = makeSeedReport(REPORT_SEEDS[index], index);
-      await query(
-        `INSERT INTO community_reports
-          (id, category_id, platform, description, description_fp,
-           short_description, sender,
-           screenshot, encountered_at, risk_score, risk_level, status,
-           confirmations, created_at, moderated_at, rejection_reason)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
-         ON CONFLICT (id) DO NOTHING`,
-        [
-          report.id,
-          report.categoryId,
-          report.platform,
-          report.description,
-          descriptionFingerprint(report.description),
-          report.shortDescription,
-          report.sender,
-          report.screenshot,
-          report.encounteredAt,
-          report.riskScore,
-          report.riskLevel,
-          report.status,
-          report.confirmations,
-          report.createdAt,
-          report.moderatedAt,
-          report.rejectionReason,
-        ]
-      );
-    }
-  })().catch((error) => {
-    seedPromise = null;
-    throw error;
-  });
-  return seedPromise;
 }
 
 // --- Memory fallback --------------------------------------------------------
@@ -188,10 +108,6 @@ function memoryReports(): Map<string, CommunityReport> {
   };
   if (!globalStore.__scamshieldReportsStore) {
     const store = { reports: new Map<string, CommunityReport>() };
-    REPORT_SEEDS.forEach((seed, index) => {
-      const report = makeSeedReport(seed, index);
-      store.reports.set(report.id, report);
-    });
     globalStore.__scamshieldReportsStore = store;
   }
   return globalStore.__scamshieldReportsStore.reports;
@@ -200,7 +116,7 @@ function memoryReports(): Map<string, CommunityReport> {
 // --- Public API -------------------------------------------------------------
 
 export async function createReport(
-  input: NewReportInput
+  input: NewReportInput,
 ): Promise<CommunityReport> {
   const report: CommunityReport = {
     id: generateReportId(),
@@ -217,8 +133,7 @@ export async function createReport(
     confirmations: 0,
     confirmedTokens: new Set(),
     createdAt: new Date().toISOString(),
-    moderatedAt:
-      input.status === "pending" ? null : new Date().toISOString(),
+    moderatedAt: input.status === "pending" ? null : new Date().toISOString(),
     rejectionReason: input.rejectionReason ?? null,
   };
 
@@ -248,7 +163,7 @@ export async function createReport(
         report.createdAt,
         report.moderatedAt,
         report.rejectionReason,
-      ]
+      ],
     );
     return rowToReport(rows[0]);
   }
@@ -284,27 +199,25 @@ export async function listApprovedReports(): Promise<PublicReportSummary[]> {
       .map(toSummary);
   }
 
-  await ensureSeeded();
   const rows = await query<ReportRow>(
     `SELECT ${REPORT_COLUMNS} FROM community_reports
-     WHERE status = 'approved' ORDER BY created_at DESC`
+     WHERE status = 'approved' ORDER BY created_at DESC`,
   );
   return rows.map((row) => toSummary(rowToReport(row)));
 }
 
 export async function getApprovedReport(
-  id: string
+  id: string,
 ): Promise<CommunityReport | null> {
   if (!isDatabaseConfigured()) {
     const report = memoryReports().get(id);
     return report && report.status === "approved" ? report : null;
   }
 
-  await ensureSeeded();
   const rows = await query<ReportRow>(
     `SELECT ${REPORT_COLUMNS} FROM community_reports
      WHERE id = $1 AND status = 'approved' LIMIT 1`,
-    [id]
+    [id],
   );
   if (!rows[0]) return null;
   const tokens = await loadConfirmedTokenIds(id);
@@ -320,13 +233,13 @@ export async function listPendingReports(): Promise<CommunityReport[]> {
 
   const rows = await query<ReportRow>(
     `SELECT ${REPORT_COLUMNS} FROM community_reports
-     WHERE status = 'pending' ORDER BY created_at ASC`
+     WHERE status = 'pending' ORDER BY created_at ASC`,
   );
   return rows.map((row) => rowToReport(row));
 }
 
 export async function listRecentlyModerated(
-  limit = 8
+  limit = 8,
 ): Promise<CommunityReport[]> {
   if (!isDatabaseConfigured()) {
     return [...memoryReports().values()]
@@ -339,14 +252,14 @@ export async function listRecentlyModerated(
     `SELECT ${REPORT_COLUMNS} FROM community_reports
      WHERE status <> 'pending' AND moderated_at IS NOT NULL
      ORDER BY moderated_at DESC LIMIT $1`,
-    [limit]
+    [limit],
   );
   return rows.map((row) => rowToReport(row));
 }
 
 export async function moderateReport(
   id: string,
-  status: Extract<ModerationStatus, "approved" | "rejected">
+  status: Extract<ModerationStatus, "approved" | "rejected">,
 ): Promise<boolean> {
   if (!isDatabaseConfigured()) {
     const report = memoryReports().get(id);
@@ -361,7 +274,7 @@ export async function moderateReport(
      SET status = $2, moderated_at = now()
      WHERE id = $1 AND status = 'pending'
      RETURNING id`,
-    [id, status]
+    [id, status],
   );
   return rows.length > 0;
 }
@@ -372,7 +285,7 @@ export async function moderateReport(
  */
 export async function confirmReport(
   id: string,
-  token: string
+  token: string,
 ): Promise<number | null> {
   const tokenHash = hashConfirmationToken(token);
 
@@ -380,7 +293,7 @@ export async function confirmReport(
     const existing = await query(
       `SELECT confirmations FROM community_reports
        WHERE id = $1 AND status = 'approved' LIMIT 1`,
-      [id]
+      [id],
     );
     if (!existing[0]) return null;
 
@@ -389,7 +302,7 @@ export async function confirmReport(
        VALUES ($1, $2)
        ON CONFLICT (report_id, token_hash) DO NOTHING
        RETURNING report_id`,
-      [id, tokenHash]
+      [id, tokenHash],
     );
     if (inserted.length === 0) {
       return Number(existing[0].confirmations);
@@ -397,7 +310,7 @@ export async function confirmReport(
     const updated = await query(
       `UPDATE community_reports SET confirmations = confirmations + 1
        WHERE id = $1 RETURNING confirmations`,
-      [id]
+      [id],
     );
     return Number(updated[0].confirmations);
   }
@@ -413,7 +326,7 @@ export async function confirmReport(
 
 export async function hasConfirmed(
   id: string,
-  token: string | undefined
+  token: string | undefined,
 ): Promise<boolean> {
   if (!token) return false;
   const tokenHash = hashConfirmationToken(token);
@@ -421,7 +334,7 @@ export async function hasConfirmed(
   if (isDatabaseConfigured()) {
     const rows = await query(
       "SELECT 1 FROM report_confirmations WHERE report_id = $1 AND token_hash = $2 LIMIT 1",
-      [id, tokenHash]
+      [id, tokenHash],
     );
     return rows.length > 0;
   }
@@ -429,7 +342,7 @@ export async function hasConfirmed(
 }
 
 export async function getConfirmedIds(
-  tokens: Iterable<string>
+  tokens: Iterable<string>,
 ): Promise<Set<string>> {
   // A single browser holds exactly one anon token; kept generic for clarity.
   if (!isDatabaseConfigured()) {
@@ -447,19 +360,19 @@ export async function getConfirmedIds(
   if (hashes.length === 0) return new Set();
   const rows = await query(
     "SELECT DISTINCT report_id FROM report_confirmations WHERE token_hash = ANY($1)",
-    [hashes]
+    [hashes],
   );
   return new Set(rows.map((row) => String(row.report_id)));
 }
 
 /** True when an existing report has the same normalized-description fingerprint. */
 export async function hasDescriptionFingerprint(
-  fingerprint: string
+  fingerprint: string,
 ): Promise<boolean> {
   if (isDatabaseConfigured()) {
     const rows = await query(
       "SELECT 1 FROM community_reports WHERE description_fp = $1 LIMIT 1",
-      [fingerprint]
+      [fingerprint],
     );
     return rows.length > 0;
   }
@@ -485,7 +398,6 @@ export async function getMeta(): Promise<ReportsMeta> {
     return { approvedCount, awaitingReview, totalConfirmations };
   }
 
-  await ensureSeeded();
   const rows = await query<{
     approved_count: string;
     pending_count: string;
@@ -495,7 +407,7 @@ export async function getMeta(): Promise<ReportsMeta> {
        COUNT(*) FILTER (WHERE status = 'approved')::text AS approved_count,
        COUNT(*) FILTER (WHERE status = 'pending')::text AS pending_count,
        COALESCE(SUM(confirmations), 0)::text AS total_confirmations
-     FROM community_reports`
+     FROM community_reports`,
   );
   return {
     approvedCount: Number(rows[0].approved_count),

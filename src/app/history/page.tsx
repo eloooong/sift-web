@@ -1,14 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Camera, ChevronRight, Clock3, Inbox, Link2, MessageSquareWarning, ScanLine } from "lucide-react";
+import {
+  Camera,
+  ChevronRight,
+  Clock3,
+  Inbox,
+  Link2,
+  MessageSquareWarning,
+  ScanLine,
+} from "lucide-react";
 
-import { FadeIn } from "@/components/shared/fade-in";
 import { Button } from "@/components/ui/button";
 import {
   DeleteAllHistoryButton,
   DeleteScanButton,
 } from "@/components/history/delete-controls";
 import { RiskBadge } from "@/components/shared/risk-badge";
+import { T } from "@/components/providers/t";
+import { isDatabaseConfigured } from "@/lib/db";
 import { requireUser } from "@/lib/auth/session";
 import { listUserHistory } from "@/lib/history/store";
 import type { HistoryScanType } from "@/lib/history/store";
@@ -30,9 +39,22 @@ const SCAN_TYPE_META: Record<
 function formatDateTime(iso: string): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return iso;
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} · ${String(
-    date.getHours()
+    date.getHours(),
   ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 }
 
@@ -43,22 +65,23 @@ export default async function HistoryPage() {
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20">
-      <FadeIn className="flex flex-wrap items-end justify-between gap-3">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="mt-2 page-title">
-            Scan history
-          </h1>
+          <h1 className="mt-2 page-title">Scan history</h1>
           <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             Scans you ran while signed in. Only your account can see these.
           </p>
         </div>
         <DeleteAllHistoryButton count={entries.length} signedIn />
-      </FadeIn>
+      </div>
 
       {entries.length === 0 ? (
-        <FadeIn delay={0.04}>
+        <div>
           <div className="mt-10 flex flex-col items-center rounded-xl border border-dashed p-10 text-center">
-            <Inbox aria-hidden="true" className="size-7 text-muted-foreground" />
+            <Inbox
+              aria-hidden="true"
+              className="size-7 text-muted-foreground"
+            />
             <p className="mt-4 text-sm font-medium">No scans yet</p>
             <p className="mt-1 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Run a scan while signed in and it will show up here so you can
@@ -71,15 +94,15 @@ export default async function HistoryPage() {
               </Link>
             </Button>
           </div>
-        </FadeIn>
+        </div>
       ) : (
         <ul className="mt-8 flex flex-col gap-2.5">
-          {entries.map((entry, index) => {
+          {entries.map((entry) => {
             const meta = SCAN_TYPE_META[entry.scanType];
             const failed = entry.status === "failed";
             return (
               <li key={entry.id}>
-                <FadeIn delay={Math.min(index * 0.04, 0.24)}>
+                <div>
                   <article className="flex items-center gap-3 rounded-xl bg-card p-3.5 ring-1 ring-foreground/10 sm:p-4">
                     <span
                       aria-hidden="true"
@@ -118,7 +141,9 @@ export default async function HistoryPage() {
                         {!failed && entry.categoryLabel ? (
                           <>
                             <span aria-hidden="true">·</span>
-                            <span className="font-sans">{entry.categoryLabel}</span>
+                            <span className="font-sans">
+                              {entry.categoryLabel}
+                            </span>
                           </>
                         ) : null}
                       </p>
@@ -133,7 +158,9 @@ export default async function HistoryPage() {
                         <>
                           <span className="hidden font-mono text-sm font-semibold tabular-nums md:inline">
                             {entry.riskScore}
-                            <span className="text-[10px] font-normal text-muted-foreground">/100</span>
+                            <span className="text-[10px] font-normal text-muted-foreground">
+                              /100
+                            </span>
                           </span>
                           <RiskBadge level={entry.riskLevel!} />
                         </>
@@ -145,7 +172,10 @@ export default async function HistoryPage() {
                         size="sm"
                         className="h-10 px-3 sm:h-7"
                       >
-                        <Link href={`/history/${entry.id}`} aria-label="Open scan result">
+                        <Link
+                          href={`/history/${entry.id}`}
+                          aria-label="Open scan result"
+                        >
                           Open
                         </Link>
                       </Button>
@@ -153,7 +183,7 @@ export default async function HistoryPage() {
                       <DeleteScanButton entryId={entry.id} />
                     </div>
                   </article>
-                </FadeIn>
+                </div>
               </li>
             );
           })}
@@ -162,7 +192,13 @@ export default async function HistoryPage() {
 
       <p className="mt-8 flex items-center gap-1.5 text-xs leading-relaxed text-muted-foreground">
         <ChevronRight aria-hidden="true" className="size-3.5" />
-        History lives in this demo server&apos;s memory and resets on restart.
+        <T
+          k={
+            isDatabaseConfigured()
+              ? "history.storage.saved"
+              : "history.storage.local"
+          }
+        />
       </p>
     </div>
   );

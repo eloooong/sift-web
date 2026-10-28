@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "lint:design": "impeccable detect src/",
-    "db:migrate": "node scripts/migrate.mjs"
+    "db:migrate": "node scripts/migrate.mjs",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "tsx scripts/detector-check.ts && tsx scripts/url-analyzer-check.ts && tsx scripts/screenshot-validation-check.ts && tsx scripts/ai-validation-check.ts && tsx --test tests/security.test.ts",
+    "check": "npm run lint && npm run typecheck && npm test && npm run lint:design"
   },
   "engines": {
     "node": ">=22.18"
@@ -18,7 +21,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^13.1.1",
     "lucide-react": "^1.34.0",
-    "next": "16.3.2",
+    "next": "^16.4.3",
     "pg": "^8.23.0",
     "radix-ui": "^1.6.7",
     "react": "19.2.8",
@@ -35,9 +38,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "^16.4.3",
     "impeccable": "^3.6.0",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

@@ -1,4 +1,5 @@
 import { Pool, type PoolClient, type QueryResultRow } from "pg";
+import { postgresTlsOptions } from "./connection.mjs";
 
 /**
  * PostgreSQL access layer.
@@ -24,12 +25,9 @@ const globalForPg = globalThis as unknown as {
 };
 
 function createPool(): Pool {
-  const needsSsl =
-    !/localhost|127\.0\.0\.1|::1/.test(connectionString) &&
-    !/sslmode=disable/.test(connectionString);
   return new Pool({
     connectionString,
-    ...(needsSsl ? { ssl: { rejectUnauthorized: false } } : {}),
+    ...postgresTlsOptions(connectionString),
     max: Number(process.env.PGPOOL_MAX ?? 5),
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: Number(process.env.PGCONNECT_TIMEOUT_MS ?? 10_000),
@@ -39,7 +37,7 @@ function createPool(): Pool {
 export function getPool(): Pool {
   if (!isDatabaseConfigured()) {
     throw new Error(
-      "DATABASE_URL is not set; the Postgres layer cannot be used."
+      "DATABASE_URL is not set; the Postgres layer cannot be used.",
     );
   }
   globalForPg.__scamshieldPgPool ??= createPool();
@@ -49,7 +47,7 @@ export function getPool(): Pool {
 /** Run a parameterized query. Never interpolate values into SQL text. */
 export async function query<T extends QueryResultRow>(
   text: string,
-  params?: unknown[]
+  params?: unknown[],
 ): Promise<T[]> {
   const pool = getPool();
   const result = await pool.query<T>(text, params);
@@ -57,7 +55,7 @@ export async function query<T extends QueryResultRow>(
 }
 
 export async function transaction<T>(
-  work: (client: PoolClient) => Promise<T>
+  work: (client: PoolClient) => Promise<T>,
 ): Promise<T> {
   const client = await getPool().connect();
   try {

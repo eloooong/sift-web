@@ -3,7 +3,6 @@ import { EyeOff, FileWarning, ShieldCheck, Timer } from "lucide-react";
 
 import { ScreenshotScanner } from "@/components/scanner/screenshot-scanner";
 import { ScannerModeTabs } from "@/components/scanner/scanner-mode-tabs";
-import { FadeIn } from "@/components/shared/fade-in";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { T } from "@/components/providers/t";
 
@@ -34,24 +33,24 @@ const PRIVACY_POINTS = [
 export default function ScreenshotScannerPage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
-      <FadeIn>
+      <div>
         <SectionHeading
           as="h1"
           align="left"
           title={<T k="screenshot.page.title" />}
           description={<T k="screenshot.page.description" />}
         />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.04} className="mt-6">
+      <div className="mt-6">
         <ScannerModeTabs active="screenshot" />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.08} className="mt-8">
+      <div className="mt-8">
         <ScreenshotScanner />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.12}>
+      <div>
         <section
           aria-labelledby="privacy-heading"
           className="mt-10 rounded-xl border bg-muted/30 px-5 py-5 sm:px-6"
@@ -85,7 +84,7 @@ export default function ScreenshotScannerPage() {
             <T k="screenshot.privacy.rules" />
           </p>
         </section>
-      </FadeIn>
+      </div>
     </div>
   );
 }

@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 
 import { SectionHeading } from "@/components/shared/section-heading";
-import { FadeIn } from "@/components/shared/fade-in";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
@@ -45,43 +44,42 @@ const AUDIENCES = [
 export default function AboutPage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-      <FadeIn>
+      <div>
         <SectionHeading
           as="h1"
           eyebrow="About"
           title="Fighting scams, one message at a time"
           description="Sift exists because scam messages in the Philippines are not an edge case: they are a daily reality in every inbox, SMS thread, and Messenger chat."
         />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.05}>
+      <div>
         <Card className="mt-10">
           <CardContent className="space-y-4 pt-1 text-sm leading-relaxed text-muted-foreground">
             <p>
               Fake prize notifications. Phony delivery fees. Too-good-to-be-
               true home-based jobs. Messages that impersonate GCash, Maya,
-              banks, couriers, and government agencies. These scams work
-              because they arrive at the right moment, dressed in familiar
-              branding, pressuring you to act before you can think.
+              banks, couriers, and government agencies. These scams work because
+              they arrive at the right moment, dressed in familiar branding,
+              pressuring you to act before you can think.
             </p>
             <p>
-              Sift is built to break that pattern. Instead of a
-              mysterious “this is a scam” verdict, every analysis explains
-              itself: a risk score, the detected scam category, the specific
-              red flags found in the message, and clear next steps you can act
-              on, written so students, parents, and senior citizens can all
-              understand them.
+              Sift is built to break that pattern. Instead of a mysterious “this
+              is a scam” verdict, every analysis explains itself: a risk score,
+              the detected scam category, the specific red flags found in the
+              message, and clear next steps you can act on, written so students,
+              parents, and senior citizens can all understand them.
             </p>
             <p>
-              The project is independent and educational. When analysis flags
-              an impersonated brand, that brand is the victim of imitation,
-              never the suspect.
+              The project is independent and educational. When analysis flags an
+              impersonated brand, that brand is the victim of imitation, never
+              the suspect.
             </p>
           </CardContent>
         </Card>
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.08}>
+      <div>
         <section className="mt-14">
           <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
             What Sift looks for
@@ -98,17 +96,16 @@ export default function AboutPage() {
             ))}
           </ul>
         </section>
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.08}>
+      <div>
         <section className="mt-14">
           <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
             Built for Filipinos online
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Examples, patterns, and language are grounded in how scams
-            actually reach people in the Philippines, including Taglish
-            phrasing.
+            Examples, patterns, and language are grounded in how scams actually
+            reach people in the Philippines, including Taglish phrasing.
           </p>
           <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {AUDIENCES.map((audience) => (
@@ -123,23 +120,22 @@ export default function AboutPage() {
             ))}
           </ul>
         </section>
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.08}>
+      <div>
         <div className="mt-14 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-4">
           <Scale className="mt-0.5 size-4 shrink-0 text-amber-600" />
           <p className="text-xs leading-relaxed text-amber-900">
-            <span className="font-medium">Honest-use disclaimer.</span>{" "}
-            Sift is an independent educational tool, not legal,
-            financial, or security advice. It is not affiliated with GCash,
-            Maya, any bank, Shopee, Lazada, LBC, J&amp;T Express, Grab, or any
-            government agency; those names appear only as examples of brands
-            scammers impersonate. For anything involving real money or
-            accounts, always verify through official apps and hotlines before
-            taking action.
+            <span className="font-medium">Honest-use disclaimer.</span> Sift is
+            an independent educational tool, not legal, financial, or security
+            advice. It is not affiliated with GCash, Maya, any bank, Shopee,
+            Lazada, LBC, J&amp;T Express, Grab, or any government agency; those
+            names appear only as examples of brands scammers impersonate. For
+            anything involving real money or accounts, always verify through
+            official apps and hotlines before taking action.
           </p>
         </div>
-      </FadeIn>
+      </div>
     </div>
   );
 }

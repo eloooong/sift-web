@@ -3,7 +3,6 @@ import { Globe, Info, ShieldCheck } from "lucide-react";
 
 import { UrlScanner } from "@/components/scanner/url-scanner";
 import { ScannerModeTabs } from "@/components/scanner/scanner-mode-tabs";
-import { FadeIn } from "@/components/shared/fade-in";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { T } from "@/components/providers/t";
 
@@ -16,24 +15,24 @@ export const metadata: Metadata = {
 export default function UrlScannerPage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
-      <FadeIn>
+      <div>
         <SectionHeading
           as="h1"
           align="left"
           title={<T k="url.page.title" />}
           description={<T k="url.page.description" />}
         />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.04} className="mt-6">
+      <div className="mt-6">
         <ScannerModeTabs active="url" />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.08} className="mt-8">
+      <div className="mt-8">
         <UrlScanner />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.12}>
+      <div>
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
           <div className="flex items-start gap-3 rounded-xl border px-4 py-3.5">
             <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success" />
@@ -63,7 +62,7 @@ export default function UrlScannerPage() {
             </p>
           </div>
         </div>
-      </FadeIn>
+      </div>
     </div>
   );
 }

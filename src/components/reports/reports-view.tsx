@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { FadeIn } from "@/components/shared/fade-in";
 import { ReportForm } from "@/components/reports/report-form";
 import { ReportsBoard } from "@/components/reports/reports-board";
 
@@ -28,9 +27,9 @@ export function ReportsView() {
           </span>
         </div>
 
-        <FadeIn delay={0.06}>
+        <div>
           <ReportForm onSubmitted={() => setRefreshKey((value) => value + 1)} />
-        </FadeIn>
+        </div>
 
         <p className="rounded-lg border border-dashed p-3 text-sm leading-relaxed text-muted-foreground">
           Never include real passwords, OTPs, or full account numbers in any
@@ -51,9 +50,9 @@ export function ReportsView() {
           </span>
         </div>
 
-        <FadeIn delay={0.12}>
+        <div>
           <ReportsBoard refreshKey={refreshKey} />
-        </FadeIn>
+        </div>
       </section>
     </div>
   );

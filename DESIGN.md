@@ -274,13 +274,15 @@ Night mode is available through a 44px switch in the desktop header and a labele
 
 Each risk badge combines a written risk label and colored dot. Low, medium, and high use their color tint and readable semantic foreground; critical uses solid danger with white text. Evidence highlights add a tint and underline so the distinction survives more than color alone. Reports place recommended actions immediately after the verdict.
 
+The scanner uses an indeterminate status while waiting for the server. It never advances completed steps on a timer.
+
 ### Motion
 
 The homepage has a single coordinated arrival: the headline settles over 650ms, the actions follow at 120ms, and the analysis panel arrives over 750ms. Content starts visible; there are no perpetual effects or repeated section entrances. The sample message runs a single 900ms inspection line, traces its warning cue, and fills its risk bar when selected. This is an explicitly illustrative example, not a simulated live request.
 
 Sample and walkthrough panels share grid cells so every option reserves its full size. Switching states uses a 280ms vertical settle and the walkthrough indicator moves over 350ms. The three-step walkthrough advances only on user input; example links move their arrow 4px on hover or keyboard focus. All cues use the existing semantic colors and flat surfaces.
 
-Reduced motion removes homepage entrance, inspection, marker, progress-fill, spatial content, and arrow animations immediately. Selection, content, risk values, and the walkthrough remain available. The compatibility FadeIn wrapper still renders directly; scanner motion remains separate. Functional loading spinners are preserved by the global rule.
+Reduced motion removes homepage entrance, inspection, marker, progress-fill, spatial content, and arrow animations immediately. Selection, content, risk values, and the walkthrough remain available. Scanner motion remains separate. Functional loading spinners are preserved by the global rule.
 
 ## Do's and Don'ts
 

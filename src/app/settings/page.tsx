@@ -6,7 +6,6 @@ import {
   ProfileForm,
   SignOutButton,
 } from "@/components/account/account-forms";
-import { FadeIn } from "@/components/shared/fade-in";
 import { requireUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = {
@@ -19,18 +18,21 @@ export default async function SettingsPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-12 sm:px-6 sm:py-20">
-      <FadeIn>
+      <div>
         <h1 className="mt-2 page-title">Settings</h1>
         <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-muted-foreground sm:text-base">
           Manage how your name appears in the app and keep your account secure.
         </p>
-      </FadeIn>
+      </div>
 
       <div className="mt-8 flex flex-col gap-5">
-        <FadeIn delay={0.04}>
+        <div>
           <section className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
             <h2 className="flex items-center gap-2 text-sm font-semibold">
-              <CircleUser aria-hidden="true" className="size-4 text-muted-foreground" />
+              <CircleUser
+                aria-hidden="true"
+                className="size-4 text-muted-foreground"
+              />
               Profile
             </h2>
             <p className="mt-1 mb-4 text-xs leading-relaxed text-muted-foreground">
@@ -42,16 +44,19 @@ export default async function SettingsPage() {
                 month: "short",
                 day: "numeric",
               })}
-              . Email can&apos;t be changed in this demo.
+              . Email changes are not supported.
             </p>
             <ProfileForm initialName={user.displayName} />
           </section>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.08}>
+        <div>
           <section className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
             <h2 className="flex items-center gap-2 text-sm font-semibold">
-              <KeyRound aria-hidden="true" className="size-4 text-muted-foreground" />
+              <KeyRound
+                aria-hidden="true"
+                className="size-4 text-muted-foreground"
+              />
               Password
             </h2>
             <p className="mt-1 mb-4 text-xs leading-relaxed text-muted-foreground">
@@ -59,12 +64,15 @@ export default async function SettingsPage() {
             </p>
             <PasswordForm />
           </section>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.12}>
+        <div>
           <section className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed p-5">
             <div className="flex items-start gap-2.5">
-              <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success" />
+              <ShieldCheck
+                aria-hidden="true"
+                className="mt-0.5 size-4 shrink-0 text-success"
+              />
               <p className="max-w-sm text-xs leading-relaxed text-muted-foreground">
                 Your scan history is private to this account and is checked
                 server-side on every request; signed-out visitors and other
@@ -73,7 +81,7 @@ export default async function SettingsPage() {
             </div>
             <SignOutButton full />
           </section>
-        </FadeIn>
+        </div>
       </div>
     </div>
   );

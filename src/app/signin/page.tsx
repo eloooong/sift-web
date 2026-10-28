@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { KeyRound } from "lucide-react";
 
 import { AuthForm } from "@/components/auth/auth-form";
-import { FadeIn } from "@/components/shared/fade-in";
 import { T } from "@/components/providers/t";
 import { currentUser } from "@/lib/auth/session";
 
@@ -31,7 +30,7 @@ export default async function SignInPage({
   return (
     <div className="relative overflow-hidden">
       <div className="mx-auto w-full max-w-5xl grid items-center gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-2 lg:gap-20">
-        <FadeIn className="flex flex-col items-start">
+        <div className="flex flex-col items-start">
           <span className="flex size-12 items-center justify-center rounded-xl bg-primary/10">
             <KeyRound aria-hidden="true" className="size-5 text-primary" />
           </span>
@@ -47,11 +46,11 @@ export default async function SignInPage({
           <p className="mt-4 text-sm text-muted-foreground">
             <T k="auth.aside.note" />
           </p>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={1} className="lg:mt-0">
+        <div className="lg:mt-0">
           <AuthForm mode="signin" nextPath={nextPath} />
-        </FadeIn>
+        </div>
       </div>
     </div>
   );

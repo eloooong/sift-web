@@ -117,7 +117,7 @@ console.log("=== Built-in example seeds ===\n");
 for (const example of EXAMPLE_SCAMS) {
   const report = analyzeMessage(example.sampleText);
   console.log(
-    `${example.label}: score=${report.riskScore} level=${report.riskLevel} category=${report.category?.label ?? "-"} confidence=${report.confidence}% signals=${report.signals.length}`
+    `${example.label}: score=${report.riskScore} level=${report.riskLevel} category=${report.category?.label ?? "-"} confidence=${report.confidence}% signals=${report.signals.length}`,
   );
 }
 
@@ -126,64 +126,73 @@ for (const testCase of EXTRA_CASES) {
   const report = analyzeMessage(testCase.text);
   const label = `${testCase.name}`;
   console.log(
-    `\n[${label}] score=${report.riskScore} level=${report.riskLevel} category=${report.category?.label ?? "-"}`
+    `\n[${label}] score=${report.riskScore} level=${report.riskLevel} category=${report.category?.label ?? "-"}`,
   );
   for (const signal of report.signals) {
     console.log(`   +${signal.weight} ${signal.label} → "${signal.evidence}"`);
   }
 
   if (testCase.expectMinScore !== undefined) {
-    assert(report.riskScore >= testCase.expectMinScore, `score ≥ ${testCase.expectMinScore}`);
+    assert(
+      report.riskScore >= testCase.expectMinScore,
+      `score ≥ ${testCase.expectMinScore}`,
+    );
   }
   if (testCase.expectMaxScore !== undefined) {
-    assert(report.riskScore <= testCase.expectMaxScore, `score ≤ ${testCase.expectMaxScore}`);
+    assert(
+      report.riskScore <= testCase.expectMaxScore,
+      `score ≤ ${testCase.expectMaxScore}`,
+    );
   }
   if (testCase.expectCategory) {
-    assert(report.category?.label === testCase.expectCategory, `category = ${testCase.expectCategory}`);
+    assert(
+      report.category?.label === testCase.expectCategory,
+      `category = ${testCase.expectCategory}`,
+    );
   }
   assert(report.recommendedActions.length > 0, "has recommended actions");
   assert(report.summary.length > 20, "has summary explanation");
   assert(
     report.confidence > 0 && report.confidence <= 97,
-    "confidence within 1–97"
+    "confidence within 1–97",
   );
 }
 
-console.log("\n=== Phase 3 report structure checks ===\n");
+console.log("\n=== Report structure checks ===\n");
 const prizeReport = analyzeMessage(EXAMPLE_SCAMS[0].sampleText);
 assert(
   prizeReport.riskScore >= 80 && prizeReport.riskLevel === "critical",
-  "prize sample lands in the critical band (≥80)"
+  "prize sample lands in the critical band (≥80)",
 );
 assert(
   prizeReport.signals.every((signal) => signal.explanation.length > 10),
-  "every detected signal carries a plain-language explanation"
+  "every detected signal carries a plain-language explanation",
 );
 assert(
   prizeReport.signals.every((signal) => signal.evidence.length > 0),
-  "every detected signal carries quoted evidence"
+  "every detected signal carries quoted evidence",
 );
 const weightSum = prizeReport.signals.reduce(
   (sum, signal) => sum + signal.weight,
-  0
+  0,
 );
 const breakdownSum = prizeReport.breakdown.reduce(
   (sum, row) => sum + row.total,
-  0
+  0,
 );
 assert(
   breakdownSum === weightSum,
-  `breakdown rows (${breakdownSum}) equal summed signal weights (${weightSum})`
+  `breakdown rows (${breakdownSum}) equal summed signal weights (${weightSum})`,
 );
 assert(prizeReport.breakdown.length > 1, "score breakdown has multiple rows");
 
 const gcashReport = analyzeMessage(EXAMPLE_SCAMS[1].sampleText);
 assert(
   gcashReport.category?.label === "E-wallet Scam",
-  "GCash sample categorized as E-wallet Scam"
+  "GCash sample categorized as E-wallet Scam",
 );
 const deliveryExample = EXAMPLE_SCAMS.find(
-  (example) => example.id === "lazada-delivery-scam"
+  (example) => example.id === "lazada-delivery-scam",
 );
 if (!deliveryExample) {
   throw new Error("delivery sample missing from EXAMPLE_SCAMS");
@@ -191,10 +200,10 @@ if (!deliveryExample) {
 const deliveryReport = analyzeMessage(deliveryExample.sampleText);
 assert(
   deliveryReport.category?.label === "Delivery Scam",
-  "delivery sample categorized as Delivery Scam"
+  "delivery sample categorized as Delivery Scam",
 );
 
-console.log("\n=== Phase 5 category coverage ===\n");
+console.log("\n=== Category coverage ===\n");
 const coveredLabels = new Set<string>();
 for (const example of EXAMPLE_SCAMS) {
   const report = analyzeMessage(example.sampleText);
@@ -206,7 +215,7 @@ for (const testCase of EXTRA_CASES) {
 }
 assert(
   coveredLabels.size >= 9,
-  `classifier distinguishes at least 9 categories (got ${coveredLabels.size}: ${[...coveredLabels].join(", ")})`
+  `classifier distinguishes at least 9 categories (got ${coveredLabels.size}: ${[...coveredLabels].join(", ")})`,
 );
 
 console.log("\n=== Community intel signal ===");
@@ -214,8 +223,10 @@ const intelText =
   "Your GCash account will be closed. Call our agent at 0917 123 4567 now to verify.";
 const withoutIntel = analyzeMessage(intelText);
 assert(
-  !withoutIntel.signals.some((signal) => signal.id === "intel.community-number"),
-  "no community intel signal when no matches are provided"
+  !withoutIntel.signals.some(
+    (signal) => signal.id === "intel.community-number",
+  ),
+  "no community intel signal when no matches are provided",
 );
 const withIntel = analyzeMessage(intelText, {
   intelMatches: [
@@ -231,20 +242,20 @@ const withIntel = analyzeMessage(intelText, {
   ],
 });
 const intelSignal = withIntel.signals.find(
-  (signal) => signal.id === "intel.community-number"
+  (signal) => signal.id === "intel.community-number",
 );
 assert(Boolean(intelSignal), "community intel signal fires on a known number");
 assert(
   intelSignal !== undefined && intelSignal.weight >= 30,
-  `confirmed block-listed number weighs heavily (${intelSignal?.weight})`
+  `confirmed block-listed number weighs heavily (${intelSignal?.weight})`,
 );
 assert(
   withIntel.riskScore > withoutIntel.riskScore,
-  `intel match raises the score (${withoutIntel.riskScore} → ${withIntel.riskScore})`
+  `intel match raises the score (${withoutIntel.riskScore} → ${withIntel.riskScore})`,
 );
 assert(
   withIntel.breakdown.some((row) => row.category === "intel"),
-  "breakdown includes the community threat intel row"
+  "breakdown includes the community threat intel row",
 );
 
 console.log("\n=== Determinism check ===");

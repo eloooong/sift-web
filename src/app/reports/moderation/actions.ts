@@ -28,9 +28,7 @@ export async function isModerator(): Promise<boolean> {
   if (!token) return false;
 
   const cookieStore = await cookies();
-  return (
-    cookieStore.get(MOD_COOKIE)?.value === tokenFingerprint(token)
-  );
+  return cookieStore.get(MOD_COOKIE)?.value === tokenFingerprint(token);
 }
 
 export async function signInModerator(formData: FormData) {
@@ -57,9 +55,7 @@ export async function signOutModerator() {
   redirect("/reports/moderation");
 }
 
-export async function moderateReportAction(
-  formData: FormData
-): Promise<void> {
+export async function moderateReportAction(formData: FormData): Promise<void> {
   const id = String(formData.get("id") ?? "");
   const status = String(formData.get("status") ?? "");
 

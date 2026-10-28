@@ -8,7 +8,7 @@ import { promisify } from "node:util";
 const scrypt = promisify(scryptCallback) as (
   password: string,
   salt: Buffer,
-  keylen: number
+  keylen: number,
 ) => Promise<Buffer>;
 
 const KEY_LENGTH = 64;
@@ -27,15 +27,22 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(
   password: string,
-  stored: string
+  stored: string,
 ): Promise<boolean> {
-  const [format, saltHex, hashHex] = stored.split(":");
-  if (format !== FORMAT || !saltHex || !hashHex) return false;
+  const parts = stored.split(":");
+  const [format, saltHex, hashHex] = parts;
+  if (
+    parts.length !== 3 ||
+    format !== FORMAT ||
+    !/^[a-f0-9]{32}$/i.test(saltHex ?? "") ||
+    !/^[a-f0-9]{128}$/i.test(hashHex ?? "")
+  )
+    return false;
 
   try {
     const salt = Buffer.from(saltHex, "hex");
     const expected = Buffer.from(hashHex, "hex");
-    const derived = await scrypt(password, salt, expected.length);
+    const derived = await scrypt(password, salt, KEY_LENGTH);
     return timingSafeEqual(derived, expected);
   } catch {
     return false;

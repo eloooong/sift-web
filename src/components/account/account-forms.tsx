@@ -5,11 +5,7 @@ import { useRouter } from "next/navigation";
 import { Check, LoaderCircle, LogOut } from "lucide-react";
 import { useLang } from "@/components/providers/language-provider";
 
-export function ProfileForm({
-  initialName,
-}: {
-  initialName: string;
-}) {
+export function ProfileForm({ initialName }: { initialName: string }) {
   const router = useRouter();
   const [name, setName] = useState(initialName);
   const [state, setState] = useState<"idle" | "saving" | "saved">("idle");
@@ -211,33 +207,45 @@ export function SignOutButton({
   const router = useRouter();
   const { t } = useLang();
   const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   async function signOut() {
     if (busy) return;
     setBusy(true);
+    setFailed(false);
     try {
-      await fetch("/api/auth/signout", { method: "POST" });
+      const response = await fetch("/api/auth/signout", { method: "POST" });
+      if (!response.ok) throw new Error("Sign-out failed");
       onSignedOut?.();
       router.push("/");
       router.refresh();
+    } catch {
+      setFailed(true);
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <button
-      type="button"
-      onClick={signOut}
-      disabled={busy}
-      className={
-        full
-          ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-muted disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          : "flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      }
-    >
-      <LogOut aria-hidden="true" className={full ? "size-4" : "size-3.5"} />
-      {busy ? t("nav.signingOut") : t("nav.signOut")}
-    </button>
+    <div className={full ? "flex flex-col gap-2" : "w-full"}>
+      <button
+        type="button"
+        onClick={signOut}
+        disabled={busy}
+        className={
+          full
+            ? "inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition-colors hover:bg-muted disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            : "flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        }
+      >
+        <LogOut aria-hidden="true" className={full ? "size-4" : "size-3.5"} />
+        {busy ? t("nav.signingOut") : t("nav.signOut")}
+      </button>
+      {failed ? (
+        <p role="alert" className="text-sm text-danger-foreground">
+          {t("nav.signOutFailed")}
+        </p>
+      ) : null}
+    </div>
   );
 }

@@ -7,8 +7,8 @@ import {
 /**
  * Corpus-anchored dashboard dataset.
  *
- * Sift does not persist scans yet, so instead of inventing numbers
- * every figure here is derived from the public Kaggle dataset
+ * These research figures are separate from private user scan history.
+ * Every figure here is derived from the public Kaggle dataset
  * "Philippine Spam SMS Messages" by bwandowando (CC BY-NC-SA 4.0):
  * 1,021 real spam texts shared by Filipino users, scored offline with the
  * actual Sift rules engine. Only aggregate statistics are stored.

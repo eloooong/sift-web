@@ -217,27 +217,6 @@
   );
 }
 
-@keyframes scanner-sweep {
-  0% {
-    transform: translateX(-120%);
-  }
-  100% {
-    transform: translateX(420%);
-  }
-}
-
-/* Landing page sample report card entrance */
-@keyframes hero-badge-pop {
-  from {
-    opacity: 0;
-    transform: translateY(4px) scale(0.96);
-  }
-}
-
-.hero-badge-pop {
-  animation: hero-badge-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
 /* Homepage choreography: a single arrival, then motion follows user actions. */
 @keyframes home-copy-arrive {
   from {

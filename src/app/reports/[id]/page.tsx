@@ -6,13 +6,9 @@ import { ArrowLeft, BadgeCheck, ImagePlus } from "lucide-react";
 
 import { CategoryBadge } from "@/components/shared/category-badge";
 import { RiskBadge } from "@/components/shared/risk-badge";
-import { FadeIn } from "@/components/shared/fade-in";
 import { ConfirmButton } from "@/components/reports/confirm-button";
 import { scamCategoryById } from "@/lib/scam-detector/categories";
-import {
-  getApprovedReport,
-  hasConfirmed,
-} from "@/lib/reports/store";
+import { getApprovedReport, hasConfirmed } from "@/lib/reports/store";
 import { ANON_COOKIE, PLATFORM_LABELS } from "@/lib/reports/types";
 import { formatDay, timeAgo } from "@/lib/reports/time-ago";
 
@@ -62,7 +58,7 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
         All reports
       </Link>
 
-      <FadeIn className="mt-4">
+      <div className="mt-4">
         <article className="rounded-xl bg-card p-5 ring-1 ring-foreground/10 sm:p-7">
           <div className="flex flex-wrap items-center gap-2">
             <CategoryBadge category={category} />
@@ -111,7 +107,9 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
               <p className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
                 Reported handle / domain (masked)
               </p>
-              <p className="mt-1 font-mono text-sm break-all">{report.sender}</p>
+              <p className="mt-1 font-mono text-sm break-all">
+                {report.sender}
+              </p>
             </div>
           ) : null}
 
@@ -132,7 +130,9 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
               />
               <figcaption className="mt-1.5 inline-flex items-center gap-1 font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
                 <ImagePlus aria-hidden="true" className="size-3" />
-                attached screenshot · {(report.screenshot.byteSize / 1024).toFixed(0)} KB · verify before trusting
+                attached screenshot ·{" "}
+                {(report.screenshot.byteSize / 1024).toFixed(0)} KB · verify
+                before trusting
               </figcaption>
             </figure>
           ) : null}
@@ -149,9 +149,9 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
             </p>
           </div>
         </article>
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={1}>
+      <div>
         <div className="mt-6 rounded-xl border border-dashed p-5">
           <h2 className="text-sm font-semibold">Received something similar?</h2>
           <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
@@ -166,7 +166,7 @@ export default async function ReportDetailPage({ params }: { params: Params }) {
             so others get warned too.
           </p>
         </div>
-      </FadeIn>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,25 @@ import type { Lang } from "./config";
 
 export const DICT = {
   en: {
+    "progress.text.title": "Checking your message",
+    "progress.text.body":
+      "Looking for warning signs. Your result and recommended next steps will appear here.",
+    "progress.screenshot.title": "Reading your screenshot",
+    "progress.screenshot.body":
+      "Extracting the text and checking it for warning signs. Larger images can take longer.",
+    "progress.url.title": "Checking the link",
+    "progress.url.body":
+      "Inspecting the address without opening the link. Your result will appear here.",
+    "progress.cancel": "Cancel check",
+    "input.historyNotice":
+      "Scans made while signed in are saved to your private history.",
+    "history.storage.saved": "Saved scans are private to your account.",
+    "history.storage.local":
+      "Local mode: history is kept on this server and clears when it restarts.",
+    "history.reportUnavailable":
+      "The full report for this scan is unavailable. Run it again to create a new report.",
+    "nav.signOutFailed": "Couldn't sign out. Try again.",
+
     "theme.nightMode": "Night mode",
     "theme.switchLight": "Switch to day mode",
     "theme.switchDark": "Switch to night mode",
@@ -317,6 +336,26 @@ export const DICT = {
   },
 
   fil: {
+    "progress.text.title": "Sinusuri ang iyong message",
+    "progress.text.body":
+      "Hinahanap ang mga babala. Lalabas dito ang resulta at mga susunod na hakbang.",
+    "progress.screenshot.title": "Binabasa ang iyong screenshot",
+    "progress.screenshot.body":
+      "Kinukuha at sinusuri ang text para sa mga babala. Maaaring mas matagal ang malalaking larawan.",
+    "progress.url.title": "Sinusuri ang link",
+    "progress.url.body":
+      "Sinusuri ang address nang hindi binubuksan ang link. Lalabas dito ang resulta.",
+    "progress.cancel": "Kanselahin ang pagsusuri",
+    "input.historyNotice":
+      "Naka-save sa pribadong history mo ang mga scan kapag naka-sign in.",
+    "history.storage.saved":
+      "Pribado sa iyong account ang mga naka-save na scan.",
+    "history.storage.local":
+      "Lokal na mode: nasa server na ito ang history at nabubura kapag nag-restart ito.",
+    "history.reportUnavailable":
+      "Wala na ang buong report ng scan na ito. Suriin ulit para gumawa ng bagong report.",
+    "nav.signOutFailed": "Hindi nakapag-sign out. Subukan ulit.",
+
     "theme.nightMode": "Mode sa gabi",
     "theme.switchLight": "Lumipat sa mode sa araw",
     "theme.switchDark": "Lumipat sa mode sa gabi",

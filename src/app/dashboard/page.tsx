@@ -10,7 +10,6 @@ import { RecentScansTable } from "@/components/dashboard/recent-scans-table";
 import { RegionalIncidentsCard } from "@/components/dashboard/regional-incidents-card";
 import { StatCards } from "@/components/dashboard/stat-cards";
 import { TrendChart } from "@/components/dashboard/trend-chart";
-import { FadeIn } from "@/components/shared/fade-in";
 import {
   getCommunityIntel,
   summarizeCommunityIntel,
@@ -35,7 +34,7 @@ export default async function DashboardPage() {
   return (
     <div className="relative">
       <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
-        <FadeIn>
+        <div>
           <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div className="max-w-xl">
               <h1 className="mt-2 page-title">PH Scam Intelligence</h1>
@@ -54,9 +53,9 @@ export default async function DashboardPage() {
               </span>
             </div>
           </header>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.04}>
+        <div>
           <aside className="mt-6 flex items-start gap-2.5 rounded-lg border border-dashed bg-muted/30 px-3.5 py-2.5">
             <Database
               aria-hidden="true"
@@ -75,43 +74,43 @@ export default async function DashboardPage() {
               with verified scores.
             </p>
           </aside>
-        </FadeIn>
-
-        <FadeIn delay={0.08} className="mt-8">
-          <StatCards data={data} />
-        </FadeIn>
-
-        <FadeIn delay={0.12} className="mt-6">
-          <TrendChart series={data.trendSeries} />
-        </FadeIn>
-
-        <FadeIn delay={0.16} className="mt-6">
-          <CommunityIntelCard stats={intelStats} />
-        </FadeIn>
-
-        <FadeIn delay={0.2} className="mt-6">
-          <RegionalIncidentsCard />
-        </FadeIn>
-
-        <div className="mt-6 grid gap-6 xl:grid-cols-2">
-          <FadeIn delay={0.24}>
-            <CorpusInsightsCard />
-          </FadeIn>
-
-          <FadeIn delay={0.28}>
-            <NetworkBreakdownCard />
-          </FadeIn>
-
-          <FadeIn delay={0.32} className="xl:col-span-2">
-            <CategoryDonut categories={data.categories} />
-          </FadeIn>
         </div>
 
-        <FadeIn delay={0.36} className="mt-6">
-          <RecentScansTable scans={data.recentScans} />
-        </FadeIn>
+        <div className="mt-8">
+          <StatCards data={data} />
+        </div>
 
-        <FadeIn delay={0.4}>
+        <div className="mt-6">
+          <TrendChart series={data.trendSeries} />
+        </div>
+
+        <div className="mt-6">
+          <CommunityIntelCard stats={intelStats} />
+        </div>
+
+        <div className="mt-6">
+          <RegionalIncidentsCard />
+        </div>
+
+        <div className="mt-6 grid gap-6 xl:grid-cols-2">
+          <div>
+            <CorpusInsightsCard />
+          </div>
+
+          <div>
+            <NetworkBreakdownCard />
+          </div>
+
+          <div className="xl:col-span-2">
+            <CategoryDonut categories={data.categories} />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <RecentScansTable scans={data.recentScans} />
+        </div>
+
+        <div>
           <p className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-sm text-muted-foreground">
             <span>
               Want these numbers to reflect your own suspicious messages?
@@ -127,7 +126,7 @@ export default async function DashboardPage() {
               />
             </Link>
           </p>
-        </FadeIn>
+        </div>
       </div>
     </div>
   );

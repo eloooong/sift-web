@@ -2,6 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ["tesseract.js"],
+  outputFileTracingIncludes: {
+    // The OCR worker loads its engine and dependencies in a separate thread.
+    "/api/analyze/screenshot": [
+      "./node_modules/tesseract.js/src/**/*",
+      "./node_modules/tesseract.js-core/**/*",
+      "./node_modules/wasm-feature-detect/**/*",
+      "./node_modules/bmp-js/**/*",
+    ],
+  },
   async headers() {
     return [
       {

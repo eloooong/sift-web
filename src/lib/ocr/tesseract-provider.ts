@@ -21,7 +21,7 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
       (error) => {
         clearTimeout(timer);
         reject(error);
-      }
+      },
     );
   });
 }
@@ -36,7 +36,7 @@ export function createTesseractProvider(options?: {
 }): OcrProvider {
   const languages = options?.languages ?? process.env.OCR_LANGUAGES ?? "eng";
   const parsedTimeout = Number(
-    options?.timeoutMs ?? process.env.OCR_TIMEOUT_MS ?? DEFAULT_TIMEOUT_MS
+    options?.timeoutMs ?? process.env.OCR_TIMEOUT_MS ?? DEFAULT_TIMEOUT_MS,
   );
   const timeoutMs =
     Number.isFinite(parsedTimeout) && parsedTimeout > 0
@@ -67,10 +67,6 @@ export function createTesseractProvider(options?: {
     return workerPromise;
   }
 
-  // Start building the worker immediately (WASM init + language data run in
-  // parallel with the rest of the request instead of serially before OCR).
-  void getWorker().catch(() => {});
-
   return {
     id: "tesseract",
 
@@ -86,9 +82,10 @@ export function createTesseractProvider(options?: {
       try {
         const result = await withTimeout(
           worker.recognize(Buffer.from(image)),
-          timeoutMs
+          timeoutMs,
         );
-        const text = typeof result.data.text === "string" ? result.data.text : "";
+        const text =
+          typeof result.data.text === "string" ? result.data.text : "";
         const confidence =
           typeof result.data.confidence === "number"
             ? result.data.confidence
@@ -98,7 +95,7 @@ export function createTesseractProvider(options?: {
         if (error instanceof OcrError) throw error;
         throw new OcrError(
           "failed",
-          "The OCR engine failed while reading the image."
+          "The OCR engine failed while reading the image.",
         );
       }
     },

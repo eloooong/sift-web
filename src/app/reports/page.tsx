@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Megaphone, ShieldCheck } from "lucide-react";
 
-import { FadeIn } from "@/components/shared/fade-in";
 import { ReportsView } from "@/components/reports/reports-view";
 
 export const metadata: Metadata = {
@@ -14,7 +13,7 @@ export default function ReportsPage() {
   return (
     <div className="relative overflow-hidden">
       <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-20">
-        <FadeIn className="max-w-2xl">
+        <div className="max-w-2xl">
           <h1 className="mt-2 page-title">Scam reports from real people</h1>
           <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
             Warn others about scam attempts you&apos;ve received and browse what
@@ -31,7 +30,7 @@ export default function ReportsPage() {
               Moderated before publishing
             </li>
           </ul>
-        </FadeIn>
+        </div>
 
         <ReportsView />
       </div>

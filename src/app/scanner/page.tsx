@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Info, ShieldAlert, Smartphone } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 
 import { ScannerInput } from "@/components/scanner/scanner-input";
 import { ScannerModeTabs } from "@/components/scanner/scanner-mode-tabs";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { FadeIn } from "@/components/shared/fade-in";
 import { T } from "@/components/providers/t";
 
 export const metadata: Metadata = {
@@ -17,50 +16,28 @@ export const metadata: Metadata = {
 export default function ScannerPage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
-      <FadeIn>
+      <div>
         <SectionHeading
           as="h1"
           align="left"
           title={<T k="scanner.page.title" />}
           description={<T k="scanner.page.description" />}
         />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.04} className="mt-6">
+      <div className="mt-6">
         <ScannerModeTabs active="text" />
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.08} className="mt-8">
+      <div className="mt-8">
         <Suspense fallback={<ScannerSkeleton />}>
           <ScannerInput />
         </Suspense>
-      </FadeIn>
+      </div>
 
-      <FadeIn delay={0.12}>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
-          <div className="flex items-start gap-3 rounded-xl border px-4 py-3.5">
-            <Smartphone className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              <span className="font-medium text-foreground">
-                Works on mobile.
-              </span>{" "}
-              Copy the suspicious text from your Messages app, then paste it
-              here in seconds.
-            </p>
-          </div>
-          <div className="flex items-start gap-3 rounded-xl border border-dashed px-4 py-3.5">
-            <Info className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              <span className="font-medium text-foreground">
-                Explainable hybrid engine.
-              </span>{" "}
-              The rule-engine pre-scan contributes named, weighted points, while
-              the AI analyst explains its findings in plain language, with no
-              black box.
-            </p>
-          </div>
-        </div>
-      </FadeIn>
+      <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
+        <T k="input.historyNotice" />
+      </p>
     </div>
   );
 }

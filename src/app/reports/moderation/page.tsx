@@ -12,7 +12,6 @@ import {
 
 import { CategoryBadge } from "@/components/shared/category-badge";
 import { RiskBadge } from "@/components/shared/risk-badge";
-import { FadeIn } from "@/components/shared/fade-in";
 import { scamCategoryById } from "@/lib/scam-detector/categories";
 import {
   getMeta,
@@ -51,7 +50,7 @@ export default async function ModerationPage({
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
-      <FadeIn>
+      <div>
         <p className="font-mono text-[11px] font-medium tracking-widest text-muted-foreground uppercase">
           Internal
         </p>
@@ -59,12 +58,14 @@ export default async function ModerationPage({
           <ShieldCheck aria-hidden="true" className="size-7 text-success" />
           Report moderation
         </h1>
-      </FadeIn>
+      </div>
 
       {!moderator ? (
-        <FadeIn delay={1}>
-          <SignInCard error={error === "invalid" || error === "expired" ? error : null} />
-        </FadeIn>
+        <div>
+          <SignInCard
+            error={error === "invalid" || error === "expired" ? error : null}
+          />
+        </div>
       ) : (
         <QueueView />
       )}
@@ -114,9 +115,6 @@ function SignInCard({ error }: { error: string | null }) {
       >
         Sign in
       </button>
-      <p className="text-center text-[11px] text-muted-foreground/70">
-        Demo default: <code>scamshield-demo</code> (set MODERATION_TOKEN in env)
-      </p>
     </form>
   );
 }
@@ -131,8 +129,16 @@ async function QueueView() {
   return (
     <div className="mt-8 flex flex-col gap-8">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-        <Stat label="Pending" value={meta.awaitingReview} icon={<Hourglass aria-hidden="true" className="size-3.5" />} />
-        <Stat label="Approved" value={meta.approvedCount} icon={<BadgeCheck aria-hidden="true" className="size-3.5" />} />
+        <Stat
+          label="Pending"
+          value={meta.awaitingReview}
+          icon={<Hourglass aria-hidden="true" className="size-3.5" />}
+        />
+        <Stat
+          label="Approved"
+          value={meta.approvedCount}
+          icon={<BadgeCheck aria-hidden="true" className="size-3.5" />}
+        />
         <button
           type="submit"
           form="mod-signout"
@@ -143,8 +149,14 @@ async function QueueView() {
         </button>
       </div>
 
-      <section aria-labelledby="pending-heading" className="flex flex-col gap-3">
-        <h2 id="pending-heading" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+      <section
+        aria-labelledby="pending-heading"
+        className="flex flex-col gap-3"
+      >
+        <h2
+          id="pending-heading"
+          className="flex items-center gap-2 text-lg font-semibold tracking-tight"
+        >
           Pending review
           <span className="rounded-full bg-warning/15 px-2 py-0.5 font-mono text-[10px] text-warning-foreground tabular-nums">
             {pending.length}
@@ -165,7 +177,10 @@ async function QueueView() {
       </section>
 
       <section aria-labelledby="recent-heading" className="flex flex-col gap-3">
-        <h2 id="recent-heading" className="text-lg font-semibold tracking-tight">
+        <h2
+          id="recent-heading"
+          className="text-lg font-semibold tracking-tight"
+        >
           Recently moderated
         </h2>
         {recent.length === 0 ? (
@@ -178,7 +193,10 @@ async function QueueView() {
               const category = scamCategoryById(report.categoryId);
               const rejected = report.status === "rejected";
               return (
-                <li key={report.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm">
+                <li
+                  key={report.id}
+                  className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm"
+                >
                   <span
                     className={
                       rejected
@@ -193,8 +211,12 @@ async function QueueView() {
                     )}
                     {rejected ? "Rejected" : "Approved"}
                   </span>
-                  <span className="text-muted-foreground">{category.label}</span>
-                  <span className="truncate text-muted-foreground/80">{report.shortDescription}</span>
+                  <span className="text-muted-foreground">
+                    {category.label}
+                  </span>
+                  <span className="truncate text-muted-foreground/80">
+                    {report.shortDescription}
+                  </span>
                   <span className="ml-auto font-mono text-[11px] text-muted-foreground tabular-nums">
                     {report.id}
                   </span>
@@ -235,9 +257,14 @@ function PendingItem({ report }: { report: CommunityReport }) {
       <div className="flex flex-wrap gap-x-5 gap-y-1 font-mono text-[11px] text-muted-foreground">
         <span>ref {report.id}</span>
         <span>enc. {formatDay(report.encounteredAt)}</span>
-        {report.sender ? <span className="break-all">handle: {report.sender}</span> : null}
+        {report.sender ? (
+          <span className="break-all">handle: {report.sender}</span>
+        ) : null}
         {report.screenshot ? (
-          <span>{(report.screenshot.byteSize / 1024).toFixed(0)} KB screenshot attached</span>
+          <span>
+            {(report.screenshot.byteSize / 1024).toFixed(0)} KB screenshot
+            attached
+          </span>
         ) : null}
       </div>
 

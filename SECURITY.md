@@ -1,191 +1,63 @@
-# Security Notes: Sift
+# Security
 
-This document summarizes the security posture of Sift and the
-specific measures taken in each area. It is aimed at reviewers and future
-maintainers.
+Sift processes untrusted messages, links, images, and reports. This document describes the implemented boundaries and their limits; it is not a claim that the application has received an independent security audit.
 
-## Threat model in one line
+## Reporting a vulnerability
 
-Sift accepts **fully untrusted input from anonymous users**
-(scam messages, screenshots, URLs, community reports) and shows that input
-back to other users, so every trust boundary is treated as hostile.
+Contact the repository owner privately through an existing trusted channel. If GitHub private vulnerability reporting is enabled, use the repository's Security tab. Do not put credentials, session tokens, or personal scam evidence in a public issue.
 
-## Authentication
+## Accounts and sessions
 
-- Hand-rolled credential auth (no third-party dependency):
-  - Passwords hashed with **scrypt** (64-byte derived key, per-user random
-    salt) and compared with `timingSafeEqual`
-    (`src/lib/auth/passwords.ts`).
-  - Session tokens are 32 random bytes (CSPRNG); the database stores only a
-    SHA-256 hash of the token, so a store leak cannot be replayed as a login.
-  - Session cookie: `httpOnly`, `SameSite=Lax`, `Secure` in production,
-    30-day expiry (`src/lib/auth/session.ts`).
-- Sign-in returns one generic `invalid_credentials` error for unknown email
-  and wrong password alike (no account enumeration on sign-in).
-- Password change requires the current password, **revokes every existing
-  session**, then issues a fresh cookie for the current device only.
-- Known trade-off: sign-up returns `409 email_taken`, which does reveal that
-  an account exists. This is deliberate: the sign-in page uses it to route
-  people to "sign in instead" instead of failing silently.
+Passwords use scrypt with a random 16-byte salt and a 64-byte derived key. Verification rejects malformed encodings and compares valid keys with `timingSafeEqual`. Session tokens use 32 random bytes; storage contains their SHA-256 hashes.
 
-## Authorization
+The session cookie is HTTP-only, SameSite=Lax, and Secure in production, with a 30-day lifetime. Changing a password revokes existing sessions and creates a new session for the current device. Sign-out only updates the client account state after the server confirms success.
 
-- Every read/write of user data derives the user id **only** from the
-  verified session cookie; clients never send identifiers that the server
-  trusts.
-- Scan history ownership is enforced inside the data layer
-  (`getUserHistoryEntry`, `deleteUserHistoryEntry`,
-  `deleteAllUserHistory`) and again at each API/page boundary. Another
-  user's entry and a nonexistent entry return the identical `404`, so ids
-  cannot be probed.
-- Protected pages (`/history`, `/settings`) guard server-side via RSC
-  redirects, never by hiding UI on the client.
-- The moderation queue is gated by a shared `MODERATION_TOKEN`; production
-  deployments must set a strong value (the default is dev-only).
+Sign-in uses a generic credential error. Sign-up returns a distinct conflict for an existing email address; it therefore reveals account existence.
 
-## CSRF / origin protection
+## Ownership and moderation
 
-- All state-changing API routes (`POST`/`PATCH`/`DELETE`) validate the
-  `Origin` header against the `Host` header
-  (`requestSameOrigin` in `src/lib/http/guards.ts`) in addition to
-  `SameSite=Lax` cookies.
-- Requests without an `Origin` header (curl, server-to-server) are allowed;
-  browsers always send `Origin` on cross-site writes, which is the only
-  case CSRF applies to.
-- Moderation actions run through Next.js Server Actions, which perform
-  their own origin verification.
+Private history is scoped by the server-derived account id in the data layer. Another user's entry and a missing entry return the same not-found result. History and settings pages also check the session on the server.
 
-## API routes
+Community reports are separate from private history. Public queries return approved reports, and submissions are reviewed through a token-protected moderation queue. The queue remains locked when `MODERATION_TOKEN` is absent. The current shared moderator credential does not provide per-user administrator roles or an audit trail.
 
-- **Input validation** everywhere: emails, password length, display names,
-  message length (5,000 chars), URL length + protocol allowlist
-  (`http`/`https` only), report fields, dates (bounded to the past 3 years).
-- **Request size limits**: all JSON bodies are read through
-  `readJsonBody(request, maxBytes)` which enforces a declared
-  `Content-Length` precheck *and* a hard cap on the buffered body
-  (`src/lib/http/guards.ts`). Multipart upload routes reject oversized
-  requests *before* parsing the body into memory.
-- **Rate limiting** (in-memory sliding window, keyed by hashed IP+UA or
-  token, never persisted):
+## Requests and abuse controls
 
-  | Endpoint | Limit |
-  | --- | --- |
-  | Text scan | 8 / minute / client |
-  | Screenshot scan | 5 / minute / client |
-  | URL scan | 15 / minute / client |
-  | Report submit | 3 / 15 minutes / client (+ honeypot field) |
-  | Confirmations | 20 / minute / anon token |
-  | Sign-up | 5 / 15 minutes / IP |
-  | Sign-in | 10 / 10 minutes / IP+email |
-  | Password change | 5 / 10 minutes / IP |
+Write routes validate the browser Origin host against the request Host, including its port. Requests without Origin are accepted for non-browser clients. Next.js applies its own origin protection to Server Actions.
 
-- **Error handling**: handlers catch broadly, log details server-side with a
-  route prefix, and return generic, user-friendly JSON errors. Stack traces
-  and internal messages never reach the client. Rate-limited responses
-  include `Retry-After`.
+JSON body limits check actual UTF-8 byte size in addition to declared length. Rate limits cover sign-in, registration, scans, report submission, and confirmations. Rate-limit keys hash identifying request information.
 
-## File uploads
+Configure the reverse proxy to overwrite trusted forwarding headers. The application uses the first `x-forwarded-for` value for rate-limit identity; an untrusted forwarding chain weakens that protection.
 
-Two upload paths exist: screenshot OCR scanning and optional report
-screenshots. Both apply layered validation, never trusting the client:
+## Images and text
 
-1. **Size**, enforced before buffering where possible (5 MB OCR /
-   2 MB reports), plus a whole-request `Content-Length` precheck.
-2. **Declared MIME type**, rejected if not in the allowlist (PNG/JPEG/WebP).
-   A mismatch between the declared type and the actual bytes is rejected.
-3. **File extension**, validated against an allowlist when present, and
-   cross-checked against the detected format (a real PNG named `.txt` → 415).
-4. **Magic bytes**, the authoritative check: content is sniffed with
-   `detectImageType`. SVG is not accepted anywhere.
-5. Screenshots are re-emitted only as `data:image/png|jpeg|webp` base64 URLs
-   generated server-side from the sniffed format, so no attacker-controlled
-   MIME/HTML can end up in an `<img src>`.
+Upload routes enforce size limits, accepted MIME types, extensions, and image signatures. SVG and HTML uploads are rejected. OCR inputs and AI responses are treated as data.
 
-## AI endpoints (prompt injection & abuse)
+React escapes report descriptions, scan evidence, AI summaries, and OCR text. The only raw HTML insertion in the root layout is a static, developer-authored theme-initialization script; it does not interpolate submitted content.
 
-The analyzed message is **untrusted data**, never instructions:
+OCR images are processed temporarily. When a signed-in scan is saved, extracted text and its result are retained in that account's history. Community-report screenshots are a separate upload path and can be retained with the report.
 
-- Message text is fenced inside triple-quote delimiters and capped
-  (5,000 chars input, ~5,000 chars prompt clip).
-- The system prompt (`src/lib/ai/prompt.ts`) explicitly instructs the model:
-  ignore embedded instructions ("ignore previous instructions",
-  role changes, output-format overrides), never reveal the system prompt,
-  never execute or follow links/code found in the message, and to treat
-  manipulation attempts themselves as scam red flags.
-- Output is constrained to a single JSON object
-  (`response_format: json_object`, strict schema parse, capped at
-  `max_tokens: 900`), so model output can only ever become report text that
-  React escapes; it is never rendered as HTML or executed.
-- Cost controls: short timeout with abort (20s), deterministic fallback to
-  the rules engine when the AI is unavailable, plus the rate limits above.
+## External services
 
-## URL scanning (SSRF)
+The URL analyzer does not fetch the submitted address, resolve its DNS, or follow redirects. If reputation checks are enabled, the address is sent to the configured provider. Internal-host addresses are excluded from those lookups.
 
-The scanner **never talks to the target**: no fetch, DNS resolution,
-redirect following, or socket to the analyzed host. See the security note in
-`src/app/api/analyze/url/route.ts` and `analyzeUrl` in
-`src/lib/url-analyzer/index.ts`.
+AI analysis is optional. Submitted message content is untrusted input to the configured service, and returned output must pass schema validation. Requests time out and fall back to deterministic rules. These controls reduce risk; they do not make prompt injection or incorrect model output impossible.
 
-- Protocol allowlist (`http`/`https`) rejects `javascript:`, `data:`,
-  `file:` etc. before parsing.
-- Internal hosts (`localhost`, `127.0.0.0/8`, RFC1918, CGNAT, link-local
-  incl. cloud-metadata `169.254.169.254`, IPv6 loopback/ULA/link-local,
-  `.local`/`.internal`/`.home.arpa`) are recognized by
-  `src/lib/url-analyzer/internal-hosts.ts`.
-- URLs pointing at internal hosts are **never sent to the reputation
-  provider**: the external lookup is skipped so internal hostnames/IPs
-  never leave the server (`isInternalHostname` gate in `analyzeUrl`).
-- The single outbound call goes to a fixed Google Safe Browsing endpoint
-  with the URL strictly as request-body data.
+OCR uses local Tesseract workers on the server. Language data is downloaded on first extraction and cached; resolving the provider does not start the worker.
 
-## Data storage ("database")
+## Storage and deployment
 
-There is currently **no database**; users, sessions, history, and reports
-live in in-memory stores on `globalThis` (single-process demo scope).
+With `DATABASE_URL`, accounts, sessions, history, community reports, and rate-limit buckets use PostgreSQL. Queries use parameters, and migrations are run explicitly. Use a database identity with only the runtime permissions it needs.
 
-When persistence is added:
+Remote PostgreSQL connections default to certificate-verified TLS. Explicit connection-string SSL settings are handled by the PostgreSQL driver; configure them intentionally and supply the provider's CA when necessary. Local loopback connections can use the driver's local defaults.
 
-- Use parameterized/prepared statements exclusively (or an ORM/query
-  builder that does); string-concatenated SQL must fail review.
-- Keep authorization checks in the data layer (as done today) so queries
-  are scoped by user id at the source.
-- Connect with a least-privilege account (no DDL rights at runtime).
+Without `DATABASE_URL`, stores fall back to process-local memory. That state disappears on restart and is not shared between application instances. Configure PostgreSQL before relying on durable accounts, saved history, or shared rate limits in deployment.
 
-## Secrets
+Serve the application over HTTPS. The configuration sets content-type sniffing protection, frame restrictions, a referrer policy, a permissions policy, and a limited Content Security Policy. It is not a strict script-src CSP.
 
-- All secrets live in environment variables read **only** in server modules
-  (`AI_API_KEY`, `GOOGLE_SAFE_BROWSING_API_KEY`, `OCR_*`, `MODERATION_TOKEN`);
-  secret-bearing modules import `server-only` so bundling them into client
-  code fails the build.
-- No `NEXT_PUBLIC_*` variables exist, so nothing sensitive is exposed to the
-  browser bundle.
-- `.env*` files are git-ignored; `.env.example` contains placeholders only.
-  A repo-wide secret-pattern scan (`gsk_…`, `sk-…`, AWS `AKIA…`) comes back
-  clean for tracked files.
-- Rate-limit keys hash IP+UA before storage; session tokens are stored
-  hashed; raw credentials/tokens are never logged.
+Secrets belong in server environment variables. `NEXT_PUBLIC_SITE_URL` is intentionally public; never put a credential in a `NEXT_PUBLIC_*` variable. Local environment files are ignored by Git.
 
-## Transport & headers
+## Verification
 
-Production must serve over HTTPS (cookies are already flagged `Secure`).
-The app sets these headers globally (`next.config.ts`):
+`npm test` covers malformed password hashes, password matching, session revocation, cross-user history isolation, request limits, origin checks, rate limits, TLS defaults, and risk thresholds, along with scanner and validation regression suites. Tests use isolated memory stores and mocked OCR contracts.
 
-- `X-Content-Type-Options: nosniff`
-- `X-Frame-Options: DENY` and CSP `frame-ancestors 'none'`
-  (clickjacking defense)
-- CSP `base-uri 'self'; form-action 'self'; object-src 'none'`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()`
-
-All rendered user content flows through React's JSX escaping (no
-`dangerouslySetInnerHTML` anywhere), which neutralizes stored XSS from
-scam descriptions, sender handles, AI summaries, and OCR text.
-
-## Residual limitations (by design, demo scope)
-
-- In-memory stores mean restart wipes accounts/history and limits do not
-  scale horizontally; multi-instance deployments need shared storage.
-- `x-forwarded-for` is trusted for rate limiting; behind a proxy, configure
-  the platform to overwrite (not append to) this header.
-- The moderation token is a shared secret; per-user admin accounts would be
-  the next step.
+Run `npm audit` for the installed dependency set. CI rejects high or critical reported advisories. Live database behavior, real OCR recognition, deployment proxy configuration, and external provider security require environment-specific verification.

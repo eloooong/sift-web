@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import { useLang } from "@/components/providers/language-provider";
@@ -345,20 +344,5 @@ export function ScannerInput() {
         </motion.div>
       ) : null}
     </AnimatePresence>
-  );
-}
-
-export function ScannerFooterNote() {
-  return (
-    <p className="mt-6 text-center text-xs leading-relaxed text-muted-foreground">
-      Scans are processed securely through our server and are never stored. See{" "}
-      <Link
-        href="/#examples"
-        className="font-medium underline underline-offset-2"
-      >
-        common scam patterns
-      </Link>{" "}
-      while deciding what to check next.
-    </p>
   );
 }

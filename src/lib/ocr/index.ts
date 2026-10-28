@@ -22,19 +22,20 @@ const globalForOcr = globalThis as unknown as {
  * must be reused across requests instead of rebuilt for every scan.
  */
 export function getOcrProvider(): OcrProvider {
-  if (globalForOcr.__scamshieldOcrProvider) {
-    return globalForOcr.__scamshieldOcrProvider;
-  }
-
   const requested = (process.env.OCR_PROVIDER ?? "tesseract")
     .toLowerCase()
     .trim();
-  const factory = PROVIDERS[requested];
+  const factory = Object.hasOwn(PROVIDERS, requested)
+    ? PROVIDERS[requested]
+    : undefined;
   if (!factory) {
     throw new OcrError(
       "not-configured",
-      `Unknown OCR provider "${requested}". Available: ${Object.keys(PROVIDERS).join(", ")}.`
+      `Unknown OCR provider "${requested}". Available: ${Object.keys(PROVIDERS).join(", ")}.`,
     );
+  }
+  if (globalForOcr.__scamshieldOcrProvider?.id === requested) {
+    return globalForOcr.__scamshieldOcrProvider;
   }
   const provider = factory();
   globalForOcr.__scamshieldOcrProvider = provider;
